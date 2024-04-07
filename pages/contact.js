@@ -1,10 +1,9 @@
 import Navbar from "@/components/Navbar";
-export default function Candle(){
+export default function contact(){
     return(
-
         <>
         <Navbar/>
-            <h1>candel</h1>
+            <h1>contact</h1>
         </>
     )
 }
