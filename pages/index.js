@@ -1,11 +1,20 @@
 import Footer from "@/components/Footer";
+import Landing from "@/components/Landing";
 import Navbar from "@/components/Navbar";
+import Head from "next/head";
+
 export default function Home() {
   return (
-    <>
-        <Navbar/>
-        <h1>Home Page</h1>
-        <Footer/>
+    < >
+    <Head>
+      <title>Home | Nature Candle</title>
+    </Head>
+      <Navbar/>
+      <Landing/>
+      <Footer/>
+
+      
+      
     </>
   );
 }

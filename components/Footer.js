@@ -1,8 +1,9 @@
 export default function Footer() {
     return (
-    <>
-        <h1>Footer</h1>
+    <footer>
+
+        <p>copyright | acbde</p>
         
-        </>
+    </footer>
     );
 }

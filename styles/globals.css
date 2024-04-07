@@ -1,0 +1,82 @@
+body {
+    background: white;
+    color: black;
+
+}
+
+nav a {
+    color:black;
+    text-decoration: none;
+    margin-left: 12px;
+    font-size: 18px;
+    padding: 10px;
+}
+
+nav{
+    margin: 10px auto;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    position:sticky;
+}
+nav a:hover{
+
+    color: #127B43;
+}
+nav .logo{
+    margin-right: auto;
+    padding-left: 10px;
+
+}
+
+footer{
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 10px;
+    color: black;
+    border-top: 1px solid gray;
+
+}
+a{
+    text-decoration: none;
+}
+
+land_1{
+    margin: 10px auto;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:sticky;
+
+}
+
+
+.title {
+    margin-top: 25%;
+    margin-right: 450px;
+    border: 150px solid transparent;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1px;
+    text-align: center;
+}
+
+land_1 .button{
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 70px;
+    background: #5BC08A;
+    border-radius: 10px;
+    color:white;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    
+}
+land_1 .button:hover {
+    background-color: #127B43;
+}
+
+
