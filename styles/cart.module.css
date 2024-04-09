@@ -1,0 +1,36 @@
+.text-center {
+  text-align: center;
+}
+
+.underline {
+  text-decoration: underline;
+  color: #56B280;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+
+th.product.text-align-left {
+  text-align: left;
+}
+
+
+th.quantity, th.total, th.price {
+  text-align: center;
+}
+
+.table {
+  width: 100%; 
+}
+
+
+
+
+
+
+
+
+
+
+
+  
