@@ -1,8 +1,8 @@
 
+
 .container {
     display: flex;
     justify-content: center;
-   
 }
 
 .contact {
@@ -12,23 +12,22 @@
 
 .bar {
     display: flex;
-    justify-content: flex-start; /* จัดให้อยู่ทางซ้าย */
-    align-items: center; /* จัดตำแหน่งตรงกลางแนวตั้ง */
+    justify-content: flex-start; 
+    align-items: center; 
     gap: 5px; 
 
     text-align: left;
-    padding-bottom: 40px;
     cursor: pointer;
   }
 
   
   .bar:hover {
-    opacity: 0.8; /* ลดความโปร่งใสของปุ่มเมื่อเมาส์ชี้ไปที่ปุ่ม */
+    opacity: 0.8; 
   }
 
   .navBar {
     display: flex;
-    justify-content: start; /* เพื่อให้องค์ประกอบอยู่ทางซ้าย */
+    justify-content: start; 
     text-align: left; 
     align-items: center;
     padding: 10px 20px;
@@ -41,10 +40,10 @@
 .linkShipping {
     display: flex;
     align-items: center;
-    color: black; /* กำหนดสีตามต้องการ */
+    color: black; 
     font-weight: 1000;
-    text-decoration: none; /* นำเส้นใต้ออก */
-    margin-right: 10px; /* เพิ่มระยะห่างระหว่างองค์ประกอบ */
+    text-decoration: none; 
+    margin-right: 10px; 
 }
 
 .linkPayment {
@@ -52,17 +51,17 @@
 }
 
 .svgIcon {
-    width: 16px; /* ปรับขนาดไอคอน */
+    width: 16px; 
     height: 16px;
-    margin: 0 5px; /* เพิ่มระยะห่างรอบไอคอน */
-    color: gray; /* กำหนดสีให้กับไอคอน */
+    margin: 0 5px; 
+    color: gray; 
 }
 
 
 .textName {
     font-family: 'Poppins', sans-serif;
-    font-size: 16px; /* ขนาดฟอนต์ */
-    color: lightgrey; /* สีข้อความ */
+    font-size: 16px; 
+    color: black; 
 }
 
 .contactBox input {
@@ -70,8 +69,18 @@
     max-width: 620px; 
     height: 40px;
     border: 1px solid gray;
-    
 }
+
+.contactBox input:focus,
+.nameSurnameBox input:focus,
+.addressBox input:focus,
+.noteBox input:focus,
+.locationBox input:focus,
+.countryBox input:focus {
+    border-color: #56B280; /* เปลี่ยนสีขอบเมื่อได้รับการโฟกัส */
+    outline: 2px solid #56B280; /* เพิ่มเส้นขอบด้านนอกสีเขียว */
+}
+
 
 .nameSurnameBox input{
     width: 100%; 
@@ -114,6 +123,62 @@
 }
 
 
+
+.shippingOption {
+    display: flex;
+    align-items: center;
+    padding: 10px ;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 10px 0;
+    transition: border 0.1s;
+}
+
+
+
+.shippingOption {
+    display: flex;
+    align-items: center;
+    padding: 10px ;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 10px 0;
+    transition: border 0.1s;
+}
+
+
+.radio[type="radio"] {
+    accent-color: #56B280; 
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+   
+}
+
+
+.input[type="radio"]:checked {
+    outline: 2px solid #56B280; 
+}
+
+
+.input[type="radio"] {
+    display: none;
+}
+
+
+.shippingOption.selected {
+    border-color: #56B280;
+    outline: 2px solid #56B280; 
+}
+
+
+.shippingOption span {
+    margin-left: auto;
+    font-weight: bolder;
+    padding: 10px;
+}
+
+  
 .back {
     text-decoration: underline;
     color: #56B280;
@@ -124,23 +189,23 @@
   }
 
 .payButton {
-    background-color: #56B280; /* กำหนดสีเขียวให้กับพื้นหลังของปุ่ม */
-    color: white; /* กำหนดสีขาวให้กับข้อความ */
-    border-radius: 5px; /* กำหนดขอบโค้งของปุ่ม */
-    font-size: 20px; /* กำหนดขนาดตัวอักษรเท่ากับขนาดของ <p> */
-    padding: 10px 50px; /* เพิ่มพื้นที่รอบขอบของปุ่ม */
+    background-color: #56B280; 
+    color: white; 
+    border-radius: 5px; 
+    font-size: 20px; 
+    padding: 10px 50px; 
     border: none; 
     cursor: pointer;
     margin: 20px;
   }
   
   .payButton:hover {
-    opacity: 0.8; /* ลดความโปร่งใสของปุ่มเมื่อเมาส์ชี้ไปที่ปุ่ม */
+    opacity: 0.8; 
   }
 
   .backAndPayButtons {
     margin-top: 30px;
     display: flex;
-    align-items: center; /* จัดตำแหน่งแนวตั้งให้ตรงกลาง */
+    align-items: center; 
     gap: 270px; 
 }
