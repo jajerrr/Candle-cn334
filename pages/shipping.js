@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from "@/components/Footer";
 import Head from 'next/head';
 import styles from "../styles/shipping.module.css";
 
-const NavigationBar = () => {
+
+const PageNav = () => {
     return (
         <nav className={`${styles.navBar}`}>
             <div className={styles.bar}>
@@ -25,7 +27,52 @@ const NavigationBar = () => {
             </div>
         </nav>
     );
+}; 
+
+const ShippingMethod = () => {
+    const [selectedMethod, setSelectedMethod] = useState('');
+
+    const handleMethodChange = (event) => {
+        setSelectedMethod(event.target.value);
+    };
+
+    return (
+<div>
+    <label className={`${styles.shippingOption} ${selectedMethod === 'Standard' ? styles.selected : ''}`}>
+        <input
+            type="radio"
+            name="shippingMethod"
+            id="standard"
+            value="Standard"
+            className={styles.radio}
+            onChange={handleMethodChange}
+            checked={selectedMethod === 'Standard'}
+        />
+        Standard Shipping
+        <span>THB 60.00</span>
+    </label>
+
+    <label className={`${styles.shippingOption} ${selectedMethod === 'Express' ? styles.selected : ''}`}>
+        <input
+            type="radio"
+            name="shippingMethod"
+            id="express"
+            value="Express"
+            className={styles.radio}
+            onChange={handleMethodChange}
+            checked={selectedMethod === 'Express'}
+        />
+        Express Shipping
+        <span>THB 100.00</span>
+    </label>
+</div>
+
+
+    );
 };
+  
+
+
 
 const ShippingPage = () => {
     const [sender, setSender] = useState({
@@ -40,7 +87,7 @@ const ShippingPage = () => {
         contact: '',
     });
 
-    // Function to handle changes in sender form fields
+    // ฟังก์ชันเพื่อจัดการการเปลี่ยนแปลงของฟอร์มการส่ง
     const handleSenderChange = (e) => {
         const { name, value } = e.target;
         setSender((prevSender) => ({
@@ -49,10 +96,10 @@ const ShippingPage = () => {
         }));
     };
 
-    // Function to handle form submission
+    // ฟังก์ชันจัดการการส่งฟอร์ม
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Logic to handle form submission, e.g., sending data to an API
+        // ลอจิกในการส่งข้อมูล เช่น ส่งข้อมูลไปยัง API
         console.log('Form submitted:', sender);
     };
 
@@ -62,9 +109,9 @@ const ShippingPage = () => {
                 <title>Shipping</title>
             </Head>
 
-            <Navbar />
-            
-            <NavigationBar />
+            <Navbar/>
+
+            <PageNav/>
 
             <div className={`${styles.container} mx-auto mt-10 px-4 md:px-0`}>
                 <div className={styles.flexContainer}>
@@ -85,8 +132,7 @@ const ShippingPage = () => {
 
                     <form className={styles.nameSurnameBox} onSubmit={handleSubmit}>
                         <div>
-
-                            <input 
+                            <input
                                 name="name"
                                 value={sender.name}
                                 onChange={handleSenderChange}
@@ -94,7 +140,7 @@ const ShippingPage = () => {
                                 className={styles.textName}
                                 required
                             />
-                            <input 
+                            <input
                                 name="surname"
                                 value={sender.surname}
                                 onChange={handleSenderChange}
@@ -105,28 +151,28 @@ const ShippingPage = () => {
                         </div>
                     </form>
 
-                        <form className={styles.addressBox}>
-                            <input
-                                name="address"
-                                value={sender.address}
-                                onChange={handleSenderChange}
-                                placeholder=" Address"
-                                className={styles.textName}
-                                required
-                            />
-                        </form>
+                    <form className={styles.addressBox}>
+                        <input
+                            name="address"
+                            value={sender.address}
+                            onChange={handleSenderChange}
+                            placeholder=" Address"
+                            className={styles.textName}
+                            required
+                        />
+                    </form>
 
-                        <form className={styles.noteBox}>
-                            <input
-                                name="note"
-                                value={sender.note}
-                                onChange={handleSenderChange}
-                                placeholder=" Note (optional)"
-                                className={styles.textName}
-                            />
-                        </form>
+                    <form className={styles.noteBox}>
+                        <input
+                            name="note"
+                            value={sender.note}
+                            onChange={handleSenderChange}
+                            placeholder=" Note (optional)"
+                            className={styles.textName}
+                        />
+                    </form>
 
-                        <form className={styles.locationBox}>
+                    <form className={styles.locationBox}>
                         <div>
                             <input
                                 name="city"
@@ -153,9 +199,9 @@ const ShippingPage = () => {
                                 required
                             />
                         </div>
-                        </form>
+                    </form>
 
-                        <form className={styles.countryBox}>
+                    <form className={styles.countryBox}>
                         <div>
                             <input
                                 name="country"
@@ -165,10 +211,14 @@ const ShippingPage = () => {
                                 className={styles.textName}
                                 required
                             />
-                            </div>
-                        </form>
+                        </div>
+                    </form>
 
-                  
+                    <h2 className={styles.shippingMethod}>Shipping Method</h2>
+                    <ShippingMethod/>
+
+                    
+
                     <div className="flex-container py-5">
                         <div className={styles.backAndPayButtons}>
                             <a href="/cart">
@@ -178,12 +228,13 @@ const ShippingPage = () => {
                                 <button className={styles.payButton}>Go to payment</button>
                             </a>
                         </div>
+                        
                     </div>
                 </div>
             </div>
+        <Footer></Footer>
         </>
     );
 };
 
 export default ShippingPage;
-
