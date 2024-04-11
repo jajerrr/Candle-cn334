@@ -93,9 +93,8 @@ const ProductList = () => {
           <div className={styles.productListContainer}>
             <div className={styles.header}>
               <h1 className={styles.title}>Your cart items</h1>
-              <a href="pages/index.js">
-                <p className={styles.back}>Back to shopping
-                </p>
+              <a href="/products">
+                <p className={styles.back}>Back to shopping</p>
               </a>
             </div>
 
@@ -145,32 +144,11 @@ const ProductList = () => {
           <div className="flex-container py-5">
             <div style={{ display: "flex", placeItems: "end", marginLeft: "70%" }}>
               <span className={styles.totalPrice}>Total: ${subtotal.toFixed(2)}</span>
-              <a href="shipping.js">
+              <a href="/shipping">
                 <button className={styles.checkoutButton}>Check Out</button>
               </a>
             </div>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
