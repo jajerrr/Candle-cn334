@@ -81,6 +81,21 @@ const ProductList = () => {
     setSubtotal(calculateSubtotal());
   }, [quantities]);
 
+  const handleCheckout = () => {
+    // คำนวณข้อมูลที่ต้องการส่งไปยังหน้า payment.js
+    const queryParameters = {
+        total: subtotal.toFixed(2), // ส่งค่า `subtotal`
+        products: JSON.stringify(productItems),  // แปลง `productItems` เป็น JSON string
+        quantities: JSON.stringify(quantities)  // แปลง `quantities` เป็น JSON string
+    };
+
+    const queryString = new URLSearchParams(queryParameters).toString();
+
+    // นำทางไปยังหน้า payment.js ด้วย query parameters
+    router.push(`/payment?${queryString}`);
+};
+
+
   return (
     <>
       <Head>
@@ -144,9 +159,10 @@ const ProductList = () => {
           <div className="flex-container py-5">
             <div style={{ display: "flex", placeItems: "end", marginLeft: "70%" }}>
               <span className={styles.totalPrice}>Total: ${subtotal.toFixed(2)}</span>
-              <a href="/shipping">
-                <button className={styles.checkoutButton}>Check Out</button>
+              <a href={`/shipping?subtotal=${subtotal.toFixed(2)}&quantities=${encodeURIComponent(JSON.stringify(quantities))}&productItems=${encodeURIComponent(JSON.stringify(productItems))}`}>
+              <button className={styles.checkoutButton}>Check Out</button>
               </a>
+
             </div>
           </div>
 

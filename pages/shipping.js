@@ -1,26 +1,49 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Navbar from '@/components/Navbar';
 import Footer from "@/components/Footer";
 import Head from 'next/head';
 import styles from "../styles/shipping.module.css";
 
-
 const PageNav = () => {
     return (
-        <nav className={`${styles.navBar}`}>
+        <nav className={styles.navBar}>
             <div className={styles.bar}>
                 <a href="/cart" className={styles.linkCart}>
                     <p>Cart</p>
                 </a>
-                <svg className={styles.svgIcon} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"/>
+                <svg
+                    className={styles.svgIcon}
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 8 14"
+                >
+                    <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
+                    />
                 </svg>
                 <a href="/shipping" className={styles.linkShipping}>
                     <p>Shipping</p>
                 </a>
-                <svg className={styles.svgIcon} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"/>
+                <svg
+                    className={styles.svgIcon}
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 8 14"
+                >
+                    <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
+                    />
                 </svg>
                 <a href="/payment" className={styles.linkPayment}>
                     <p>Payment</p>
@@ -28,53 +51,48 @@ const PageNav = () => {
             </div>
         </nav>
     );
-}; 
+};
 
-const ShippingMethod = () => {
+const ShippingMethod = ({ handleShippingChange }) => {
     const [selectedMethod, setSelectedMethod] = useState('');
 
     const handleMethodChange = (event) => {
         setSelectedMethod(event.target.value);
+        handleShippingChange(event);
     };
 
     return (
-<div>
-    <label className={`${styles.shippingOption} ${selectedMethod === 'Standard' ? styles.selected : ''}`}>
-        <input
-            type="radio"
-            name="shippingMethod"
-            id="standard"
-            value="Standard"
-            className={styles.radio}
-            onChange={handleMethodChange}
-            checked={selectedMethod === 'Standard'}
-        />
-        Standard Shipping
-        <span>THB 60.00</span>
-    </label>
+        <div>
+            <label className={`${styles.shippingOption} ${selectedMethod === 'Standard' ? styles.selected : ''}`}>
+                <input
+                    type="radio"
+                    name="shippingMethod"
+                    id="standard"
+                    value="Standard"
+                    className={styles.radio}
+                    onChange={handleMethodChange}
+                    checked={selectedMethod === 'Standard'}
+                />
+                Standard Shipping
+                <span>THB 60.00</span>
+            </label>
 
-    <label className={`${styles.shippingOption} ${selectedMethod === 'Express' ? styles.selected : ''}`}>
-        <input
-            type="radio"
-            name="shippingMethod"
-            id="express"
-            value="Express"
-            className={styles.radio}
-            onChange={handleMethodChange}
-            checked={selectedMethod === 'Express'}
-        />
-        Express Shipping
-        <span>THB 100.00</span>
-    </label>
-</div>
-
-
+            <label className={`${styles.shippingOption} ${selectedMethod === 'Express' ? styles.selected : ''}`}>
+                <input
+                    type="radio"
+                    name="shippingMethod"
+                    id="express"
+                    value="Express"
+                    className={styles.radio}
+                    onChange={handleMethodChange}
+                    checked={selectedMethod === 'Express'}
+                />
+                Express Shipping
+                <span>THB 100.00</span>
+            </label>
+        </div>
     );
 };
-  
-
-
-
 
 const ShippingPage = () => {
     const [sender, setSender] = useState({
@@ -90,44 +108,63 @@ const ShippingPage = () => {
         selectedMethod: 'Standard',
     });
 
+    const [shippingCost, setShippingCost] = useState(60); // ค่าเริ่มต้นสำหรับ Standard Shipping
+    const [subtotal, setSubtotal] = useState(0);
+    const [total, setTotal] = useState(subtotal + shippingCost);
+
     const router = useRouter();
 
-    // ฟังก์ชันเพื่อจัดการการเปลี่ยนแปลงของฟอร์มการส่ง
-    const handleSenderChange = (e) => {
-        const { name, value } = e.target;
+    useEffect(() => {
+        // อัปเดตราคารวมใหม่เมื่อค่า shipping cost หรือ subtotal เปลี่ยนแปลง
+        setTotal(subtotal + shippingCost);
+    }, [shippingCost, subtotal]);
+
+    const handleShippingChange = (event) => {
+        const shippingOption = event.target.value;
+
+        let shippingCost = 0;
+
+        if (shippingOption === 'Standard') {
+            shippingCost = 60;
+        } else if (shippingOption === 'Express') {
+            shippingCost = 100;
+        }
+
+        setShippingCost(shippingCost);
+    };
+
+    const handleGoToPayment = () => {
+        const queryParams = new URLSearchParams({
+            name: sender.name,
+            surname: sender.surname,
+            address: sender.address,
+            city: sender.city,
+            postalCode: sender.postalCode,
+            province: sender.province,
+            country: sender.country,
+            note: sender.note,
+            contact: sender.contact,
+            selectedMethod: sender.selectedMethod,
+            subtotal: subtotal.toFixed(2),
+            shippingCost: shippingCost.toFixed(2),
+            total: total.toFixed(2)
+        });
+
+        const queryString = queryParams.toString();
+        router.push(`/payment?${queryString}`);
+    };
+
+    const handleSenderChange = (event) => {
+        const { name, value } = event.target;
         setSender((prevSender) => ({
             ...prevSender,
             [name]: value,
         }));
     };
 
-    // ฟังก์ชันจัดการการส่งฟอร์ม
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            // ร้องขอ HTTP ไปยัง API endpoint ที่คุณต้องการ
-            const response = await fetch('/api/shipping', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(sender),
-            });
-
-            // ตรวจสอบการตอบกลับจาก API
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Data from API:', data);
-
-                // นำผู้ใช้ไปยังหน้าที่ต้องการ (เช่น payment)
-                router.push('/payment');
-            } else {
-                console.error('Failed to submit form:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-        }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // เพิ่มฟังก์ชันการส่งฟอร์มที่นี่
     };
 
     return (
@@ -135,15 +172,11 @@ const ShippingPage = () => {
             <Head>
                 <title>Shipping</title>
             </Head>
-
-            <Navbar/>
-
-            <PageNav/>
-
+            <Navbar />
+            <PageNav />
             <div className={`${styles.container} mx-auto mt-10 px-4 md:px-0`}>
                 <div className={styles.flexContainer}>
                     <h2 className={styles.contact}>Contact</h2>
-
                     <form className={styles.contactBox} onSubmit={handleSubmit}>
                         <input
                             name="contact"
@@ -156,7 +189,6 @@ const ShippingPage = () => {
                     </form>
 
                     <h2 className={styles.shippingAddress}>Shipping Address</h2>
-
                     <form className={styles.nameSurnameBox} onSubmit={handleSubmit}>
                         <div>
                             <input
@@ -229,37 +261,31 @@ const ShippingPage = () => {
                     </form>
 
                     <form className={styles.countryBox}>
-                        <div>
-                            <input
-                                name="country"
-                                value={sender.country}
-                                onChange={handleSenderChange}
-                                placeholder=" Country/Region"
-                                className={styles.textName}
-                                required
-                            />
-                        </div>
+                        <input
+                            name="country"
+                            value={sender.country}
+                            onChange={handleSenderChange}
+                            placeholder=" Country/Region"
+                            className={styles.textName}
+                            required
+                        />
                     </form>
 
                     <h2 className={styles.shippingMethod}>Shipping Method</h2>
-                    <ShippingMethod/>
+                    <ShippingMethod handleShippingChange={handleShippingChange} />
 
-                    
-
-                    <div className="flex-container py-5">
-                        <div className={styles.backAndPayButtons}>
-                            <a href="/cart">
-                                <h3 className={styles.back}>Back to cart</h3>
-                            </a>
-                            <a href="/payment">
-                                <button className={styles.payButton}>Go to payment</button>
-                            </a>
-                        </div>
-                        
+                    <div className={styles.backAndPayButtons}>
+                        <a href="/cart" className={styles.backButton}>
+                            <h3 className={styles.back}>Back to cart</h3>
+                        </a>
+                        <button className={styles.payButton} onClick={handleGoToPayment}>
+                            Go to payment
+                        </button>
                     </div>
+                    
                 </div>
             </div>
-        <Footer></Footer>
+            <Footer />
         </>
     );
 };

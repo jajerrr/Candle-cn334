@@ -1,7 +1,12 @@
 .container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    height: auto;
 }
+
+
 
 .contact {
     text-align: left;
@@ -53,4 +58,182 @@
     height: 16px;
     margin: 0 5px; 
     color: gray; 
+}
+
+
+
+
+
+.infoList {
+    list-style: none;
+    padding: 0;
+    margin: 5px;
+}
+
+.infoLabel {
+    font-weight: bold;
+    margin-right: 100px;
+    margin: 20px;
+    color: gray;
+}
+
+
+
+.paymentBox {
+
+    padding: 20px; /* ระยะห่างภายใน */
+    border-radius: 8px; /* ขอบโค้งมน */
+    margin: 20px;
+    width: 100%; 
+    max-width: 620px; 
+    height: auto;
+    border: 1px solid rgba(86, 178, 128, 0.5); 
+}
+
+.edit {
+    color: #56B280;
+    margin-right: 20px;
+}
+
+.edit:hover {
+    opacity: 0.5; 
+  }
+
+.couponContainer {
+    display: flex;
+    justify-content: center; /* จัดวางให้อยู่ตรงกลางแนวนอน */
+    align-items: center; /* จัดวางให้อยู่ตรงกลางแนวตั้ง */
+    margin-top: 20px; /* เพิ่มระยะห่างด้านบนของ container เพื่อให้มีช่องว่าง */
+    margin: 10px;
+}
+
+.textCoupon {
+    flex-grow: 1; /* อนุญาตให้ input เต็มความกว้างที่เหลืออยู่ */
+    padding: 5px; /* เพิ่มช่องว่างภายใน input */
+    margin-right: 10px; /* เพิ่มระยะห่างระหว่าง input กับปุ่ม */
+    margin-left: 15px;
+    width: 420px; 
+    height: 30px;
+    border: 1px solid gray;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px; 
+    
+}
+
+.textCoupon:focus {
+    border-color: #56B280; /* เปลี่ยนสีขอบเมื่อได้รับการโฟกัส */
+    outline: 2px solid #56B280; /* เพิ่มเส้นขอบด้านนอกสีเขียว */
+}
+
+
+.couponButton {
+    background-color: #56B280; 
+    color: white; 
+    border-radius: 5px; 
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px; 
+    padding: 8px 50px; 
+    border: none; 
+    cursor: pointer;
+    margin: 20px;
+}
+
+.couponButton:hover {
+    opacity: 0.8; 
+  }
+
+
+.paymentMethod, .product{
+    text-align: left;
+    padding-left: 20px;
+}
+
+
+.paymentOption {
+    display: flex;
+    align-items: center;
+    padding: 10px ;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 10px 0;
+    transition: border 0.1s;
+    width: 650px;
+    margin-left: 20px;
+}
+
+
+
+.radio[type="radio"] {
+    accent-color: #56B280; 
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+   
+}
+
+
+.input[type="radio"]:checked {
+    outline: 2px solid #56B280; 
+}
+
+
+.input[type="radio"] {
+    display: none;
+}
+
+
+.paymentOption.selected {
+    border-color: #56B280;
+    outline: 2px solid #56B280; 
+}
+
+
+.paymentOption span {
+    margin-right: auto;
+    color: black;
+    padding: 10px;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    color: #56B280;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.inputShipping {
+    color: black; 
+    margin-left: 20px;
+}
+
+.back {
+    text-decoration: underline;
+    color: #56B280;
+    text-align: center;
+    padding-bottom: 40px;
+    cursor: pointer;
+    margin-top: 50px;
+  }
+
+.payButton {
+    background-color: #56B280; 
+    color: white; 
+    border-radius: 5px; 
+    font-size: 20px; 
+    padding: 10px 50px; 
+    border: none; 
+    cursor: pointer;
+    margin: 20px;
+  }
+  
+  .payButton:hover {
+    opacity: 0.8; 
+  }
+
+  .backAndPayButtons {
+    margin-top: 30px;
+    display: flex;
+    align-items: center; 
+    gap: 270px; 
 }
