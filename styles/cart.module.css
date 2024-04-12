@@ -1,0 +1,168 @@
+.title {
+  text-align: center;
+}
+
+.back {
+  text-decoration: underline;
+  color: #56B280;
+  text-align: center;
+  padding-bottom: 40px;
+  cursor: pointer;
+}
+
+.back:hover {
+  opacity: 0.8; /* ลดความโปร่งใสของปุ่มเมื่อเมาส์ชี้ไปที่ปุ่ม */
+}
+
+.headProduct {
+  text-align: left;
+}
+
+.table {
+  width: 95%; 
+  margin: 0 auto;
+}
+
+
+.head-table {
+  border-bottom: 1px solid gray;
+  padding: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  
+}
+
+
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+
+.border-b {
+  border-bottom: 1px solid gray;
+}
+
+.centerAlign {
+  text-align: center;
+}
+
+
+.productImage {
+  width: 10rem;
+  height: 10rem; 
+}
+
+.productDetails {
+  display: inline-block; /* หรือจะใช้ display: flex; ก็ได้ */
+  vertical-align: top; /* จัดให้อยู่ด้านบนของรูปภาพ */
+  margin-left: 1rem; /* กำหนดระยะห่างระหว่างรูปภาพกับข้อความ */
+}
+
+.removeProduct {
+  text-decoration: underline;
+  color: #56B280;
+  cursor: pointer;
+}
+
+.removeProduct:hover {
+  opacity: 0.8; /* ลดความโปร่งใสของปุ่มเมื่อเมาส์ชี้ไปที่ปุ่ม */
+}
+
+
+.productListContainer {
+  max-width: 100%; /* ให้ container ของรายการสินค้ามีขนาดพอดีหน้าจอโดยไม่เกิน */
+  margin: 0 auto; /* จัดวาง container ตรงกลาง */
+}
+
+.flexContainer {
+  max-width: 100%;
+}
+
+.quantity {
+  display: flex;
+  justify-content: center; /* จัดให้อยู่ตรงกลางแนวนอน */
+  align-items: center; /* จัดให้อยู่ตรงกลางแนวตั้ง */
+}
+
+.container {
+  max-width: 100%; /* ขนาดสูงสุดของคอนเทนเนอร์เท่ากับขนาดสูงสุดของหน้าจอ */
+  padding: 0 20px; /* เพิ่มช่องว่างด้านซ้ายและด้านขวาของคอนเทนเนอร์ */
+  margin: 0 auto; /* จัดให้คอนเทนเนอร์อยู่ตรงกลางของหน้าจอ */
+  box-sizing: border-box; /* รวมขนาดของ padding และ border ในการคำนวณขนาดของคอนเทนเนอร์ */
+  
+}
+
+.checkoutButton {
+  background-color: #56B280; /* กำหนดสีเขียวให้กับพื้นหลังของปุ่ม */
+  color: white; /* กำหนดสีขาวให้กับข้อความ */
+  border-radius: 5px; /* กำหนดขอบโค้งของปุ่ม */
+  font-size: 20px; /* กำหนดขนาดตัวอักษรเท่ากับขนาดของ <p> */
+  padding: 10px 50px; /* เพิ่มพื้นที่รอบขอบของปุ่ม */
+  border: none; 
+  cursor: pointer;
+  margin: 20px;
+}
+
+.checkoutButton:hover {
+  opacity: 0.8; /* ลดความโปร่งใสของปุ่มเมื่อเมาส์ชี้ไปที่ปุ่ม */
+}
+
+
+
+
+
+.flex-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* แบ่งเป็น 2 คอลัมน์ */
+  padding: auto;
+}
+
+
+
+.totalPrice {
+  font-size: 30px;
+  text-align: right; /* Align to the right for "Total: $100.00" */
+  margin: 15px auto; 
+}
+
+
+.checkoutButton {
+  justify-self: end; 
+  margin-left: auto;
+}
+
+
+.quantityButtonPlus {
+  background-color: white;
+  border-top: 2px solid #56B280;
+  border-bottom: 2px solid #56B280;
+  border-left: 2px solid #56B280;
+  border-right: none;
+  font-size: 18px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.quantityButtonMinus {
+  background-color: white;
+  border-top: 2px solid #56B280;
+  border-bottom: 2px solid #56B280;
+  border-left: none;
+  border-right: 2px solid #56B280;
+  font-size: 18px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+
+.quantityValue {
+  border-top: 2px solid #56B280;
+  border-bottom: 2px solid #56B280;
+  background-color: white;
+  border-left: none;
+  border-right: none;
+  padding: 3px 10px;
+  text-align: center;
+}

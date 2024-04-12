@@ -5,16 +5,14 @@ import Head from "next/head";
 
 export default function Home() {
   return (
-    < >
-    <Head>
-      <title>Home | Nature Candle</title>
-    </Head>
+    <>
+      <Head>
+        <title>Home | Nature Candle</title>
+      </Head>
       <Navbar/>
       <Landing/>
       <Footer/>
-
-      
-      
     </>
   );
 }
+
