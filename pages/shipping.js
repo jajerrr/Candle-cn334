@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Navbar from '@/components/Navbar';
 import Footer from "@/components/Footer";
 import Head from 'next/head';
@@ -74,6 +75,7 @@ const ShippingMethod = () => {
 
 
 
+
 const ShippingPage = () => {
     const [sender, setSender] = useState({
         name: '',
@@ -85,7 +87,10 @@ const ShippingPage = () => {
         country: '',
         note: '',
         contact: '',
+        selectedMethod: 'Standard',
     });
+
+    const router = useRouter();
 
     // ฟังก์ชันเพื่อจัดการการเปลี่ยนแปลงของฟอร์มการส่ง
     const handleSenderChange = (e) => {
@@ -97,10 +102,32 @@ const ShippingPage = () => {
     };
 
     // ฟังก์ชันจัดการการส่งฟอร์ม
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // ลอจิกในการส่งข้อมูล เช่น ส่งข้อมูลไปยัง API
-        console.log('Form submitted:', sender);
+
+        try {
+            // ร้องขอ HTTP ไปยัง API endpoint ที่คุณต้องการ
+            const response = await fetch('/api/shipping', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sender),
+            });
+
+            // ตรวจสอบการตอบกลับจาก API
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Data from API:', data);
+
+                // นำผู้ใช้ไปยังหน้าที่ต้องการ (เช่น payment)
+                router.push('/payment');
+            } else {
+                console.error('Failed to submit form:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
     };
 
     return (
