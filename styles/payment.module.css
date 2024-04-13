@@ -237,3 +237,61 @@
     align-items: center; 
     gap: 270px; 
 }
+
+
+
+.productBox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* จัดตำแหน่งแนวตั้ง */
+    padding: 10px;
+    
+}
+
+
+
+.infoLabel{
+    text-align: left;
+    align-items: left;
+    margin-right: 10px;
+}
+
+
+
+
+
+.imgProduct img {
+    width: 200px; 
+    height: 200px; 
+    margin-right: 0;
+}
+
+
+
+.productPrice {
+    color: #56B280;
+    margin-left: auto;
+}
+
+
+
+
+
+.priceDetail {
+    margin-bottom: 20px; /* Optional: Add margin-bottom for spacing */
+}
+.priceRow, .totalRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px; /* Optional: Add margin between rows */
+}
+.label {
+    flex-basis: 50%;
+    text-align: left;
+    color: #616161;
+}
+.value {
+    flex-basis: 50%;
+    text-align: right;
+    color: #616161;
+}

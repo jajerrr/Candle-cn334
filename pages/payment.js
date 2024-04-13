@@ -1,10 +1,11 @@
-import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Head from 'next/head';
 import styles from '../styles/payment.module.css';
 
+// คอมโพเนนต์ PageNav สำหรับสร้างแท็บนำทาง
 const PageNav = () => (
     <nav className={styles.navBar}>
         <div className={styles.bar}>
@@ -27,6 +28,7 @@ const PageNav = () => (
     </nav>
 );
 
+// คอมโพเนนต์ PaymentMethod สำหรับเลือกวิธีการชำระเงิน
 const PaymentMethod = ({ selectedMethod, handleMethodChange }) => (
     <div>
         <label className={`${styles.paymentOption} ${selectedMethod === 'Cash' ? styles.selected : ''}`}>
@@ -79,8 +81,10 @@ const PaymentMethod = ({ selectedMethod, handleMethodChange }) => (
     </div>
 );
 
+// คอมโพเนนต์หลักของ PaymentPage
 const PaymentPage = () => {
     const router = useRouter();
+    const [products, setProducts] = useState([]);
     const [sender, setSender] = useState({
         contact: '',
         name: '',
@@ -96,10 +100,20 @@ const PaymentPage = () => {
     const [shippingCost, setShippingCost] = useState(0);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
 
+    // ใช้ useEffect เพื่ออ่านข้อมูลจาก router.query เมื่อ router.isReady เป็นจริง
     useEffect(() => {
         if (router.isReady) {
             const query = router.query;
-
+            console.log('query:', query); // Inspect the query data
+    
+            // Parse the products data from the query
+            const productsFromQuery = query.products ? JSON.parse(query.products) : [];
+            console.log('productsFromQuery:', productsFromQuery); // Inspect the parsed products data
+    
+            // Set the products state
+            setProducts(productsFromQuery);
+    
+            // Set the sender state
             setSender({
                 contact: query.contact || '',
                 name: query.name || '',
@@ -111,15 +125,23 @@ const PaymentPage = () => {
                 postalCode: query.postalCode || '',
                 selectedMethod: query.selectedMethod || '',
             });
-
+    
+            // Set the total and shipping cost
             setTotal(parseFloat(query.total) || 0);
             setShippingCost(parseFloat(query.shippingCost) || 0);
             setSelectedPaymentMethod(query.paymentMethod || '');
         }
     }, [router.isReady, router.query]);
-
+    
+    // ฟังก์ชันจัดการเปลี่ยนแปลงวิธีการชำระเงิน
     const handleMethodChange = (event) => {
         setSelectedPaymentMethod(event.target.value);
+    };
+
+    // ฟังก์ชันจัดการการใช้คูปอง (สามารถปรับปรุงตามความต้องการ)
+    const handleCouponCode = (event) => {
+        event.preventDefault();
+        // ตรวจสอบและใช้คูปองที่นี่
     };
 
     return (
@@ -133,10 +155,12 @@ const PaymentPage = () => {
 
             <div className={`${styles.container} mx-auto mt-10 px-4 md:px-0`}>
                 <div className={styles.flexContainer}>
+                    {/* Payment Box แสดงข้อมูลเกี่ยวกับผู้ส่งและที่อยู่การจัดส่ง */}
                     <div className={styles.paymentBox}>
+                        {/* ส่วนที่แสดงข้อมูลติดต่อ */}
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <p>
-                                <span className={styles.infoLabel}>Contact</span> {sender.contact}
+                                <span className={styles.infoLabel}>Contact:</span> {sender.contact}
                             </p>
                             <a href={`/edit/contact?contact=${sender.contact}`}>
                                 <p className={styles.edit}>Edit</p>
@@ -145,13 +169,14 @@ const PaymentPage = () => {
 
                         <hr style={{ width: '95%', border: '1px solid rgba(86, 178, 128, 0.5)' }} />
 
+                        {/* ส่วนที่แสดงข้อมูลการจัดส่ง */}
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <p>
-                                <span className={styles.infoLabel}>Ship to</span> {`${sender.name} ${sender.surname}`}<br />
-                                                                                    {sender.address}<br />
-                                                                                    {sender.city}<br />
-                                                                                    {`${sender.province}, ${sender.country}`}<br />
-                                                                                    {sender.postalCode}
+                                <span className={styles.infoLabel}>Ship to:</span> {`${sender.name} ${sender.surname}`}<br />
+                                                                                     {sender.address}<br />
+                                                                                     {sender.city}<br />
+                                                                                     {`${sender.province}, ${sender.country}`}<br />
+                                                                                     {sender.postalCode}
                             </p>
                             <a href={`/edit/shipto?name=${sender.name}&surname=${sender.surname}&address=${sender.address}&city=${sender.city}&province=${sender.province}&country=${sender.country}&postalCode=${sender.postalCode}`}>
                                 <p className={styles.edit}>Edit</p>
@@ -160,50 +185,82 @@ const PaymentPage = () => {
 
                         <hr style={{ width: '95%', border: '1px solid rgba(86, 178, 128, 0.5)' }} />
 
+                        {/* ส่วนที่แสดงวิธีการขนส่ง */}
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <span className={styles.infoLabel}>
                                 Method <span className={styles.inputShipping}>{sender.selectedMethod}</span>
                             </span>
-
                             <a href={`/edit/method?method=${sender.selectedMethod}`}>
                                 <p className={styles.edit}>Edit</p>
                             </a>
                         </div>
                     </div>
 
+                    {/* ส่วนที่เกี่ยวข้องกับการเพิ่มคูปอง */}
                     <div className={styles.couponContainer}>
-                        <form className={styles.couponBox}>
+                        <form className={styles.couponBox} onSubmit={handleCouponCode}>
                             <input
+                                type="text"
                                 placeholder="Coupon Code"
                                 className={styles.textCoupon}
                                 required
                             />
+                            <button type="submit" className={styles.couponButton}>Add Code</button>
                         </form>
-
-                        <button className={styles.couponButton}>Add Code</button>
                     </div>
 
+                    {/* ส่วนที่แสดงวิธีการชำระเงิน */}
                     <h2 className={styles.paymentMethod}>Payment Method</h2>
                     <PaymentMethod selectedMethod={selectedPaymentMethod} handleMethodChange={handleMethodChange} />
 
+                    {/* ส่วนที่แสดงผลิตภัณฑ์ */}
                     <h2 className={styles.product}>Product</h2>
+                    {products.map((product, index) => (
+                        <React.Fragment key={index}>
+                            <div className={styles.productBox}>
+                                <span className={styles.imgProduct}>
+                                    <img src={product.productImg} alt={product.productName} />
+                                </span>
+                                <div>
+                                    <h2><span className={styles.infoLabel}>Product: </span>{product.productName}</h2>
+                                    <h3><span className={styles.infoLabel}>Quantity: </span>{product.productQuantity}</h3>
+                                </div>
+                                <h3 className={styles.productPrice}>
+                                    THB {parseFloat(product.productPrice).toFixed(2)}
+                                </h3>
+                            </div>
 
-                    <hr style={{ width: '95%', border: '1px solid lightgray' }} />
-                    <div>
-                        <p>Subtotal: THB {total.toFixed(2)}</p>
-                        <p>Shipping: THB {shippingCost.toFixed(2)}</p>
-                        <h2>Total: THB {(total + shippingCost).toFixed(2)}</h2>
+                            {index !== products.length - 1 && (
+                                <hr style={{ width: '95%', border: '1px solid lightgray' }} />
+                            )}
+                        </React.Fragment>
+                    ))}
+
+                    {/* ส่วนที่แสดงรายละเอียดราคา */}
+                    <div className={styles.priceDetail}>
+                        <p className={styles.priceRow}>
+                            <span className={styles.label}>Subtotal:</span>
+                            <span className={styles.value}>THB {total.toFixed(2)}</span>
+                        </p>
+                        <p className={styles.priceRow}>
+                            <span className={styles.label}>Shipping:</span>
+                            <span className={styles.value}>THB {shippingCost.toFixed(2)}</span>
+                        </p>
+                        <h2 className={styles.totalRow}>
+                            <span className={styles.labelTotal}>Total:</span>
+                            <span className={styles.valueTotal}>THB {(total + shippingCost).toFixed(2)}</span>
+                        </h2>
                     </div>
 
+                    {/* ปุ่ม "กลับไปยังรายละเอียด" และ "จ่ายทันที" */}
                     <div className={styles.backAndPayButtons}>
-                        <a href="/products" className={styles.backButton}>
+                        <a href="/shipping" className={styles.backButton}>
                             <h3 className={styles.back}>Back to detail</h3>
                         </a>
                         <a href="/confirm">
-                        <button className={styles.payButton}>Pay Now</button>
+                            <button className={styles.payButton}>Pay Now</button>
                         </a>
                     </div>
-
                 </div>
             </div>
 

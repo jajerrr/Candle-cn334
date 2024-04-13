@@ -1,178 +1,135 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Head from "next/head";
-import styles from "../styles/cart.module.css"; 
+import styles from "../styles/cart.module.css";
 
-const ProductList = () => {
-  const initialProductItems = [
-    {
-      name: 'Jasmine (Pink)',
-      image: '/cart/jasmine.jpg',
-      price: 59,
-    },
-    {
-      name: 'Berries (Red)',
-      image: '/cart/berrie.jpg',
-      price: 59,
-    },
-    {
-      name: 'Fresh grass (Light green)',
-      image: '/cart/grass.jpg',
-      price: 59,
-    },
-    {
-      name: 'Vanilla (Light beige)',
-      image: '/cart/vanilla.jpg',
-      price: 59,
-    },
-    {
-      name: 'Scandinavian Woods (White)',
-      image: '/cart/scandinavian.jpg',
-      price: 59,
-    },
-    {
-      name: 'Bonfire (Grey)',
-      image: '/cart/bonfire.jpg',
-      price: 59,
-    },
-    {
-      name: 'Lemon (Yellow)',
-      image: '/cart/lemon.jpg',
-      price: 59,
-    },
-    {
-      name: 'Vetiver & geranium (Black-turquoise)',
-      image: '/cart/vetiver.jpg',
-      price: 59,
-    },
-  ];
+const CartPage = () => {
+    const router = useRouter();
+    const { items, subtotal } = router.query;
 
-  const [subtotal, setSubtotal] = useState(0);
-  const [productItems, setProductItems] = useState(initialProductItems);
-  const [quantities, setQuantities] = useState(initialProductItems.map(() => 1));
+    // Initialize cart items and subtotal from query if they exist
+    const initialCartItems = items ? JSON.parse(items) : [];
+    const initialSubtotal = subtotal ? parseFloat(subtotal) : 0;
 
-  const updateQuantity = (index, newQuantity) => {
-    if (newQuantity <= 0) {
-      return;
-    }
-    const updatedQuantities = [...quantities];
-    updatedQuantities[index] = newQuantity;
-    setQuantities(updatedQuantities);
-  };
+    const [cartItems, setCartItems] = useState(initialCartItems);
+    const [cartSubtotal, setCartSubtotal] = useState(initialSubtotal);
 
-  const calculateSubtotal = () => {
-    return productItems.reduce((total, item, index) => {
-      return total + item.price * quantities[index];
-    }, 0);
-  };
-
-  const removeItem = (index) => {
-    const newProductItems = [...productItems];
-    newProductItems.splice(index, 1);
-    setProductItems(newProductItems);
-
-    const newQuantities = [...quantities];
-    newQuantities.splice(index, 1);
-    setQuantities(newQuantities);
-  };
-
-  useEffect(() => {
-    setSubtotal(calculateSubtotal());
-  }, [quantities]);
-
-  const handleCheckout = () => {
-    // คำนวณข้อมูลที่ต้องการส่งไปยังหน้า payment.js
-    const queryParameters = {
-        total: subtotal.toFixed(2), // ส่งค่า `subtotal`
-        products: JSON.stringify(productItems),  // แปลง `productItems` เป็น JSON string
-        quantities: JSON.stringify(quantities)  // แปลง `quantities` เป็น JSON string
+    // Function to calculate subtotal
+    const calculateSubtotal = () => {
+        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
-    const queryString = new URLSearchParams(queryParameters).toString();
+    // Update quantity of an item
+    const updateQuantity = (index, newQuantity) => {
+        const updatedCartItems = [...cartItems];
+        if (newQuantity > 0) {
+            updatedCartItems[index].quantity = newQuantity;
+            setCartItems(updatedCartItems);
+        }
+    };
 
-    // นำทางไปยังหน้า payment.js ด้วย query parameters
-    router.push(`/payment?${queryString}`);
+    // Remove an item
+    const removeItem = (index) => {
+        const updatedCartItems = [...cartItems];
+        updatedCartItems.splice(index, 1);
+        setCartItems(updatedCartItems);
+    };
+
+    useEffect(() => {
+        setCartSubtotal(calculateSubtotal());
+    }, [cartItems]);
+
+    const handleCheckout = () => {
+        // Send cart data to the shipping page
+        const shippingQuery = {
+            subtotal: cartSubtotal.toFixed(2),
+            items: JSON.stringify(cartItems),
+        };
+
+        router.push({
+            pathname: '/shipping',
+            query: shippingQuery,
+        });
+    };
+
+    return (
+        <>
+            <Head>
+                <title>Cart</title>
+            </Head>
+            <Navbar />
+
+            <div className={`${styles.container} mx-auto mt-10 px-4 md:px-0`}>
+                <div className={styles.flexContainer}>
+                    <div className={styles.productListContainer}>
+                        <div className={styles.header}>
+                            <h1 className={styles.title}>Your cart items</h1>
+                            <a href="/products">
+                                <p className={styles.back}>Back to shopping</p>
+                            </a>
+                        </div>
+
+                        <div className={styles.productTable}>
+                            <table className={styles.table}>
+                                <thead>
+                                    <tr>
+                                        <th className={styles.headProduct}>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {cartItems.map((item, index) => (
+                                        <tr key={index}>
+                                            <td className={styles.product}>
+                                                <div className={styles.productInfo}>
+                                                    <img src={item.image} className={styles.productImage} alt={item.name} />
+                                                    <div className={styles.productDetails}>
+                                                        <h2 className={styles.productName}>{item.name}</h2>
+                                                        <p className={styles.removeProduct} onClick={() => removeItem(index)}>Remove</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td className={styles.centerAlign}>THB {item.price.toFixed(2)}</td>
+
+                                            <td>
+                                                <div className={styles.quantity}>
+                                                    <button className={styles.quantityButtonMinus} onClick={() => updateQuantity(index, item.quantity - 1)}>-</button>
+                                                    <span className={styles.quantityValue}>{item.quantity}</span>
+                                                    <button className={styles.quantityButtonPlus} onClick={() => updateQuantity(index, item.quantity + 1)}>+</button>
+                                                </div>
+                                            </td>
+
+                                            <td className={styles.centerAlign}>THB {(item.price * item.quantity).toFixed(2)}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div className={styles.summaryContainer}>
+                        <div className={styles.summaryBox}>
+                            <div className={styles.summaryItem}>
+                                <h2><span className={styles.summaryLabel}>Total </span>
+                                    <span className={styles.summaryValue}>THB {cartSubtotal.toFixed(2)}</span>
+                                </h2>
+                            </div>
+                            <button className={styles.checkoutButton} onClick={handleCheckout}>Check Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <Footer />
+        </>
+    );
 };
 
-
-  return (
-    <>
-      <Head>
-        <title>Cart</title>
-      </Head>
-      <Navbar/>
-      
-      <div className={`${styles.container} mx-auto mt-10 px-4 md:px-0`}>
-        <div className={styles.flexContainer}>
-          <div className={styles.productListContainer}>
-            <div className={styles.header}>
-              <h1 className={styles.title}>Your cart items</h1>
-              <a href="/products">
-                <p className={styles.back}>Back to shopping</p>
-              </a>
-            </div>
-
-            <div className={styles.productTable}>
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th className={styles.headProduct}>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {productItems.map((product, index) => (
-                    <tr key={index}>
-                      <td className={styles.product}>
-                        <div className={styles.productInfo}>
-                          <img src={product.image} className={styles.productImage} />
-                          <div className={styles.productDetails}>
-                            <h2 className={styles.productName}>{product.name}</h2>
-                            <p className={styles.removeProduct} onClick={() => removeItem(index)}>Remove</p>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td className={styles.centerAlign}>THB {product.price.toFixed(2)}</td>
-
-                      <td>
-                        <div className={styles.quantity}>
-                          <button className={styles.quantityButtonPlus} onClick={() => updateQuantity(index, quantities[index] - 1)}>-</button>
-                          <span className={styles.quantityValue}>{quantities[index]}</span>
-                          <button className={styles.quantityButtonMinus} onClick={() => updateQuantity(index, quantities[index] + 1)}>+</button>
-                        </div>
-                      </td>
-
-                      <td className={styles.centerAlign}>THB {(product.price * quantities[index]).toFixed(2)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-
-          <div className="flex-container py-5">
-            <div style={{ display: "flex", placeItems: "end", marginLeft: "70%" }}>
-              <span className={styles.totalPrice}>Total: ${subtotal.toFixed(2)}</span>
-              <a href={`/shipping?subtotal=${subtotal.toFixed(2)}&quantities=${encodeURIComponent(JSON.stringify(quantities))}&productItems=${encodeURIComponent(JSON.stringify(productItems))}`}>
-              <button className={styles.checkoutButton}>Check Out</button>
-              </a>
-
-            </div>
-          </div>
-
-
-
-        </div>
-      </div>
-    <Footer></Footer>
-    </>
-  );
-};
-
-export default ProductList;
+export default CartPage;
