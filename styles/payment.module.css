@@ -234,8 +234,9 @@
   .backAndPayButtons {
     margin-top: 30px;
     display: flex;
-    align-items: center; 
-    gap: 270px; 
+    justify-content: center; /* จัดตำแหน่งกลางในแนวนอน */
+    align-items: center; /* จัดตำแหน่งกลางในแนวตั้ง */
+    gap: 350px; /* ระยะห่างระหว่างปุ่ม */
 }
 
 
@@ -250,12 +251,16 @@
 
 
 
-.infoLabel{
+.infoLabels{
     text-align: left;
     align-items: left;
-    margin-right: 10px;
+    
+    
 }
 
+.infoQuantity {
+    padding-left: 10px; /* เพิ่มระยะห่างภายในจากด้านซ้าย 10px */
+}
 
 
 
@@ -263,7 +268,7 @@
 .imgProduct img {
     width: 200px; 
     height: 200px; 
-    margin-right: 0;
+    margin-right: 20px;
 }
 
 
@@ -273,25 +278,46 @@
     margin-left: auto;
 }
 
+.priceRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
 
 
 
 
 .priceDetail {
-    margin-bottom: 20px; /* Optional: Add margin-bottom for spacing */
+    margin-bottom: 20px;
+
 }
 .priceRow, .totalRow {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px; /* Optional: Add margin between rows */
+    justify-content: flex-start;
+    margin-bottom: 8px; 
 }
 .label {
-    flex-basis: 50%;
+    flex-basis: 60%;
     text-align: left;
+    margin-left: 20px;
     color: #616161;
 }
 .value {
-    flex-basis: 50%;
+    flex-basis: 40%;
+    margin-right: 20px;
     text-align: right;
     color: #616161;
+}
+
+.labelTotal {
+    flex-basis: 60%;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.valueTotal {
+    flex-basis: 40%;
+    margin-right: 20px;
+    text-align: right;
 }

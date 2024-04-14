@@ -77,15 +77,14 @@ const ShippingPage = () => {
     const [subtotal, setSubtotal] = useState(parseFloat(query.subtotal || 0)); // Receiving subtotal from query
     const [total, setTotal] = useState(subtotal + shippingCost);
     
-    // Updating the total cost whenever shipping cost or subtotal changes
+    // Update the total cost whenever shipping cost or subtotal changes
     useEffect(() => {
-        setTotal(subtotal);
-    }, [subtotal]);
+        setTotal(subtotal + shippingCost);
+    }, [shippingCost, subtotal]);
 
-    // Handling changes in the shipping method
+    // Handle changes in the shipping method
     const handleShippingChange = (event) => {
         const shippingOption = event.target.value;
-
         let newShippingCost = 0;
 
         if (shippingOption === 'Standard') {
@@ -97,12 +96,13 @@ const ShippingPage = () => {
         setShippingCost(newShippingCost);
         setSender((prevSender) => ({
             ...prevSender,
-            selectedMethod: shippingOption
+            selectedMethod: shippingOption,
         }));
     };
 
-    // Handling navigation to the payment page
+    // Handle navigation to the payment page
     const handleGoToPayment = () => {
+        // Create query parameters for the payment page
         const queryParams = new URLSearchParams({
             name: sender.name,
             surname: sender.surname,
@@ -114,16 +114,15 @@ const ShippingPage = () => {
             note: sender.note,
             contact: sender.contact,
             selectedMethod: sender.selectedMethod,
-            subtotal: subtotal.toFixed(2),
-            shippingCost: shippingCost.toFixed(2),
-            total: total.toFixed(2),
+            shippingCost: shippingCost.toFixed(2)
+            
         });
 
-        const queryString = queryParams.toString();
-        router.push(`/payment?${queryString}`);
+        // Navigate to the payment page with query parameters
+        router.push(`/payment?${queryParams.toString()}`);
     };
 
-    // Handling input changes for sender information
+    // Handle input changes for sender information
     const handleSenderChange = (event) => {
         const { name, value } = event.target;
         setSender((prevSender) => ({
@@ -131,6 +130,29 @@ const ShippingPage = () => {
             [name]: value,
         }));
     };
+
+    const cartData = cartItems.map((item, index) => ({
+        productImg: item.image,
+        productName: item.name,
+        productQuantity: quantities[index],
+        productPrice: item.price.toFixed(2),
+    }));
+
+    // รวมค่า total สำหรับการนำไปแสดงใน payment.js
+    const total = subtotal;
+
+    // สร้าง query parameters ที่ประกอบไปด้วยข้อมูลทั้งหมด
+    const query = {
+        products: JSON.stringify(cartData),
+        total: total.toFixed(2),
+    };
+
+    // ส่งข้อมูลไปยังหน้า shipping
+    router.push({
+        pathname: '/shipping',
+        query: query,
+    });
+
 
     // Rendering the Shipping page
     return (

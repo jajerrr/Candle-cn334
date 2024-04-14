@@ -1,10 +1,17 @@
 import Navbar from "@/components/Navbar";
-export default function Candle(){
-    return(
+import { useRouter } from 'next/router';
 
+
+
+export default function Candle() {
+    const router = useRouter(); 
+
+    return (
         <>
-        <Navbar/>
-            <h1>candel</h1>
+            <Navbar />
+            <h1>Candle</h1>
+            
+
         </>
-    )
+    );
 }

@@ -44,7 +44,7 @@ const ConfirmPage = () => {
                     <h1 style={{ color: 'black', marginBottom: '-15px' }}>Payment Confirmed</h1>
                     <h3 style={{ color: '#56B280', marginBottom: '20px' }}>We appreciate your order!</h3>
 
-                    <a href="/products" style={{ marginBottom: '-20px' }}>
+                    <a href="/productTest" style={{ marginBottom: '-20px' }}>
                         <button className={styles.payButton}>Back to shopping</button>
                     </a>
 
