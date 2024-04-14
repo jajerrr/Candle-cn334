@@ -1,65 +1,59 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Navbar from '@/components/Navbar';
-import Footer from "@/components/Footer";
 import Head from 'next/head';
-import styles from "../styles/shipping.module.css";
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import styles from '../styles/shipping.module.css';
 
-// Reused for displaying the navigation bar
-const PageNav = () => {
-    return (
-        <nav className={styles.navBar}>
-            <div className={styles.bar}>
-                <a href="/cart" className={styles.linkCart}>Cart</a>
-                <svg className={styles.svgIcon} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
-                </svg>
-                <a href="/shipping" className={styles.linkShipping}>Shipping</a>
-                <svg className={styles.svgIcon} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
-                </svg>
-                <a href="/payment" className={styles.linkPayment}>Payment</a>
-            </div>
-        </nav>
-    );
-};
-
-const ShippingMethod = ({ handleShippingChange, selectedMethod }) => {
-    return (
-        <div>
-            <label className={`${styles.shippingOption} ${selectedMethod === 'Standard' ? styles.selected : ''}`}>
-                <input
-                    type="radio"
-                    name="shippingMethod"
-                    id="standard"
-                    value="Standard"
-                    className={styles.radio}
-                    onChange={handleShippingChange}
-                    checked={selectedMethod === 'Standard'}
-                />
-                Standard Shipping - THB 60.00
-            </label>
-            <label className={`${styles.shippingOption} ${selectedMethod === 'Express' ? styles.selected : ''}`}>
-                <input
-                    type="radio"
-                    name="shippingMethod"
-                    id="express"
-                    value="Express"
-                    className={styles.radio}
-                    onChange={handleShippingChange}
-                    checked={selectedMethod === 'Express'}
-                />
-                Express Shipping - THB 100.00
-            </label>
+// ฟังก์ชันการนำทางในหน้าจัดส่ง
+const PageNav = () => (
+    <nav className={styles.navBar}>
+        <div className={styles.bar}>
+            <a href="/cart" className={styles.linkCart}>Cart</a>
+            <svg className={styles.svgIcon} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
+            </svg>
+            <a href="/shipping" className={styles.linkShipping}>Shipping</a>
+            <svg className={styles.svgIcon} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
+            </svg>
+            <a href="/payment" className={styles.linkPayment}>Payment</a>
         </div>
-    );
-};
+    </nav>
+);
+
+// คอมโพเนนต์สำหรับการเลือกวิธีการจัดส่ง
+const ShippingMethod = ({ handleShippingChange, selectedMethod }) => (
+    <div>
+        <label className={`${styles.shippingOption} ${selectedMethod === 'Standard' ? styles.selected : ''}`}>
+            <input
+                type="radio"
+                name="shippingMethod"
+                value="Standard"
+                className={styles.radio}
+                onChange={handleShippingChange}
+                checked={selectedMethod === 'Standard'}
+            />
+            Standard Shipping - THB 60.00
+        </label>
+        <label className={`${styles.shippingOption} ${selectedMethod === 'Express' ? styles.selected : ''}`}>
+            <input
+                type="radio"
+                name="shippingMethod"
+                value="Express"
+                className={styles.radio}
+                onChange={handleShippingChange}
+                checked={selectedMethod === 'Express'}
+            />
+            Express Shipping - THB 100.00
+        </label>
+    </div>
+);
 
 const ShippingPage = () => {
     const router = useRouter();
     const { query } = router;
-    
-    // Initializing state for the sender data and shipping method
+
     const [sender, setSender] = useState({
         name: '',
         surname: '',
@@ -73,25 +67,46 @@ const ShippingPage = () => {
         selectedMethod: 'Standard',
     });
 
-    const [shippingCost, setShippingCost] = useState(60); // Default cost for Standard shipping
-    const [subtotal, setSubtotal] = useState(parseFloat(query.subtotal || 0)); // Receiving subtotal from query
+    const [shippingCost, setShippingCost] = useState(60);
+    const [subtotal, setSubtotal] = useState(parseFloat(query.total) || 0);
     const [total, setTotal] = useState(subtotal + shippingCost);
-    
-    // Update the total cost whenever shipping cost or subtotal changes
+
+    const [cartItems, setCartItems] = useState([]);
+    const [quantities, setQuantities] = useState([]);
+
+    // ดึงข้อมูลจาก query และแปลงข้อมูล JSON เมื่อ ready
+    useEffect(() => {
+        if (router.isReady) {
+            const productsFromQuery = query.products ? JSON.parse(query.products) : [];
+            setCartItems(productsFromQuery);
+            setQuantities(productsFromQuery.map(() => 1));
+
+            // ตั้งค่าผู้ส่งข้อมูลจาก query
+            setSender({
+                name: query.name || '',
+                surname: query.surname || '',
+                address: query.address || '',
+                city: query.city || '',
+                postalCode: query.postalCode || '',
+                province: query.province || '',
+                country: query.country || '',
+                note: query.note || '',
+                contact: query.contact || '',
+                selectedMethod: query.selectedMethod || 'Standard',
+            });
+
+            // ตั้งค่าค่าใช้จ่ายการจัดส่ง
+            setShippingCost(parseFloat(query.shippingCost) || 60);
+        }
+    }, [router.isReady, query]);
+
     useEffect(() => {
         setTotal(subtotal + shippingCost);
     }, [shippingCost, subtotal]);
 
-    // Handle changes in the shipping method
     const handleShippingChange = (event) => {
         const shippingOption = event.target.value;
-        let newShippingCost = 0;
-
-        if (shippingOption === 'Standard') {
-            newShippingCost = 60;
-        } else if (shippingOption === 'Express') {
-            newShippingCost = 100;
-        }
+        let newShippingCost = shippingOption === 'Express' ? 100 : 60;
 
         setShippingCost(newShippingCost);
         setSender((prevSender) => ({
@@ -100,9 +115,15 @@ const ShippingPage = () => {
         }));
     };
 
-    // Handle navigation to the payment page
+    const handleSenderChange = (event) => {
+        const { name, value } = event.target;
+        setSender((prevSender) => ({
+            ...prevSender,
+            [name]: value,
+        }));
+    };
+
     const handleGoToPayment = () => {
-        // Create query parameters for the payment page
         const queryParams = new URLSearchParams({
             name: sender.name,
             surname: sender.surname,
@@ -114,47 +135,23 @@ const ShippingPage = () => {
             note: sender.note,
             contact: sender.contact,
             selectedMethod: sender.selectedMethod,
-            shippingCost: shippingCost.toFixed(2)
-            
+            shippingCost: shippingCost.toFixed(2),
         });
 
-        // Navigate to the payment page with query parameters
+        const cartData = cartItems.map((item, index) => ({
+            productImg: item.image,
+            productName: item.name,
+            productQuantity: quantities[index],
+            productPrice: Number(item.price).toFixed(2),
+
+        }));
+
+        queryParams.append('products', JSON.stringify(cartData));
+        queryParams.append('total', total.toFixed(2));
+
         router.push(`/payment?${queryParams.toString()}`);
     };
 
-    // Handle input changes for sender information
-    const handleSenderChange = (event) => {
-        const { name, value } = event.target;
-        setSender((prevSender) => ({
-            ...prevSender,
-            [name]: value,
-        }));
-    };
-
-    const cartData = cartItems.map((item, index) => ({
-        productImg: item.image,
-        productName: item.name,
-        productQuantity: quantities[index],
-        productPrice: item.price.toFixed(2),
-    }));
-
-    // รวมค่า total สำหรับการนำไปแสดงใน payment.js
-    const total = subtotal;
-
-    // สร้าง query parameters ที่ประกอบไปด้วยข้อมูลทั้งหมด
-    const query = {
-        products: JSON.stringify(cartData),
-        total: total.toFixed(2),
-    };
-
-    // ส่งข้อมูลไปยังหน้า shipping
-    router.push({
-        pathname: '/shipping',
-        query: query,
-    });
-
-
-    // Rendering the Shipping page
     return (
         <>
             <Head>
@@ -260,12 +257,17 @@ const ShippingPage = () => {
                     </form>
 
                     <h2 className={styles.shippingMethod}>Shipping Method</h2>
-                    <ShippingMethod handleShippingChange={handleShippingChange} selectedMethod={sender.selectedMethod} />
+                    
+                    <ShippingMethod
+                        handleShippingChange={handleShippingChange}
+                        selectedMethod={sender.selectedMethod}
+                    />
 
                     <div className={styles.backAndPayButtons}>
                         <a href="/cart" className={styles.backButton}>
                             <h3 className={styles.back}>Back to cart</h3>
                         </a>
+                        
                         <button className={styles.payButton} onClick={handleGoToPayment}>
                             Go to payment
                         </button>

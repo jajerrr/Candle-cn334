@@ -1,112 +1,68 @@
-import { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'; 
 import Navbar from "@/components/Navbar"; 
 import Footer from "@/components/Footer"; 
 import Head from "next/head"; 
-import styles from "../styles/cart.module.css"; 
-
- 
-const CartPage = () => { 
-const router = useRouter(); 
-
-// ตั้งค่าข้อมูลเริ่มต้นของสินค้าจาก router.query.items 
-const { items } = router.query; 
-const initialProductItems = items ? JSON.parse(items) : []; 
+import styles from '../styles/cart.module.css';
 
 
-// ตั้งค่าค่าเริ่มต้นของ cartItems และ quantities ตาม initialProductItems 
-const [cartItems, setCartItems] = useState(initialProductItems); 
-const [quantities, setQuantities] = useState(initialProductItems.map(() => 1)); 
-
- 
-// ตั้งค่าค่าเริ่มต้นของ subtotal เป็น 0 
-const [subtotal, setSubtotal] = useState(0); 
 
 
-// ฟังก์ชันคำนวณค่า subtotal 
-const calculateSubtotal = () => { 
-return cartItems.reduce((total, item, index) => { 
-return total + item.price * quantities[index]; 
+const CartPage = () => {
+  const router = useRouter();
+  const { items } = router.query;
+  const initialProductItems = items ? JSON.parse(items) : [];
 
-}, 0); 
+  const [cartItems, setCartItems] = useState(initialProductItems);
+  const [quantities, setQuantities] = useState(initialProductItems.map(() => 1));
+  const [subtotal, setSubtotal] = useState(0);
 
-}; 
+  const calculateSubtotal = () => {
+      return cartItems.reduce((total, item, index) => {
+          return total + item.price * quantities[index];
+      }, 0);
+  };
 
- 
+  const updateQuantity = (index, newQuantity) => {
+      if (newQuantity <= 0) {
+          return;
+      }
+      const updatedQuantities = [...quantities];
+      updatedQuantities[index] = newQuantity;
+      setQuantities(updatedQuantities);
+  };
 
-// ฟังก์ชันอัปเดตปริมาณของสินค้าในตำแหน่งที่กำหนด 
+  const removeItem = (index) => {
+      const updatedCartItems = [...cartItems];
+      updatedCartItems.splice(index, 1);
+      setCartItems(updatedCartItems);
 
-const updateQuantity = (index, newQuantity) => { 
-    if (newQuantity <= 0) { 
-    return; 
+      const updatedQuantities = [...quantities];
+      updatedQuantities.splice(index, 1);
+      setQuantities(updatedQuantities);
+  };
 
-    } 
-    const updatedQuantities = [...quantities]; 
-    updatedQuantities[index] = newQuantity; 
-    setQuantities(updatedQuantities); 
+  useEffect(() => {
+      setSubtotal(calculateSubtotal());
+  }, [cartItems, quantities]);
 
-}; 
+  const handleCheckout = () => {
+      const cartData = cartItems.map((item, index) => ({
+          productImg: item.image,
+          productName: item.name,
+          productQuantity: quantities[index],
+          productPrice: item.price.toFixed(2),
+      }));
 
- 
+      const query = {
+          products: JSON.stringify(cartData),
+          total: subtotal.toFixed(2),
+      };
 
-// ฟังก์ชันลบสินค้าออกจาก cartItems และ quantities 
+      // Navigate to the shipping page with cart data and total
+      router.push({ pathname: '/shipping', query: query });
+  };
 
-const removeItem = (index) => { 
-const updatedCartItems = [...cartItems]; 
-updatedCartItems.splice(index, 1); 
-setCartItems(updatedCartItems); 
-
- 
-
-const updatedQuantities = [...quantities]; 
-updatedQuantities.splice(index, 1); 
-setQuantities(updatedQuantities); 
-
-}; 
-
- 
-
-// อัปเดตค่า subtotal เมื่อมีการเปลี่ยนแปลงใน cartItems หรือ quantities 
-useEffect(() => { 
-setSubtotal(calculateSubtotal()); 
-}, [cartItems, quantities]); 
-
- 
-
-// ฟังก์ชันนำผู้ใช้ไปที่หน้า shipping พร้อมข้อมูล 
-
-const handleCheckout = () => { 
-const cartData = cartItems.map((item, index) => ({ 
-  productImg: item.image, 
-  productName: item.name, 
-  productQuantity: quantities[index], 
-  productPrice: item.price.toFixed(2), 
-
-})); 
-
-// รวมค่า total สำหรับการนำไปแสดงใน payment.js 
-
-const total = subtotal; 
-
-// สร้าง query parameters ที่ประกอบไปด้วยข้อมูลทั้งหมด 
-
-const query = { 
-products: JSON.stringify(cartData), 
-total: total.toFixed(2), 
-
-}; 
-
-// ส่งข้อมูลผ่าน router ไปยังหน้า payment.js 
-
-router.push({ 
-pathname: '/shipping', 
-query: query, 
-
-}); 
-
-}; 
-
- 
 
 return ( 
 
