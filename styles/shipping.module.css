@@ -1,7 +1,20 @@
-.container {
-    display: flex;
-    justify-content: center;
+
+.header-container {
+    position: fixed; /* ใช้ตำแหน่ง fixed */
+    top: 0; /* ตั้งตำแหน่งด้านบนสุด */
+    left: 0; /* ตั้งตำแหน่งด้านซ้ายสุด */
+    display: flex; /* ใช้ flexbox เพื่อจัดองค์ประกอบ */
+    flex-direction: column; /* จัดองค์ประกอบในแนวตั้ง */
+    align-items: flex-start; /* จัดตำแหน่งองค์ประกอบทางซ้าย */
+    justify-content: flex-start; /* จัดตำแหน่งองค์ประกอบบนสุด */
+    margin: 0; /* ยกเลิกระยะห่างภายนอก */
+    padding: 0; /* ยกเลิกช่องว่างภายใน */
 }
+
+.logo {
+    margin-bottom: 0px; /* เพิ่มระยะห่างระหว่างโลโก้กับ PageNav */
+}
+
 
 .contact {
     text-align: left;
@@ -58,15 +71,15 @@
 
 .textName {
     font-family: 'Poppins', sans-serif;
-    font-size: 16px; 
+    font-size: 18px; 
     color: black; 
 }
 
 .contactBox input {
     width: 100%; 
-    max-width: 620px; 
-    height: 40px;
-    border: 1px solid gray;
+    max-width: 660px; 
+    height: 45px;
+    border: 1px solid #B7B7B7;
 }
 
 .contactBox input:focus,
@@ -80,68 +93,70 @@
 }
 
 
+
 .nameSurnameBox input{
     width: 100%; 
-    max-width: 302px; 
-    height: 40px;
-    border: 1px solid gray;
-    margin: 5px;
+    max-width: 323px; 
+    height: 45px;
+    border: 1px solid #B7B7B7;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 0;
+  
 }
 
 .addressBox input {
     width: 100%; 
-    max-width: 620px; 
-    height: 40px;
-    border: 1px solid gray;
-    margin: 5px;
+    max-width: 660px; 
+    height: 45px;
+    border: 1px solid #B7B7B7;
+    margin: 10px;
+    margin-left: 0;
 }
 
 .noteBox input {
     width: 100%; 
-    max-width: 620px; 
-    height: 40px;
-    border: 1px solid gray;
-    margin: 5px;
+    max-width: 660px; 
+    height: 45px;
+    border: 1px solid #B7B7B7;
+    margin: 10px;
+    margin-left: 0;
 }
 
 .locationBox input {
     width: 100%; 
-    max-width: 197px; 
-    height: 40px;
-    border: 1px solid gray;
-    margin: 5px;
+    max-width: 210px; 
+    height: 45px;
+    border: 1px solid #B7B7B7;
+    margin: 10px;
+    margin-left: 0;
 }
 
 .countryBox input {
     width: 100%; 
-    max-width: 620px; 
-    height: 40px;
-    border: 1px solid gray;
-    margin: 5px;
+    max-width: 660px; 
+    height: 45px;
+    border: 1px solid #B7B7B7;
+    margin: 10px;
+    margin-left: 0;
 }
 
 
 
-.shippingOption {
-    display: flex;
-    align-items: center;
-    padding: 10px ;
-    border: 1px solid gray;
-    border-radius: 5px;
-    margin: 10px 0;
-    transition: border 0.1s;
-}
-
 
 
 .shippingOption {
+    width: 95%;
     display: flex;
     align-items: center;
     padding: 10px ;
-    border: 1px solid gray;
+    border: 1px solid #E5E5E5;
+    background-color: white;
     border-radius: 5px;
-    margin: 10px 0;
+    margin: 30px 0;
     transition: border 0.1s;
+    font-size: 18px;
 }
 
 
@@ -160,7 +175,7 @@
 
 
 .input[type="radio"].radio {
-    accent-color: gray; 
+    border: 1px solid #B7B7B7;
 }
 
 
@@ -178,7 +193,7 @@
 .label.radio-label {
     display: inline-block;
     padding: 8px;
-    background-color: gray;
+    border: 1px solid #B7B7B7;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -209,7 +224,8 @@
 
 
 
-.shippingOption span {
+.boldRight {
+    display: flex;
     margin-left: auto;
     font-weight: bolder;
     padding: 10px;
@@ -223,12 +239,14 @@
     padding-bottom: 40px;
     cursor: pointer;
     margin-top: 50px;
+    font-size: 20px; 
   }
 
 .payButton {
     background-color: #56B280; 
     color: white; 
     border-radius: 5px; 
+    font-family: 'Poppins', sans-serif;
     font-size: 20px; 
     padding: 10px 50px; 
     border: none; 
@@ -240,9 +258,170 @@
     opacity: 0.8; 
   }
 
-  .backAndPayButtons {
+.backAndPayButtons {
     margin-top: 30px;
     display: flex;
     align-items: center; 
-    gap: 270px; 
+    gap: 280px; 
+}
+
+
+.productBox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* จัดตำแหน่งแนวตั้ง */
+    padding: 10px;
+    line-height: 1.0; 
+    
+}
+
+
+
+.infoLabels{
+    text-align: left;
+    align-items: left;
+    
+    
+}
+
+
+
+
+
+.imgProduct img {
+    width: 200px; 
+    height: 200px; 
+    margin-right: 30px;
+    border: none;
+}
+
+
+
+.productPrice {
+    color: #56B280;
+    margin-left: auto;
+}
+
+.priceRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0; 
+}
+
+
+.priceDetail {
+    width: 100%;
+    line-height: 1;
+   
+}
+
+
+
+
+.priceRow, .totalRow {
+    display: flex;
+    justify-content: flex-start;
+    
+}
+.label {
+    flex-basis: 60%;
+    text-align: left;
+    margin-left: 20px;
+    color: #616161;
+    font-size: 18px;
+}
+.value {
+    flex-basis: 40%;
+    margin-right: 20px;
+    text-align: right;
+    color: #616161;
+    font-size: 18px;
+}
+
+.labelTotal {
+    flex-basis: 60%;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.valueTotal {
+    flex-basis: 40%;
+    margin-right: 20px;
+    text-align: right;
+}
+
+
+
+
+
+.couponContainer {
+    display: flex;
+    justify-content: left; /* จัดวางให้อยู่ตรงกลางแนวนอน */
+    align-items: left; /* จัดวางให้อยู่ตรงกลางแนวตั้ง */
+    margin-top: 20px; /* เพิ่มระยะห่างด้านบนของ container เพื่อให้มีช่องว่าง */
+    margin: 10px;
+}
+
+.textCoupon {
+    flex-grow: 1; /* อนุญาตให้ input เต็มความกว้างที่เหลืออยู่ */
+    padding: 5px; /* เพิ่มช่องว่างภายใน input */
+    margin-right: 10px; /* เพิ่มระยะห่างระหว่าง input กับปุ่ม */
+    margin-left: 15px;
+    width: 550px; 
+    height: 40px;
+    border: 1px solid #B7B7B7;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px; 
+    
+}
+
+.textCoupon:focus {
+    border-color: #56B280; /* เปลี่ยนสีขอบเมื่อได้รับการโฟกัส */
+    outline: 2px solid #56B280; /* เพิ่มเส้นขอบด้านนอกสีเขียว */
+}
+
+
+.couponButton {
+    background-color: #56B280; 
+    color: white; 
+    border-radius: 5px; 
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px; 
+    padding: 8px 50px; 
+    border: none; 
+    cursor: pointer;
+    margin: 20px;
+}
+
+.couponButton:hover {
+    opacity: 0.8; 
+  }
+
+
+/* styles.module.css */
+.container {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh; 
+}
+
+.left {
+    width: 50%;
+    display: flex; /* เปลี่ยนให้คอมโพเนนต์นี้เป็นการจัดวางแบบ flex */
+    justify-content: center; /* จัดองค์ประกอบให้ตรงกลางแนวนอน */
+    align-items: center; /* จัดองค์ประกอบให้ตรงกลางแนวตั้ง */
+}
+
+.right {
+    width: 50%;
+    background-color: #F2F2F2;
+    display: flex; /* เปลี่ยนให้คอมโพเนนต์นี้เป็นการจัดวางแบบ flex */
+    justify-content: center; /* จัดองค์ประกอบให้ตรงกลางแนวนอน */
+    align-items: center; /* จัดองค์ประกอบให้ตรงกลางแนวตั้ง */
+}
+
+
+.separator {
+    margin: 30px 0;
 }

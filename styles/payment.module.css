@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
     flex-direction: column;
@@ -75,6 +76,7 @@
     margin-right: 100px;
     margin: 20px;
     color: gray;
+    font-size: 18px;
 }
 
 
@@ -113,10 +115,10 @@
     margin-right: 10px; /* เพิ่มระยะห่างระหว่าง input กับปุ่ม */
     margin-left: 15px;
     width: 420px; 
-    height: 30px;
+    height: 40px;
     border: 1px solid gray;
     font-family: 'Poppins', sans-serif;
-    font-size: 16px; 
+    font-size: 18px; 
     
 }
 
@@ -136,6 +138,7 @@
     border: none; 
     cursor: pointer;
     margin: 20px;
+    height: 50px;
 }
 
 .couponButton:hover {
@@ -197,7 +200,7 @@
 .icon {
     width: 20px;
     height: 20px;
-    color: #56B280;
+    color: #616161;
     margin-left: 20px;
     margin-right: 10px;
 }
@@ -217,6 +220,7 @@
   }
 
 .payButton {
+    font-family: 'Poppins', sans-serif;
     background-color: #56B280; 
     color: white; 
     border-radius: 5px; 
@@ -232,6 +236,7 @@
   }
 
   .backAndPayButtons {
+    font-size: 18px;
     margin-top: 30px;
     display: flex;
     justify-content: center; /* จัดตำแหน่งกลางในแนวนอน */
@@ -276,6 +281,7 @@
 .productPrice {
     color: #56B280;
     margin-left: auto;
+    font-size: 20px;
 }
 
 .priceRow {
@@ -302,12 +308,14 @@
     text-align: left;
     margin-left: 20px;
     color: #616161;
+    font-size: 20px;
 }
 .value {
     flex-basis: 40%;
     margin-right: 20px;
     text-align: right;
     color: #616161;
+    font-size: 20px;
 }
 
 .labelTotal {
@@ -320,4 +328,124 @@
     flex-basis: 40%;
     margin-right: 20px;
     text-align: right;
+}
+
+.inputAdd {
+    margin-left: 110px;
+    font-size: 18px;
+}
+
+.separator {
+    margin: 20px ;
+}
+
+.email {
+    margin-left: 10px;
+    color: black;
+}
+
+.nameAndSurname {
+    font-size: 18px;
+    margin-left: 3px;
+}
+
+.paymentMethodBox {
+    display: flex;
+    align-items: center;
+    padding: 10px ;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 10px 0;
+    transition: border 0.1s;
+    width: 650px;
+    margin-left: 20px;
+}
+
+.cardNumBox input {
+    margin-top: 20px;
+}
+
+.cardNumBox input, .holderNameBox input{
+    width: 100%; 
+    width: 580px; 
+    height: 45px;
+    border: 1px solid #B7B7B7;
+    margin-bottom: 5px;
+  
+    
+}
+
+.cvvBox input {
+    width: 263px;
+    height: 45px;
+    border: 1px solid #B7B7B7;
+    margin-top: 5px;
+    margin-bottom: 25px;
+    
+}
+.cardNumBox input:focus, .holderNameBox input:focus, .cvvBox input:focus {
+    border-color: #56B280; /* เปลี่ยนสีขอบเมื่อได้รับการโฟกัส */
+    outline: 2px solid #56B280; /* เพิ่มเส้นขอบด้านนอกสีเขียว */
+}
+.textName {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px; 
+    color: black; 
+}
+
+.iconCredit {
+    color: #56B280;
+    width: 45px;
+    height: 45px;
+    margin-left: 20px;
+    
+}
+
+/* เพิ่ม CSS สำหรับ headBox */
+
+.headBox {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* จัดชิดซ้าย */
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    width: 100%; /* ความกว้างเต็มหน้าจอ */
+    background-color: #EEFCF4;
+    color: #56B280;
+    border-bottom: 1px solid #616161; /* กำหนดเส้นขอบด้านล่าง */
+    /* border: none; // ใช้ถ้าจำเป็นต้องลบขอบทั้งหมด */
+}
+
+/* สไตล์สำหรับกล่องห่อ input */
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    position: relative; /* ทำให้สามารถจัดการตำแหน่งของไอคอนได้ */
+}
+
+/* สไตล์สำหรับช่องกรอกข้อมูล */
+.textName {
+    flex-grow: 1; /* ทำให้ input ใช้พื้นที่ที่เหลือ */
+    padding-right: 2.5rem; /* ระยะห่างที่ถูกปรับขวาของ input เพื่อไม่ให้ทับไอคอน */
+}
+
+
+
+.iconcardnum, .iconcvv {
+    position: absolute; /* ทำให้ไอคอนอยู่ในตำแหน่งที่ถูกต้อง */
+    right: 0.5rem; /* ตำแหน่งขวาของกล่องห่อ input */
+    width: 1.5rem; /* ขนาดไอคอน */
+    height: 1.5rem; /* ขนาดไอคอน */
+    color: #616161; /* สีไอคอน */
+}
+    
+.iconcardnum {
+    top: 58%; /* ทำให้ไอคอนอยู่กึ่งกลางแนวตั้ง */
+    transform: translateY(-50%); /* ปรับให้ไอคอนอยู่กึ่งกลางแนวตั้ง */
+}
+
+.iconcvv {
+    top: 35%; /* ทำให้ไอคอนอยู่กึ่งกลางแนวตั้ง */
+    transform: translateY(-50%); /* ปรับให้ไอคอนอยู่กึ่งกลางแนวตั้ง */
 }
