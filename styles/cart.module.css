@@ -1,5 +1,14 @@
+/* ทั่วไป */
+.container {
+  max-width: 90%; /* จำกัดขนาด container ไม่เกิน 100% ของหน้าจอ */
+  padding: 0 20px; /* เพิ่ม padding รอบ container */
+  margin: 0 auto; /* จัดวาง container ให้อยู่ตรงกลาง */
+  box-sizing: border-box;
+}
+
+/* เฮดเดอร์ */
 .title {
-  text-align: center;
+  text-align: center; /* จัดกึ่งกลางข้อความในหัวข้อ */
 }
 
 .back {
@@ -11,53 +20,50 @@
 }
 
 .back:hover {
-  opacity: 0.8; /* ลดความโปร่งใสของปุ่มเมื่อเมาส์ชี้ไปที่ปุ่ม */
+  opacity: 0.8; /* ความโปร่งใสลดลงเมื่อ hover */
 }
 
-.headProduct {
-  text-align: left;
-}
-
+/* ตารางสินค้า */
 .table {
   width: 95%; 
   margin: 0 auto;
+  border-collapse: collapse;
 }
 
-
-.head-table {
-  border-bottom: 1px solid gray;
-  padding: 10px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: normal;
+.headTable {
+  font-size: 22px;
+  border-bottom: 1px solid lightgray;  
   
 }
 
-
-
-.flex {
-  display: flex;
-  align-items: center;
+.headPrice, .headQuantity, .headTotal {
+  padding-bottom: 20px;
 }
 
-
-.border-b {
-  border-bottom: 1px solid gray;
+.headProduct {
+  text-align: left; /* จัดชิดซ้าย */
+  padding-bottom: 20px;
+  
+  
 }
 
-.centerAlign {
-  text-align: center;
+.priceValue, .totalValue{
+  text-align: center; /* จัดกึ่งกลาง */
+  font-size: 22px;
 }
 
-
+/* รูปภาพสินค้า */
 .productImage {
-  width: 10rem;
-  height: 10rem; 
+  margin-top: 50px;
+  width: auto;
+  height: 12rem; 
 }
 
 .productDetails {
-  display: inline-block; /* หรือจะใช้ display: flex; ก็ได้ */
-  vertical-align: top; /* จัดให้อยู่ด้านบนของรูปภาพ */
-  margin-left: 1rem; /* กำหนดระยะห่างระหว่างรูปภาพกับข้อความ */
+  margin-top: 40px;
+  display: inline-block; /* จัดให้อยู่ในบรรทัดเดียวกับรูป */
+  vertical-align: top; /* จัดให้อยู่ที่ด้านบนของรูปภาพ */
+  margin-left: 1rem; /* เพิ่มระยะห่างระหว่างรูปภาพกับรายละเอียด */
 }
 
 .removeProduct {
@@ -67,51 +73,20 @@
 }
 
 .removeProduct:hover {
-  opacity: 0.8; /* ลดความโปร่งใสของปุ่มเมื่อเมาส์ชี้ไปที่ปุ่ม */
+  opacity: 0.8; /* ความโปร่งใสลดลงเมื่อ hover */
 }
 
-
+/* Container ของรายการสินค้า */
 .productListContainer {
-  max-width: 100%; /* ให้ container ของรายการสินค้ามีขนาดพอดีหน้าจอโดยไม่เกิน */
-  margin: 0 auto; /* จัดวาง container ตรงกลาง */
+  max-width: 100%; /* กำหนดขนาด container เท่ากับความกว้างของหน้าจอ */
+  margin: 0 auto; /* จัดวาง container ให้อยู่ตรงกลาง */
 }
 
-.flexContainer {
-  max-width: 100%;
-}
-
-.quantity {
+/* การแสดงผลตาราง */
+.flex {
   display: flex;
-  justify-content: center; /* จัดให้อยู่ตรงกลางแนวนอน */
-  align-items: center; /* จัดให้อยู่ตรงกลางแนวตั้ง */
+  align-items: center;
 }
-
-.container {
-  max-width: 100%; /* ขนาดสูงสุดของคอนเทนเนอร์เท่ากับขนาดสูงสุดของหน้าจอ */
-  padding: 0 20px; /* เพิ่มช่องว่างด้านซ้ายและด้านขวาของคอนเทนเนอร์ */
-  margin: 0 auto; /* จัดให้คอนเทนเนอร์อยู่ตรงกลางของหน้าจอ */
-  box-sizing: border-box; /* รวมขนาดของ padding และ border ในการคำนวณขนาดของคอนเทนเนอร์ */
-  
-}
-
-.checkoutButton {
-  background-color: #56B280; /* กำหนดสีเขียวให้กับพื้นหลังของปุ่ม */
-  color: white; /* กำหนดสีขาวให้กับข้อความ */
-  border-radius: 5px; /* กำหนดขอบโค้งของปุ่ม */
-  font-size: 20px; /* กำหนดขนาดตัวอักษรเท่ากับขนาดของ <p> */
-  padding: 10px 50px; /* เพิ่มพื้นที่รอบขอบของปุ่ม */
-  border: none; 
-  cursor: pointer;
-  margin: 20px;
-}
-
-.checkoutButton:hover {
-  opacity: 0.8; /* ลดความโปร่งใสของปุ่มเมื่อเมาส์ชี้ไปที่ปุ่ม */
-}
-
-
-
-
 
 .flex-container {
   display: grid;
@@ -119,50 +94,94 @@
   padding: auto;
 }
 
+.checkoutButton {
+  background-color: #56B280;
+  color: white;
+  border-radius: 5px;
+  font-size: 22px;
+  padding: 10px 50px;
+  border: none;
+  cursor: pointer;
+  margin: 20px;
+  width: fit-content;
+  height: 50px;
+  
+}
 
+.checkoutButton:hover {
+  opacity: 0.8; /* ลดความโปร่งใสเมื่อ hover */
+}
 
-.totalPrice {
-  font-size: 30px;
-  text-align: right; /* Align to the right for "Total: $100.00" */
-  margin: 15px auto; 
+/* ปรับปรุง summaryContainer */
+.summaryContainer {
+  width: 50%; /* ตั้งความกว้างครึ่งหนึ่งของหน้าจอ */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* จัดให้กล่องอยู่ที่ขวาของ parent container */
+  margin-left: auto; /* เพิ่ม margin-left: auto เพื่อดันกล่องไปทางขวา */
+}
+
+/* ปรับปรุง summaryBox */
+.summaryBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* ให้กล่องมีความกว้างเต็มความกว้างของ parent container */
 }
 
 
-.checkoutButton {
-  justify-self: end; 
-  margin-left: auto;
+
+
+.summaryLabel {
+  font-size: 25px;
+  color: gray;
+  font-weight: 100;
+  margin-right: 20px;
+}
+
+.summaryValue {
+  font-size: 28px;
+  color: black;
+}
+
+
+
+.quantity {
+  display: flex; /* ใช้ flex layout */
+  align-items: center; /* จัดตำแหน่งองค์ประกอบแนวตั้งอยู่ตรงกลาง */
+  justify-content: center; /* จัดตำแหน่งองค์ประกอบแนวนอนอยู่ตรงกลาง */
 }
 
 
 .quantityButtonPlus {
-  background-color: white;
-  border-top: 2px solid #56B280;
-  border-bottom: 2px solid #56B280;
-  border-left: 2px solid #56B280;
-  border-right: none;
-  font-size: 18px;
-  padding: 5px 10px;
-  cursor: pointer;
+  background-color: white; /* สีพื้นหลังของปุ่ม */
+  border: 2px solid #56B280; /* เส้นขอบทั้งหมด 2px */
+  border-left: none; /* ลบเส้นขอบฝั่งซ้ายออก */
+  font-size: 20px; /* ขนาดของฟอนต์ */
+  color: #56B280; /* สีของตัวอักษร */
+  padding: 8px 10px; /* ช่องว่างรอบๆ ตัวอักษร */
+  cursor: pointer; /* เปลี่ยน cursor เมื่อชี้เมาส์ไปที่ปุ่ม */
 }
+
 
 .quantityButtonMinus {
-  background-color: white;
-  border-top: 2px solid #56B280;
-  border-bottom: 2px solid #56B280;
-  border-left: none;
-  border-right: 2px solid #56B280;
-  font-size: 18px;
-  padding: 5px 10px;
-  cursor: pointer;
+  background-color: white; /* สีพื้นหลังของปุ่ม */
+  border: 2px solid #56B280; /* เส้นขอบทั้งหมด 2px */
+  border-right: none; /* ลบเส้นขอบฝั่งซ้ายออก */
+  font-size: 20px; /* ขนาดของฟอนต์ */
+  color: gray; /* สีของตัวอักษร */
+  padding: 8px 10px; /* ช่องว่างรอบๆ ตัวอักษร */
+  cursor: pointer; /* เปลี่ยน cursor เมื่อชี้เมาส์ไปที่ปุ่ม */
 }
 
-
 .quantityValue {
-  border-top: 2px solid #56B280;
-  border-bottom: 2px solid #56B280;
-  background-color: white;
+  background-color: white; /* สีพื้นหลังของปุ่ม */
+  border: 2px solid #56B280; /* เส้นขอบทั้งหมด 2px */
+  border-right: none; 
   border-left: none;
-  border-right: none;
-  padding: 3px 10px;
-  text-align: center;
+  font-size: 20px; 
+  color: black;
+  padding: 5px 10px; 
+  cursor: pointer; 
+
 }

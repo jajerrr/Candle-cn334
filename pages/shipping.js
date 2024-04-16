@@ -5,62 +5,26 @@ import Footer from "@/components/Footer";
 import Head from 'next/head';
 import styles from "../styles/shipping.module.css";
 
+// Reused for displaying the navigation bar
 const PageNav = () => {
     return (
         <nav className={styles.navBar}>
             <div className={styles.bar}>
-                <a href="/cart" className={styles.linkCart}>
-                    <p>Cart</p>
-                </a>
-                <svg
-                    className={styles.svgIcon}
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 8 14"
-                >
-                    <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
-                    />
+                <a href="/cart" className={styles.linkCart}>Cart</a>
+                <svg className={styles.svgIcon} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
                 </svg>
-                <a href="/shipping" className={styles.linkShipping}>
-                    <p>Shipping</p>
-                </a>
-                <svg
-                    className={styles.svgIcon}
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 8 14"
-                >
-                    <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
-                    />
+                <a href="/shipping" className={styles.linkShipping}>Shipping</a>
+                <svg className={styles.svgIcon} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
                 </svg>
-                <a href="/payment" className={styles.linkPayment}>
-                    <p>Payment</p>
-                </a>
+                <a href="/payment" className={styles.linkPayment}>Payment</a>
             </div>
         </nav>
     );
 };
 
-const ShippingMethod = ({ handleShippingChange }) => {
-    const [selectedMethod, setSelectedMethod] = useState('');
-
-    const handleMethodChange = (event) => {
-        setSelectedMethod(event.target.value);
-        handleShippingChange(event);
-    };
-
+const ShippingMethod = ({ handleShippingChange, selectedMethod }) => {
     return (
         <div>
             <label className={`${styles.shippingOption} ${selectedMethod === 'Standard' ? styles.selected : ''}`}>
@@ -70,13 +34,11 @@ const ShippingMethod = ({ handleShippingChange }) => {
                     id="standard"
                     value="Standard"
                     className={styles.radio}
-                    onChange={handleMethodChange}
+                    onChange={handleShippingChange}
                     checked={selectedMethod === 'Standard'}
                 />
-                Standard Shipping
-                <span>THB 60.00</span>
+                Standard Shipping - THB 60.00
             </label>
-
             <label className={`${styles.shippingOption} ${selectedMethod === 'Express' ? styles.selected : ''}`}>
                 <input
                     type="radio"
@@ -84,17 +46,20 @@ const ShippingMethod = ({ handleShippingChange }) => {
                     id="express"
                     value="Express"
                     className={styles.radio}
-                    onChange={handleMethodChange}
+                    onChange={handleShippingChange}
                     checked={selectedMethod === 'Express'}
                 />
-                Express Shipping
-                <span>THB 100.00</span>
+                Express Shipping - THB 100.00
             </label>
         </div>
     );
 };
 
 const ShippingPage = () => {
+    const router = useRouter();
+    const { query } = router;
+    
+    // Initializing state for the sender data and shipping method
     const [sender, setSender] = useState({
         name: '',
         surname: '',
@@ -108,32 +73,36 @@ const ShippingPage = () => {
         selectedMethod: 'Standard',
     });
 
-    const [shippingCost, setShippingCost] = useState(60); // ค่าเริ่มต้นสำหรับ Standard Shipping
-    const [subtotal, setSubtotal] = useState(0);
+    const [shippingCost, setShippingCost] = useState(60); // Default cost for Standard shipping
+    const [subtotal, setSubtotal] = useState(parseFloat(query.subtotal || 0)); // Receiving subtotal from query
     const [total, setTotal] = useState(subtotal + shippingCost);
-
-    const router = useRouter();
-
+    
+    // Update the total cost whenever shipping cost or subtotal changes
     useEffect(() => {
-        // อัปเดตราคารวมใหม่เมื่อค่า shipping cost หรือ subtotal เปลี่ยนแปลง
         setTotal(subtotal + shippingCost);
     }, [shippingCost, subtotal]);
 
+    // Handle changes in the shipping method
     const handleShippingChange = (event) => {
         const shippingOption = event.target.value;
-
-        let shippingCost = 0;
+        let newShippingCost = 0;
 
         if (shippingOption === 'Standard') {
-            shippingCost = 60;
+            newShippingCost = 60;
         } else if (shippingOption === 'Express') {
-            shippingCost = 100;
+            newShippingCost = 100;
         }
 
-        setShippingCost(shippingCost);
+        setShippingCost(newShippingCost);
+        setSender((prevSender) => ({
+            ...prevSender,
+            selectedMethod: shippingOption,
+        }));
     };
 
+    // Handle navigation to the payment page
     const handleGoToPayment = () => {
+        // Create query parameters for the payment page
         const queryParams = new URLSearchParams({
             name: sender.name,
             surname: sender.surname,
@@ -145,15 +114,15 @@ const ShippingPage = () => {
             note: sender.note,
             contact: sender.contact,
             selectedMethod: sender.selectedMethod,
-            subtotal: subtotal.toFixed(2),
-            shippingCost: shippingCost.toFixed(2),
-            total: total.toFixed(2)
+            shippingCost: shippingCost.toFixed(2)
+            
         });
 
-        const queryString = queryParams.toString();
-        router.push(`/payment?${queryString}`);
+        // Navigate to the payment page with query parameters
+        router.push(`/payment?${queryParams.toString()}`);
     };
 
+    // Handle input changes for sender information
     const handleSenderChange = (event) => {
         const { name, value } = event.target;
         setSender((prevSender) => ({
@@ -162,11 +131,30 @@ const ShippingPage = () => {
         }));
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // เพิ่มฟังก์ชันการส่งฟอร์มที่นี่
+    const cartData = cartItems.map((item, index) => ({
+        productImg: item.image,
+        productName: item.name,
+        productQuantity: quantities[index],
+        productPrice: item.price.toFixed(2),
+    }));
+
+    // รวมค่า total สำหรับการนำไปแสดงใน payment.js
+    const total = subtotal;
+
+    // สร้าง query parameters ที่ประกอบไปด้วยข้อมูลทั้งหมด
+    const query = {
+        products: JSON.stringify(cartData),
+        total: total.toFixed(2),
     };
 
+    // ส่งข้อมูลไปยังหน้า shipping
+    router.push({
+        pathname: '/shipping',
+        query: query,
+    });
+
+
+    // Rendering the Shipping page
     return (
         <>
             <Head>
@@ -177,25 +165,25 @@ const ShippingPage = () => {
             <div className={`${styles.container} mx-auto mt-10 px-4 md:px-0`}>
                 <div className={styles.flexContainer}>
                     <h2 className={styles.contact}>Contact</h2>
-                    <form className={styles.contactBox} onSubmit={handleSubmit}>
+                    <form className={styles.contactBox}>
                         <input
                             name="contact"
                             value={sender.contact}
                             onChange={handleSenderChange}
-                            placeholder=" example@mail.com"
+                            placeholder="example@mail.com"
                             className={styles.textName}
                             required
                         />
                     </form>
 
                     <h2 className={styles.shippingAddress}>Shipping Address</h2>
-                    <form className={styles.nameSurnameBox} onSubmit={handleSubmit}>
+                    <form className={styles.nameSurnameBox}>
                         <div>
                             <input
                                 name="name"
                                 value={sender.name}
                                 onChange={handleSenderChange}
-                                placeholder=" Name"
+                                placeholder="Name"
                                 className={styles.textName}
                                 required
                             />
@@ -203,7 +191,7 @@ const ShippingPage = () => {
                                 name="surname"
                                 value={sender.surname}
                                 onChange={handleSenderChange}
-                                placeholder=" Surname"
+                                placeholder="Surname"
                                 className={styles.textName}
                                 required
                             />
@@ -215,7 +203,7 @@ const ShippingPage = () => {
                             name="address"
                             value={sender.address}
                             onChange={handleSenderChange}
-                            placeholder=" Address"
+                            placeholder="Address"
                             className={styles.textName}
                             required
                         />
@@ -226,7 +214,7 @@ const ShippingPage = () => {
                             name="note"
                             value={sender.note}
                             onChange={handleSenderChange}
-                            placeholder=" Note (optional)"
+                            placeholder="Note (optional)"
                             className={styles.textName}
                         />
                     </form>
@@ -237,7 +225,7 @@ const ShippingPage = () => {
                                 name="city"
                                 value={sender.city}
                                 onChange={handleSenderChange}
-                                placeholder=" City"
+                                placeholder="City"
                                 className={styles.textName}
                                 required
                             />
@@ -245,7 +233,7 @@ const ShippingPage = () => {
                                 name="postalCode"
                                 value={sender.postalCode}
                                 onChange={handleSenderChange}
-                                placeholder=" Postal Code"
+                                placeholder="Postal Code"
                                 className={styles.textName}
                                 required
                             />
@@ -253,7 +241,7 @@ const ShippingPage = () => {
                                 name="province"
                                 value={sender.province}
                                 onChange={handleSenderChange}
-                                placeholder=" Province"
+                                placeholder="Province"
                                 className={styles.textName}
                                 required
                             />
@@ -265,14 +253,14 @@ const ShippingPage = () => {
                             name="country"
                             value={sender.country}
                             onChange={handleSenderChange}
-                            placeholder=" Country/Region"
+                            placeholder="Country/Region"
                             className={styles.textName}
                             required
                         />
                     </form>
 
                     <h2 className={styles.shippingMethod}>Shipping Method</h2>
-                    <ShippingMethod handleShippingChange={handleShippingChange} />
+                    <ShippingMethod handleShippingChange={handleShippingChange} selectedMethod={sender.selectedMethod} />
 
                     <div className={styles.backAndPayButtons}>
                         <a href="/cart" className={styles.backButton}>
@@ -282,7 +270,6 @@ const ShippingPage = () => {
                             Go to payment
                         </button>
                     </div>
-                    
                 </div>
             </div>
             <Footer />
