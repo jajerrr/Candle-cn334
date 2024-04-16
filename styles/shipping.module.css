@@ -403,7 +403,7 @@
 .container {
     display: flex;
     justify-content: space-between;
-    height: 100vh; 
+    height: 100vh;
 }
 
 .left {
@@ -425,3 +425,4 @@
 .separator {
     margin: 30px 0;
 }
+

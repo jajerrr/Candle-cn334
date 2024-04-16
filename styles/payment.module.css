@@ -86,8 +86,7 @@
     padding: 20px; /* ระยะห่างภายใน */
     border-radius: 8px; /* ขอบโค้งมน */
     margin: 20px;
-    width: 100%; 
-    max-width: 620px; 
+    width: 900px; 
     height: auto;
     border: 1px solid rgba(86, 178, 128, 0.5); 
 }
@@ -107,14 +106,14 @@
     align-items: center; /* จัดวางให้อยู่ตรงกลางแนวตั้ง */
     margin-top: 20px; /* เพิ่มระยะห่างด้านบนของ container เพื่อให้มีช่องว่าง */
     margin: 10px;
+    width: 100%;
 }
 
 .textCoupon {
     flex-grow: 1; /* อนุญาตให้ input เต็มความกว้างที่เหลืออยู่ */
     padding: 5px; /* เพิ่มช่องว่างภายใน input */
-    margin-right: 10px; /* เพิ่มระยะห่างระหว่าง input กับปุ่ม */
-    margin-left: 15px;
-    width: 420px; 
+    
+    width: 700px; 
     height: 40px;
     border: 1px solid gray;
     font-family: 'Poppins', sans-serif;
@@ -241,7 +240,7 @@
     display: flex;
     justify-content: center; /* จัดตำแหน่งกลางในแนวนอน */
     align-items: center; /* จัดตำแหน่งกลางในแนวตั้ง */
-    gap: 350px; /* ระยะห่างระหว่างปุ่ม */
+    gap: 600px; /* ระยะห่างระหว่างปุ่ม */
 }
 
 
@@ -352,14 +351,17 @@
 .paymentMethodBox {
     display: flex;
     align-items: center;
-    padding: 10px ;
+    padding: 10px 50px ;
     border: 1px solid gray;
     border-radius: 5px;
-    margin: 10px 0;
-    transition: border 0.1s;
-    width: 650px;
+    margin: 10px 0px;
     margin-left: 20px;
+    transition: border 0.1s;
+    width: 85%;
+    
 }
+
+
 
 .cardNumBox input {
     margin-top: 20px;
@@ -367,16 +369,16 @@
 
 .cardNumBox input, .holderNameBox input{
     width: 100%; 
-    width: 580px; 
+    width: 850px; 
     height: 45px;
     border: 1px solid #B7B7B7;
     margin-bottom: 5px;
-  
+   
     
 }
 
 .cvvBox input {
-    width: 263px;
+    width: 398px;
     height: 45px;
     border: 1px solid #B7B7B7;
     margin-top: 5px;
@@ -397,7 +399,7 @@
     color: #56B280;
     width: 45px;
     height: 45px;
-    margin-left: 20px;
+    margin-left: 0px;
     
 }
 
@@ -411,9 +413,9 @@
     margin: 0;
     padding: 0;
     width: 100%; /* ความกว้างเต็มหน้าจอ */
-    background-color: #EEFCF4;
+    
     color: #56B280;
-    border-bottom: 1px solid #616161; /* กำหนดเส้นขอบด้านล่าง */
+    border-bottom: 1.25px solid #56B280; /* กำหนดเส้นขอบด้านล่าง */
     /* border: none; // ใช้ถ้าจำเป็นต้องลบขอบทั้งหมด */
 }
 

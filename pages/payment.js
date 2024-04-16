@@ -193,6 +193,7 @@ const PaymentPage = () => {
 
                         <hr className={styles.separator} />
 
+
                         {/* Shipping Information */}
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
     
