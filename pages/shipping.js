@@ -51,10 +51,13 @@ const ShippingMethod = ({ handleShippingChange, selectedMethod }) => (
     </div>
 );
 
+
+// ฟังก์ชันหลักของ ShippingPage
 const ShippingPage = () => {
     const router = useRouter();
     const { query } = router;
 
+    // สร้างสถานะสำหรับ sender, shippingCost, subtotal, total, cartItems และ quantities
     const [sender, setSender] = useState({
         name: '',
         surname: '',
@@ -68,7 +71,6 @@ const ShippingPage = () => {
         selectedMethod: 'Standard',
     });
 
-    // ตั้งค่าเริ่มต้นของ shippingCost และ subtotal
     const [shippingCost, setShippingCost] = useState(parseFloat(query.shippingCost) || 0);
     const [subtotal, setSubtotal] = useState(parseFloat(query.total) || 0);
     const [total, setTotal] = useState(subtotal + shippingCost);
@@ -76,23 +78,26 @@ const ShippingPage = () => {
     const [cartItems, setCartItems] = useState([]);
     const [quantities, setQuantities] = useState([]);
 
+    // ดึงข้อมูล `cartItems` จาก `localStorage` เมื่อคอมโพเนนต์ถูกโหลด
+    useEffect(() => {
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        setCartItems(storedCartItems);
 
-    // ดึงข้อมูลจาก query และแปลงข้อมูล JSON เมื่อ ready
+        // ดึงข้อมูล `subtotal` และ `shippingCost` จาก `localStorage`
+        const storedSubtotal = parseFloat(localStorage.getItem('subtotal')) || 0;
+        const storedShippingCost = parseFloat(localStorage.getItem('shippingCost')) || 0;
+
+        setSubtotal(storedSubtotal);
+        setShippingCost(storedShippingCost);
+    }, []);
+
+    // ดึงข้อมูลจาก query และตั้งค่า sender, cartItems, และ quantities
     useEffect(() => {
         if (router.isReady) {
-            // ตรวจสอบข้อมูลสินค้า
+            // ดึงข้อมูลสินค้าและตั้งค่า `cartItems` และ `quantities`
             const productsFromQuery = query.products ? JSON.parse(query.products) : [];
-
-            // หากไม่พบสินค้าใน query ให้แสดงข้อความแจ้ง
-            if (!productsFromQuery || productsFromQuery.length === 0) {
-                console.error('No products found in query.');
-            }
-
-            // ตั้งค่า cartItems และ quantities
             setCartItems(productsFromQuery);
             setQuantities(productsFromQuery.map(item => item.productQuantity || 1));
-
-
 
             // ตั้งค่าผู้ส่งข้อมูลจาก query
             setSender({
@@ -108,20 +113,30 @@ const ShippingPage = () => {
                 selectedMethod: query.selectedMethod || 'Standard',
             });
 
-             // ตั้งค่าค่าใช้จ่ายการจัดส่ง
-             setShippingCost(parseFloat(query.shippingCost) || 0);
-
+            // ตั้งค่าค่าใช้จ่ายการจัดส่ง
+            setShippingCost(parseFloat(query.shippingCost) || 0);
         }
     }, [router.isReady, query]);
 
-    useEffect(() => {
-        setTotal(subtotal + shippingCost);
-    }, [shippingCost, subtotal]);
+        // ใช้ `useEffect` เพื่อบันทึก `subtotal` และ `shippingCost` ลงใน `localStorage`
+        useEffect(() => {
+            // คำนวณ subtotal
+            const subtotal = cartItems.reduce((sum, item, index) => {
+                return sum + (parseFloat(item.productPrice) * quantities[index]);
+            }, 0);
+    
+            // บันทึก `subtotal` และ `shippingCost` ลงใน `localStorage`
+            localStorage.setItem('subtotal', subtotal.toFixed(2));
+            localStorage.setItem('shippingCost', shippingCost.toFixed(2));
+    
+            // อัปเดตค่า `total`
+            setTotal(subtotal);
+        }, [cartItems, quantities, shippingCost]);
 
+    // จัดการการเปลี่ยนแปลงของตัวเลือกการจัดส่ง
     const handleShippingChange = (event) => {
         const shippingOption = event.target.value;
         let newShippingCost = shippingOption === 'Express' ? 40 : 0;
-
         setShippingCost(newShippingCost);
         setSender((prevSender) => ({
             ...prevSender,
@@ -129,6 +144,7 @@ const ShippingPage = () => {
         }));
     };
 
+    // จัดการการเปลี่ยนแปลงของ sender
     const handleSenderChange = (event) => {
         const { name, value } = event.target;
         setSender((prevSender) => ({
@@ -137,28 +153,14 @@ const ShippingPage = () => {
         }));
     };
 
+    // ฟังก์ชันที่ใช้ในการนำทางไปที่หน้า `payment` และส่งข้อมูล `query` ตามที่ต้องการ
     const handleGoToPayment = () => {
-                // สร้าง cartData ที่จะส่งไปยัง PaymentPage
-                const cartData = cartItems.map((item, index) => {
-                    const productImg = item.image || '';
-                    const productName = item.name || '';
-                    const productQuantity = quantities[index];
-                    
-                    // แปลง productPrice เป็นตัวเลข
-                    let productPrice = parseFloat(item.price);
-                    // ตรวจสอบว่า productPrice เป็น NaN หรือไม่
-                    if (isNaN(productPrice)) {
-                        productPrice = 0.00;
-                    }
-            
-                    return {
-                        productImg,
-                        productName,
-                        productQuantity,
-                        productPrice: productPrice.toFixed(2),
-                    };
-                });
-        
+        const cartData = cartItems.map((item, index) => ({
+            productImg: item.productImg || '',
+            productName: item.productName || '',
+            productQuantity: quantities[index],
+            productPrice: parseFloat(item.productPrice).toFixed(2),
+        }));
 
         const queryParams = new URLSearchParams({
             name: sender.name,
@@ -174,16 +176,17 @@ const ShippingPage = () => {
             shippingCost: shippingCost.toFixed(2),
         });
 
+        // เพิ่มข้อมูล `cartData` และ `total` ใน `queryParams`
         queryParams.append('products', JSON.stringify(cartData));
-        queryParams.append('total', subtotal.toFixed(2));
+        queryParams.append('total', total.toFixed(2));
 
-        // นำทางไปที่ /shipping ด้วยข้อมูล query
+        // นำทางไปที่ `payment` พร้อมกับข้อมูล `query`
         router.push({
             pathname: '/payment',
             query: queryParams.toString(),
         });
     };
-    
+
 
     return (
         <>
