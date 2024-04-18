@@ -144,7 +144,7 @@ const PaymentPage = () => {
                             
                             <span className={styles.infoLabel}>Contact: <span className={styles.email}>{sender.contact}</span></span>
 
-                            <a href={`/shipping?name=${sender.name}&surname=${sender.surname}&address=${sender.address}&city=${sender.city}&province=${sender.province}&country=${sender.country}&postalCode=${sender.postalCode}&products=${encodeURIComponent(JSON.stringify(cartItems))}`}>
+                            <a href={`/shipping?name=${sender.name}&surname=${sender.surname}&address=${sender.address}&city=${sender.city}&province=${sender.province}&country=${sender.country}&postalCode=${sender.postalCode}&products=${encodeURIComponent(JSON.stringify(cartItems))}&method=${sender.selectedMethod}`}>
                                 <p className={styles.edit}>Edit</p>
                             </a>
 
