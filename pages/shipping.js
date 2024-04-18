@@ -137,6 +137,9 @@ const ShippingPage = () => {
         }));
     };
 
+
+    
+
     const handleGoToPayment = () => {
                 // สร้าง cartData ที่จะส่งไปยัง PaymentPage
                 const cartData = cartItems.map((item, index) => {
@@ -157,6 +160,12 @@ const ShippingPage = () => {
                         productQuantity,
                         productPrice: productPrice.toFixed(2),
                     };
+
+                    const handleShippingClick = () => {
+                        const shippingUrl = `/payment?shipping=${encodeURIComponent(product.shipping)}`;
+                        router.push(shippingUrl);
+                    };
+                    
                 });
         
 

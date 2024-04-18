@@ -117,33 +117,51 @@ const PaymentPage = () => {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
 
     // ใช้ useEffect เพื่อตั้งค่าจาก query เมื่อ router พร้อม
-    useEffect(() => {
-        if (router.isReady) {
-            console.log('Query:', query);
-            const productsFromQuery = query.products ? JSON.parse(query.products) : [];
-            console.log('Products from query:', productsFromQuery);
+    // ใช้ useEffect เพื่อตั้งค่าจาก query เมื่อ router พร้อม
+useEffect(() => {
+    if (router.isReady) {
+        console.log('Query:', query);
+        
+        // ตรวจสอบและแปลงค่า products จาก query string
+        const productsFromQuery = query.products ? JSON.parse(query.products) : [];
+        console.log('Products from query:', productsFromQuery);
+        
+        // ตั้งค่า cartItems และ quantities หาก productsFromQuery มีข้อมูล
+        if (productsFromQuery.length > 0) {
             setCartItems(productsFromQuery);
-            setQuantities(productsFromQuery.map(item => item.productQuantity || 1)); // ดึง quantity จาก productQuantity หรือใช้ค่าเริ่มต้น 1
+            setQuantities(productsFromQuery.map(item => item.productQuantity || 1));
             
-            // ตั้งค่า sender
-            setSender({
-                contact: query.contact || '',
-                name: query.name || '',
-                surname: query.surname || '',
-                address: query.address || '',
-                city: query.city || '',
-                province: query.province || '',
-                country: query.country || '',
-                postalCode: query.postalCode || '',
-                selectedMethod: query.selectedMethod || '',
+            // แก้ไข cartItems เพื่อจัดการกับค่าเริ่มต้น
+            setCartItems(prevCartItems => {
+                return prevCartItems.map(item => ({
+                    ...item,
+                    productImg: item.productImg || '', // จัดการกรณีที่ productImg เป็นค่า undefined หรือ null
+                    productName: item.productName || '', // จัดการกรณีที่ productName เป็นค่า undefined หรือ null
+                    productPrice: parseFloat(item.productPrice) || 0, // จัดการกรณีที่ productPrice เป็น NaN
+                }));
             });
-            
-            // ตั้งค่า total และ shippingCost
-            setTotal(parseFloat(query.total) || 0);
-            setShippingCost(parseFloat(query.shippingCost) || 0);
-            setSelectedPaymentMethod(query.paymentMethod || '');
         }
-    }, [router.isReady, query]);
+        
+        // ตั้งค่า sender จาก query
+        setSender({
+            contact: query.contact || '',
+            name: query.name || '',
+            surname: query.surname || '',
+            address: query.address || '',
+            city: query.city || '',
+            province: query.province || '',
+            country: query.country || '',
+            postalCode: query.postalCode || '',
+            selectedMethod: query.selectedMethod || '',
+        });
+        
+        // ตั้งค่า total, shippingCost และ selectedPaymentMethod จาก query
+        setTotal(parseFloat(query.total) || 0);
+        setShippingCost(parseFloat(query.shippingCost) || 0);
+        setSelectedPaymentMethod(query.paymentMethod || '');
+    }
+}, [router.isReady, query]);
+
 
 
     // การจัดรูปแบบข้อมูล cartData สำหรับการแสดงใน PaymentPage
@@ -151,7 +169,7 @@ const PaymentPage = () => {
         // ตรวจสอบและแปลง item.price เป็นตัวเลข
         let productPrice = parseFloat(item.price);
         if (isNaN(productPrice)) {
-            productPrice = 0.00; // ตั้งค่าเริ่มต้นเป็น 0.00 หาก item.price เป็น NaN
+            productPrice = 59.00; // ตั้งค่าเริ่มต้นเป็น 0.00 หาก item.price เป็น NaN
         }
         
         return {
@@ -322,6 +340,7 @@ const PaymentPage = () => {
                     {/* Products Information */}
                     <h2 className={styles.product}>Products</h2>
                     {cartItems.map((product, index) => (
+                        
                         <div key={index}>
                             <div className={styles.productBox}>
                                 <span className={styles.imgProduct}>
