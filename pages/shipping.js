@@ -376,7 +376,7 @@ const ShippingPage = () => {
                         <div className={styles.priceDetail}>
                             <p className={styles.priceRow}>
                                 <span className={styles.label}>Subtotal</span>
-                                <span className={styles.value}>THB {(total - shippingCost).toFixed(2)}</span>
+                                <span className={styles.value}>THB {total.toFixed(2)}</span>
                             </p>
 
                             <p className={styles.priceRow}>
@@ -388,7 +388,7 @@ const ShippingPage = () => {
 
                             <h2 className={styles.totalRow}>
                                 <span className={styles.labelTotal}>Total</span>
-                                <span className={styles.valueTotal}>THB {total.toFixed(2)}</span>
+                                <span className={styles.valueTotal}>THB {(total + shippingCost).toFixed(2)}</span>
                             </h2>
                         </div> 
                         
