@@ -25,6 +25,7 @@ db = client["ecommerce"]
 
 # เรียกใช้งาน Microservices APIs
 app.include_router(products_router, prefix="/api/products", tags=["Products"])
+
 app.include_router(users_router, prefix="/api/users", tags=["Users"])
 app.include_router(orders_router, prefix="/api/orders", tags=["Orders"])
 app.include_router(dashboard_router, prefix="/api/dashboard", tags=["Dashboard"])

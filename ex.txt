@@ -1,0 +1,204 @@
+from fastapi import FastAPI, HTTPException, File , UploadFile
+from bson import ObjectId, json_util
+import json
+from pydantic import BaseModel
+from pymongo.mongo_client import MongoClient
+from typing import List
+import uuid
+from fastapi.responses import FileResponse
+import os
+import shutil
+
+app = FastAPI()
+
+uri = "mongodb://mongoadmin:mongoadmin@mongo_db:27017/?authMechanism=DEFAULT"
+IMAGEDIR = "D:/Project A_Art/fast_api_docker/fast_api/shops"
+
+if not os.path.exists(IMAGEDIR):
+    os.makedirs(IMAGEDIR)
+    
+client = MongoClient(uri, connect=False)
+db = client['CoffeeApp']
+
+class Images(BaseModel):
+    filename: str
+    url: str 
+
+class coffee_bean_record(BaseModel):
+    Cof_shop_id:str
+    bean_name:str
+    price:str
+    weigth:str
+    origin:str
+    Varieties:str
+    Altitude:str
+    Process:str
+    Tasting_Notes:str
+    Recommend:str
+    Images_url: str
+
+class coffee_shop_record(BaseModel):
+    Cof_shop_name:str
+    Cof_shop_id:str     
+    Opening:str
+    Location:str
+    rating_total:str
+    Images_url: str
+
+class menu_record(BaseModel):
+    Cof_shop_id:str
+    Menu_name:str
+    Description:str
+    Coffee_price:str
+    Images_url: str
+    
+class popular_coffee_shop_record(BaseModel):
+    Cof_shop_id:str
+    Cof_shop_name:str
+    rating_id:str
+    Images_url:str
+      
+class review_record(BaseModel):    
+    Cof_shop_name:str
+    Cof_shop_id:str     
+    User_id:str
+    rating:str
+    rating_id:str
+    comment:str
+    # last_comment:datetime
+ 
+class users_record(BaseModel):
+    username:str
+    password:str
+    user_id:str
+    email:str
+    cof_shop_id:str
+
+
+# @app.post("/upload-image/")
+# async def upload_image(file: UploadFile = UploadFile(...)):
+#     contents = await file.read()
+#     filepath = os.path.join(IMAGEDIR, file.filename)
+#     with open(filepath, "wb") as f:
+#         f.write(contents)
+#     image_data = {"filename": file.filename, "url": filepath}
+#     db.images.insert_one(image_data)
+#     return {"filename": file.filename, "url": filepath}
+
+# @app.get("/images/{image_id}")
+# async def get_image(image_id: str):
+#     image_path = os.path.join(IMAGEDIR, image_id)
+#     if not os.path.exists(image_path):
+#         raise HTTPException(status_code=404, detail="Image not found")
+#     return FileResponse(image_path)
+
+@app.get("/users/")
+async def find_user_id():
+    users = db.users.find()
+    return {"Users": json.loads(json_util.dumps(users))}
+
+@app.get("/username/")
+async def find_username(username):
+    users = db.users.find_one({'username':username})
+    return {"users": json.loads(json_util.dumps(users))}
+
+@app.get("/coffee_shop/")
+async def find_coffee_shop():
+    coffee_shops = db.coffee_shops.find()
+    return {"coffee_shop": json.loads(json_util.dumps(coffee_shops))}
+
+@app.get("/Pop_shop/")
+async def find_pop_coffee_shop():
+    pop_shops = db.popular_coffee_shops.find()
+    return {"Pop_shop": json.loads(json_util.dumps(pop_shops))}
+
+@app.get("/coffee_bean/")
+async def find_coffee_bean():
+    coffee_beans = db.coffee_beans.find()
+    return {"coffee_bean": json.loads(json_util.dumps(coffee_beans))}
+
+@app.get("/review/")
+async def find_review():
+    reviews = db.reviews.find()
+    return {"review": json.loads(json_util.dumps(reviews))}
+
+@app.get("/Images/{filename}")
+async def get_image(filename: str):
+    image_path = os.path.join(IMAGEDIR, filename)
+    
+    
+    if not os.path.exists(image_path):
+        raise HTTPException(status_code=404, detail="Image not found")
+    return FileResponse(image_path)
+
+@app.get("/images/")
+async def get_all_images():
+    # ระบุไดเรกทอรีที่เก็บรูปภาพ
+    directory = os.listdir(IMAGEDIR)
+    
+    # สร้างรายการ URL หรือเส้นทางสำหรับรูปภาพทั้งหมด
+    images_paths = []
+    for filename in directory:
+        file_path = os.path.join(IMAGEDIR, filename)
+        if os.path.isfile(file_path):  # ตรวจสอบเพื่อให้แน่ใจว่าเป็นไฟล์
+            images_paths.append(file_path)
+    
+    if not images_paths:
+        raise HTTPException(status_code=404, detail="No images found")
+    
+    return images_paths
+
+
+@app.post("/upload-image/")
+async def upload_image(file: UploadFile = File(...)):
+    # สร้างชื่อไฟล์ที่ไม่ซ้ำเพื่อหลีกเลี่ยงความขัดแย้ง
+    file_extension = file.filename.split('.')[-1]
+    unique_filename = f"{uuid.uuid4()}.{file_extension}"
+    file_path = os.path.join(IMAGEDIR, unique_filename)
+
+    # บันทึกไฟล์
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    # จัดเก็บข้อมูลรูปภาพใน MongoDB
+    Images = {
+        "filename": unique_filename,
+        "url": f"{unique_filename}"
+    }
+    db.Images.insert_one(Images)
+
+    return {"filename": unique_filename, "url": f"/Images/{unique_filename}"}
+
+@app.get("/coffee_shop_details/")
+async def get_coffee_shop_details():
+    # ดึงข้อมูลทั้งหมดจากคอลเลกชัน coffee_shops
+    coffee_shops_cursor = db.coffee_shops.find()
+    coffee_shops = list(coffee_shops_cursor)
+    
+    combined_data = []
+    for shop in coffee_shops:
+        shop_id = shop['Cof_shop_id']
+        
+        # ดึงข้อมูลเมนูจากคอลเลกชัน menus
+        menus_cursor = db.menus.find({'Cof_shop_id': shop_id})
+        menus_list = list(menus_cursor)
+        
+        # ดึงข้อมูลเมล็ดกาแฟจากคอลเลกชัน coffee_beans
+        beans_cursor = db.coffee_beans.find({'Cof_shop_id': shop_id})
+        beans_list = list(beans_cursor)
+        
+        # ดึงข้อมูลรูปภาพจากคอลเลกชัน images
+        images_cursor = db.images.find({'Cof_shop_id': shop_id})
+        images_list = list(images_cursor)
+        
+        # รวมข้อมูลเข้าด้วยกัน
+        combined_shop_data = {
+            "shop_info": shop,
+            "menus": menus_list,
+            "coffee_beans": beans_list,
+            "images": images_list
+        }
+        combined_data.append(combined_shop_data)
+    
+    # ส่งข้อมูลที่รวมแล้วกลับไปยัง frontend
+    return json.loads(json_util.dumps(combined_data))

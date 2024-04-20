@@ -1,21 +1,37 @@
+from typing import Optional
+
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 from pymongo import MongoClient
 
 router = APIRouter()
 client = MongoClient("mongodb://localhost:27017/")
 db = client["ecommerce"]
+
+# สร้าง collection
 products_collection = db["products"]
 
+class Product(BaseModel):
+    candle_id: str
+    candle_name: str
+    candle_price: float
+    detail: str
+    image_url: str
+
+
+
 @router.post("/products/")
-def create_product(product_data: dict):
-    product_id = products_collection.insert_one(product_data).inserted_id
+def create_product(product_data: Product):
+    product_id = products_collection.insert_one(product_data.dict()).inserted_id
     return {"message": "Product created successfully", "product_id": str(product_id)}
+
 
 @router.get("/products/{product_id}")
 def get_product(product_id: str):
     product = products_collection.find_one({"_id": ObjectId(product_id)})
     if product:
+        product["_id"] = str(product["_id"])  # Convert ObjectId to string
         return product
     else:
         raise HTTPException(status_code=404, detail="Product not found")
