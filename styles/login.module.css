@@ -1,0 +1,43 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    background-image: url('/login/bglogin.jpg');
+    background-size: cover; /* ขยายรูปภาพให้เต็มพื้นที่ */
+    background-position: center; /* จัดตำแหน่งรูปภาพตรงกลาง */
+    background-repeat: no-repeat; 
+}
+
+
+
+.Box {
+
+    padding: 30px; /* ระยะห่างภายใน */
+    border-radius: 8px; /* ขอบโค้งมน */
+    width: 700px; 
+    height: auto;
+    background-color: white;
+    display: flex;
+    justify-content: center; /* จัดให้ content อยู่กลางแนวนอน */
+    align-items: center; /* จัดให้ content อยู่กลางแนวตั้ง */
+   
+}
+
+
+.head {
+
+    color: #616161;
+    text-align: left;
+    font-weight: bolder;
+    
+}
+
+.sub {
+    color: #818181;
+    text-align: left;
+}
+
