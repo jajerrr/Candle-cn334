@@ -18,12 +18,13 @@
 
     padding: 30px; /* ระยะห่างภายใน */
     border-radius: 8px; /* ขอบโค้งมน */
-    width: 700px; 
+    width: 800px; 
     height: auto;
     background-color: white;
     display: flex;
     justify-content: center; /* จัดให้ content อยู่กลางแนวนอน */
     align-items: center; /* จัดให้ content อยู่กลางแนวตั้ง */
+    height: 100%;
    
 }
 
@@ -33,11 +34,62 @@
     color: #616161;
     text-align: left;
     font-weight: bolder;
+    margin-bottom: -10px;
+    margin-left: -520px;
+    font-size: 45px;
+    margin-top: 50px;
     
 }
 
 .sub {
     color: #818181;
     text-align: left;
+    margin-left: -40px;
+    font-size: 22px;
 }
 
+.userBox input {
+    width: 650px; 
+    height: 65px;
+    border: 1px solid #B7B7B7;
+    margin: 10px;
+    margin-left: 50;
+    margin-top: 30px;
+
+}
+
+.passwordBox input {
+    width: 650px; 
+    height: 65px;
+    border: 1px solid #B7B7B7;
+    margin: 10px;
+    margin-left: 50;
+    margin-top: 20px;
+}
+
+.userBox input:focus, .passwordBox input:focus {
+    border-color: #56B280; /* เปลี่ยนสีขอบเมื่อได้รับการโฟกัส */
+    outline: 2px solid #56B280; /* เพิ่มเส้นขอบด้านนอกสีเขียว */
+}
+
+.textName {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px; 
+    
+}
+
+.payButton {
+    font-family: 'Poppins', sans-serif;
+    background-color: #56B280; 
+    color: white; 
+    border-radius: 5px; 
+    font-size: 28px; 
+    padding: 15px 100px; 
+    border: none; 
+    cursor: pointer;
+    text-align: right;
+    margin-left: 380px;
+    margin-top: 50px;
+    margin-bottom: 60px;
+  }
+  
