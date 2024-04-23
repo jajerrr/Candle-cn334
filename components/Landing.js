@@ -20,7 +20,7 @@ export default function Landing() {
         
         <div className="container">
             <div className="title">
-            <h1>Tha Nature Candle</h1>
+            <h1>The Nature Candle</h1>
             <p>All can make with natural soy wax</p>
 
             <Link href="/products" passHref>
