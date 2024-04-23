@@ -1,0 +1,95 @@
+.container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .left {
+    margin-left: 300px;
+  }
+  
+  .right {
+    flex: 1;
+    margin-left: 100px;
+  }
+
+  .image {
+    padding-left: 70px;
+  }
+
+.head {
+    font-size: 40px;
+}
+
+
+  .sub {
+    font-size: 24px;
+    font-weight: 100;
+  }
+  .button {
+    background-color: #56B280; 
+    color: white; 
+    border-radius: 5px; 
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px; 
+    padding: 8px 50px; 
+    border: none; 
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}  
+
+.flexcontainer {
+    flex-direction: column;
+    display: flex;
+    align-items: center; /* จัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
+    margin-top: 100px;
+    padding: 50px 0;
+    width: 100%;
+    height: 50%;
+
+    background-image: url('/login/bglogin.jpg');
+    background-size: cover; /* ขยายรูปภาพให้เต็มพื้นที่ */
+    background-position: center; /* จัดตำแหน่งรูปภาพตรงกลาง */
+    background-repeat: no-repeat; 
+   
+  }
+
+.values {
+    display: flex; /* ให้เป็น flex container */
+    justify-content: center; /* จัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.box {
+    width: 450px;
+    height: 400px;
+    background-color: #FFFFFF;
+    border-radius: 3%;
+    margin-left: 60px;
+    margin-right: 60px;
+    text-align: center;
+  }
+
+  .containerBox {
+    display: flex; /* ให้เป็น flex container */
+    justify-content: center; /* จัดให้ elements อยู่ตรงกลางแนวนอน */
+    flex-direction: row; /* จัดเรียง elements ในแนวนอน */
+}
+
+.num {
+    margin-top: 60px;
+    margin-bottom: 30px;
+    color: #616161;
+    font-size: 42px;
+}
+
+.title {
+    font-weight: bolder;
+    font-size: 22px;
+}
+
+.content {
+    font-size: 18px;
+}
