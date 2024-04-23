@@ -1,0 +1,63 @@
+.flexcontainer {
+    flex-direction: column;
+    display: flex;
+    align-items: center; /* จัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
+    padding: 50px 0;
+    width: 100%;
+    height: 100vh; /* ตั้งค่าความสูงเป็น 100% ของ viewport height */
+
+    background-image: url('/login/bglogin.jpg');
+    background-size: cover; /* ขยายรูปภาพให้เต็มพื้นที่ */
+    background-position: center; /* จัดตำแหน่งรูปภาพตรงกลาง */
+    background-repeat: no-repeat; 
+   
+  }
+
+  .Contact {
+    display: flex; /* ให้เป็น flex container */
+    justify-content: center; /* จัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
+    font-size: 40px;
+    text-align: center;
+    margin-top: 70px;
+}
+
+.sub {
+    font-size: 20px;
+    text-indent: -20px;
+}
+
+  .box {
+    width: 350px;
+    height: 375px;
+    background-color: #FFFFFF;
+    border-radius: 3%;
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-top: 100px;
+    text-align: center;
+  }
+
+  .containerBox {
+    display: flex; /* ให้เป็น flex container */
+    justify-content: center; /* จัดให้ elements อยู่ตรงกลางแนวนอน */
+    flex-direction: row; /* จัดเรียง elements ในแนวนอน */
+    margin-top: 50px;
+}
+
+
+.image {
+    width: 40px;
+    height: 40px;
+    margin-top: 70px;
+    margin-bottom: 20px;
+
+}
+.title {
+    font-weight: bolder;
+    font-size: 22px;
+}
+
+.content {
+    font-size: 18px;
+}
+
