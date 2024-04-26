@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Navbar from '@/components/Navbar'; 
-
+import Footer from '@/components/Footer';
 import styles from '../styles/shipping.module.css';
 
 
@@ -381,7 +381,7 @@ const ShippingPage = () => {
             </div>
 
       
-
+        <Footer/>
            
         </>
     );

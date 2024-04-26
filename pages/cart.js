@@ -73,6 +73,10 @@ const CartPage = () => {
             pathname: '/shipping',
             query: query,
         });
+
+        // เคลียร์ข้อมูลใน localStorage
+        localStorage.removeItem('cartItems');
+
     };
 
     useEffect(() => {

@@ -2,6 +2,7 @@
 
 import Head from "next/head";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styles from '@/styles/[id].module.css';
@@ -138,6 +139,7 @@ const handleAddToCart = (selectedProduct) => {
             </div>
 
             )}
+             <Footer />
         </div>
     );
 };
