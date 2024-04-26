@@ -85,19 +85,27 @@ const Detail = () => {
         }
     }, [id]); // เรียกใช้ฟังก์ชันเมื่อ id เปลี่ยนแปลง
 
-        // ฟังก์ชันสำหรับจัดการเหตุการณ์การคลิก Add to Cart
-        const handleAddToCart = (item) => {
-            // สร้าง array สำหรับข้อมูลสินค้า
-            const cartItems = [item];
-            
-            // ส่งข้อมูลสินค้าไปยังหน้า cart.js ผ่าน query parameters
-            router.push({
-                pathname: '/cart',
-                query: {
-                    items: JSON.stringify(cartItems), // ส่งสินค้าเป็น JSON string
-                },
-            });
-        };
+// ฟังก์ชันสำหรับจัดการเหตุการณ์การคลิก Add to Cart
+const handleAddToCart = (selectedProduct) => {
+    // เพิ่มคุณสมบัติ addedFromButton เพื่อระบุว่าสินค้าถูกเพิ่มจากการกดปุ่ม "Add to Cart"
+    selectedProduct.addedFromButton = true;
+    // ดึงข้อมูลสินค้าที่มีอยู่ใน Local Storage (หากมี)
+    const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    // เพิ่มข้อมูลสินค้าที่เลือกเข้าไปในตัวแปร existingCartItems
+    const updatedCartItems = [...existingCartItems, selectedProduct]; // แก้จาก item เป็น selectedProduct
+    // บันทึกข้อมูลสินค้าที่อัพเดทลงใน Local Storage
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+
+    // ส่งข้อมูลสินค้าไปยังหน้า cart.js ผ่าน query parameters
+    router.push({
+        pathname: '/cart',
+        query: {
+            items: JSON.stringify(updatedCartItems), // ส่งสินค้าเป็น JSON string
+        },
+    });
+};
+
+    
 
     return (
         <div>
