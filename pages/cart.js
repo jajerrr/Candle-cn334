@@ -8,6 +8,13 @@ import styles from '../styles/cart.module.css';
 
 
 const CartPage = () => {
+    const [initialCartItems, setInitialCartItems] = useState([]);
+
+    useEffect(() => {
+        const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        setInitialCartItems(storedItems);
+    }, []);
+
     const router = useRouter();
 
     // กำหนดค่าเริ่มต้นให้กับตัวแปร products เป็นอาร์เรย์ว่าง
@@ -16,12 +23,11 @@ const CartPage = () => {
     const { items } = router.query;
     const initialProductItems = items ? JSON.parse(items) : [];
 
-    const [cartItems, setCartItems] = useState(initialProductItems);
     const [quantities, setQuantities] = useState(initialProductItems.map(() => 1));
     const [subtotal, setSubtotal] = useState(0);
 
     const calculateSubtotal = () => {
-        return cartItems.reduce((total, item, index) => {
+        return initialCartItems.reduce((total, item, index) => {
             return total + item.price * quantities[index];
         }, 0);
     };
@@ -36,9 +42,9 @@ const CartPage = () => {
     };
 
     const removeItem = (index) => {
-        const updatedCartItems = [...cartItems];
+        const updatedCartItems = [...initialCartItems];
         updatedCartItems.splice(index, 1);
-        setCartItems(updatedCartItems);
+        setInitialCartItems(updatedCartItems);
 
         const updatedQuantities = [...quantities];
         updatedQuantities.splice(index, 1);
@@ -47,10 +53,10 @@ const CartPage = () => {
 
     useEffect(() => {
         setSubtotal(calculateSubtotal());
-    }, [cartItems, quantities]);
+    }, [initialCartItems, quantities]);
 
     const handleCheckout = () => {
-        const cartData = cartItems.map((item, index) => ({
+        const cartData = initialCartItems.map((item, index) => ({
             productImg: item.image,
             productName: item.name,
             productQuantity: quantities[index],
@@ -68,6 +74,19 @@ const CartPage = () => {
             query: query,
         });
     };
+
+    useEffect(() => {
+        // ตรวจสอบว่ามีข้อมูลสินค้าใน localStorage หรือไม่
+        const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        
+        // กรองข้อมูลสินค้าเฉพาะที่เพิ่มจากการกดปุ่ม "Add to Cart"
+        const filteredItems = storedItems.filter(item => item.addedFromButton === true);
+        
+        // ตั้งค่าสินค้าใน state เฉพาะสินค้าที่เพิ่มจากการกดปุ่ม "Add to Cart"
+        setInitialCartItems(filteredItems);
+    }, []);
+    
+
     return (
 
 
@@ -108,7 +127,7 @@ const CartPage = () => {
 
             <tbody> 
 
-        {cartItems.map((item, index) => ( 
+        {initialCartItems.map((item, index) => (
         <tr key={index}> 
             <td className={styles.product}> 
                 <div className={styles.productInfo}> 
