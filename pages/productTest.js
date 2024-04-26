@@ -7,46 +7,46 @@ const ProductList = () => {
     // ข้อมูลสินค้า
     const productData = [
         {
-            name: 'Jasmine (Pink)',
-            image: '/cart/jasmine.jpg',
+            name: 'Berry Bliss',
+            image: '/index/BerryBliss.jpg',
             price: 59.00,
         },
         {
-            name: 'Berries (Red)',
-            image: '/cart/berrie.jpg',
+            name: 'Earthy Elegance',
+            image: '/index/EarthyElegance.jpg',
             price: 59.00,
         },
         {
-            name: 'Fresh Grass (Light Green)',
-            image: '/cart/grass.jpg',
+            name: 'Ember Glow',
+            image: '/index/EmberGlow.jpg',
             price: 59.00,
         },
         {
-            name: 'Vanilla (Light Beige)',
-            image: '/cart/vanilla.jpg',
+            name: 'Enchanting Jasmine',
+            image: '/index/EnchantingJasmine .jpg',
             price: 59.00,
         },
         {
-            name: 'Scandinavian Woods (White)',
-            image: '/cart/scandinavian.jpg',
+            name: 'Meadow Breeze',
+            image: '/index/MeadowBreeze.jpg',
             price: 59.00,
         },
         {
-            name: 'Bonfire (Grey)',
-            image: '/cart/bonfire.jpg',
+            name: 'Nordic Forest',
+            image: '/index/NordicForest.jpg',
             price: 59.00,
         },
         {
-            name: 'Lemon (Yellow)',
-            image: '/cart/lemon.jpg',
+            name: 'Vanilla Serenity',
+            image: '/index/VanillaSerenity.jpg',
             price: 59.00,
         },
         {
-            name: 'Vetiver & Geranium (Black-turquoise)',
-            image: '/cart/vetiver.jpg',
+            name: 'Zesty Citrus Deligh',
+            image: '/index/ZestyCitrusDeligh.jpg',
             price: 59.00,
         },
-
+        
     ];
 
     // ฟังก์ชันสำหรับจัดการเหตุการณ์การคลิก Add to Cart
