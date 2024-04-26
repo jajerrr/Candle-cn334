@@ -4,7 +4,7 @@ import Head from "next/head";
 import styles from "../styles/confirm.module.css";
 
 const PageNav = () => (
-    <nav className={styles.navBar}>
+    <div className={styles.navBar}>
         <div className={styles.bar}>
             <a href="/cart" className={styles.linkCart}>
                 <p>Cart</p>
@@ -22,7 +22,7 @@ const PageNav = () => (
                 <p>Payment</p>
             </a>
         </div>
-    </nav>
+    </div>
 );
 
 const ConfirmPage = () => {
