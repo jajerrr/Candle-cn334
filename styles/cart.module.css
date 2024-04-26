@@ -4,6 +4,7 @@
   padding: 0 20px; /* เพิ่ม padding รอบ container */
   margin: 0 auto; /* จัดวาง container ให้อยู่ตรงกลาง */
   box-sizing: border-box;
+  height: 100vh;
 }
 
 /* เฮดเดอร์ */

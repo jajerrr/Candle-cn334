@@ -76,7 +76,8 @@
     margin-right: 100px;
     margin: 20px;
     color: gray;
-    font-size: 20px;
+    font-size: 18px;
+    
 }
 
 
@@ -264,14 +265,15 @@
 .infoLabels{
     text-align: left;
     align-items: left;
-    font-size: 24px;
+    font-size: 22px;
     
     
     
 }
 
 .infoQuantity {   
-    font-size: 24px;
+    font-size: 22px;
+    color: black;
     
 }
 
@@ -279,10 +281,11 @@
 
 
 .imgProduct img {
-    width: 200px; 
-    height: 200px; 
+    width: 150px; 
+    height: 150px; 
     margin-right: 20px;
 }
+
 
 
 
@@ -345,8 +348,11 @@
 }
 
 .separator {
-    margin: 20px ;
+    display: block;
+    width: 95%;
+    margin: 30px 20px;
 }
+
 
 .email {
     margin-left: 10px;

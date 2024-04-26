@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { useRouter } from 'next/router';
 import React from 'react';
 import styles from '@/styles/index.module.css';
@@ -92,9 +93,11 @@ const ProductList = ({ products }) => {
                     </div>
                 </Link>
                 ))}
-                
+                 
             </div>
+            <Footer />
         </div>
+       
     );
 };
 
