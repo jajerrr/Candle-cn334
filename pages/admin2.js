@@ -8,52 +8,52 @@ export default function admin2() {
   const [products, setProducts] = useState([
     {
       id: 1,
-      name: "Scandinavian Woods (White)",
-      image: "/cart/scandinavian.jpg",
-      price: "THB 59.00"
-    },
-    {
+      name: 'Berry Bliss',
+      image: '/index/BerryBliss.jpg',
+      price: 59.00,
+  },
+  {
       id: 2,
-      name: 'Jasmine (Pink)',
-      image: '/cart/jasmine.jpg',
-      price: 'THB 59.00',
-    },
-    {
+      name: 'Vanilla Serenity',
+      image: '/index/VanillaSerenity.jpg',
+      price: 59.00,
+  },
+  {
       id: 3,
-      name: 'Berries (Red)',
-      image: '/cart/berrie.jpg',
-      price: 'THB 59.00',
-    },
-    {
+      name: 'Ember Glow',
+      image: '/index/EmberGlow.jpg',
+      price: 59.00,
+  },
+  {
       id: 4,
-      name: 'Fresh Grass (Light Green)',
-      image: '/cart/grass.jpg',
-      price: 'THB 59.00',
-    },
-    {
+      name: 'Meadow Breeze',
+      image: '/index/MeadowBreeze.jpg',
+      price: 59.00,
+  },
+  {
       id: 5,
-      name: 'Vanilla (Light Beige)',
-      image: '/cart/vanilla.jpg',
-      price: 'THB 59.00',
-    },
-    {
+      name: 'Earthy Elegance',
+      image: '/index/EarthyElegance.jpg',
+      price: 59.00,
+  },
+  {
       id: 6,
-      name: 'Bonfire (Grey)',
-      image: '/cart/bonfire.jpg',
-      price: 'THB 59.00',
-    },
-    {
+      name: 'Zesty Citrus Deligh',
+      image: '/index/ZestyCitrusDeligh.jpg',
+      price: 59.00,
+  },
+  {
       id: 7,
-      name: 'Lemon (Yellow)',
-      image: '/cart/lemon.jpg',
-      price: 'THB 59.00',
-    },
-    {
+      name: 'Nordic Forest',
+      image: '/index/NordicForest.jpg',
+      price: 59.00,
+  },
+  {
       id: 8,
-      name: 'Vetiver & Geranium (Black-turquoise)',
-      image: '/cart/vetiver.jpg',
-      price: 'THB 59.00',
-    },
+      name: 'Enchanting Jasmine',
+      image: '/index/EnchantingJasmine .jpg',
+      price: 59.00,
+  },
   ]);
 
   const [showAddProductModal, setShowAddProductModal] = useState(false);

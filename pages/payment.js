@@ -7,7 +7,7 @@ import styles from '../styles/payment.module.css';
 
 
 const PageNav = () => (  
-    <nav className={styles.navBar}>  
+    <div className={styles.navBar}>  
         <div className={styles.bar}>  
             <a href="/cart" className={styles.linkCart}>  
                 <p>Cart</p>  
@@ -27,7 +27,7 @@ const PageNav = () => (
                 <p>Payment</p>  
             </a>  
         </div>  
-    </nav>  
+    </div>  
 
 );  
 

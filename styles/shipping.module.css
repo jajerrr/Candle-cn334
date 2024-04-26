@@ -1,34 +1,16 @@
 
-.header-container {
-    position: fixed; /* ใช้ตำแหน่ง fixed */
-    top: 0; /* ตั้งตำแหน่งด้านบนสุด */
-    left: 0; /* ตั้งตำแหน่งด้านซ้ายสุด */
-    display: flex; /* ใช้ flexbox เพื่อจัดองค์ประกอบ */
-    flex-direction: column; /* จัดองค์ประกอบในแนวตั้ง */
-    align-items: flex-start; /* จัดตำแหน่งองค์ประกอบทางซ้าย */
-    justify-content: flex-start; /* จัดตำแหน่งองค์ประกอบบนสุด */
-    margin: 0; /* ยกเลิกระยะห่างภายนอก */
-    padding: 0; /* ยกเลิกช่องว่างภายใน */
-}
-
-.logo {
-    margin-bottom: 0px; /* เพิ่มระยะห่างระหว่างโลโก้กับ PageNav */
-}
-
-
 .contact {
     text-align: left;
 }
   
-
 .bar {
     display: flex;
     justify-content: flex-start; 
     align-items: center; 
-    gap: 5px; 
-
+    gap: 15px; 
     text-align: left;
     cursor: pointer;
+    
   }
 
   
@@ -41,24 +23,31 @@
     justify-content: start; 
     text-align: left; 
     align-items: center;
-    padding: 10px 20px;
+    padding: 20px 100px;
+    margin-top: 24px ;
+    margin-bottom: 30px;
 }
 
 .linkCart {
     color:#56B280;
+    font-size: 24px;
 }
 
 .linkShipping {
     display: flex;
     align-items: center;
-    color: black; 
+    color: black;
+    font-weight: bold; 
     font-weight: 1000;
     text-decoration: none; 
     margin-right: 10px; 
+    font-size: 24px;
 }
 
 .linkPayment {
-    color: gray;
+    color: #616161;
+    font-size: 24px;
+  
 }
 
 .svgIcon {
@@ -66,6 +55,7 @@
     height: 16px;
     margin: 0 5px; 
     color: gray; 
+    
 }
 
 
@@ -77,7 +67,7 @@
 
 .contactBox input {
     width: 100%; 
-    max-width: 660px; 
+    max-width: 810px; 
     height: 45px;
     border: 1px solid #B7B7B7;
 }
@@ -95,8 +85,7 @@
 
 
 .nameSurnameBox input{
-    width: 100%; 
-    max-width: 323px; 
+    width: 397px; 
     height: 45px;
     border: 1px solid #B7B7B7;
     margin-top: 10px;
@@ -108,7 +97,7 @@
 
 .addressBox input {
     width: 100%; 
-    max-width: 660px; 
+    max-width: 810px; 
     height: 45px;
     border: 1px solid #B7B7B7;
     margin: 10px;
@@ -117,7 +106,7 @@
 
 .noteBox input {
     width: 100%; 
-    max-width: 660px; 
+    max-width: 810px; 
     height: 45px;
     border: 1px solid #B7B7B7;
     margin: 10px;
@@ -126,7 +115,7 @@
 
 .locationBox input {
     width: 100%; 
-    max-width: 210px; 
+    max-width: 260px; 
     height: 45px;
     border: 1px solid #B7B7B7;
     margin: 10px;
@@ -135,7 +124,7 @@
 
 .countryBox input {
     width: 100%; 
-    max-width: 660px; 
+    max-width: 810px; 
     height: 45px;
     border: 1px solid #B7B7B7;
     margin: 10px;
@@ -147,11 +136,11 @@
 
 
 .shippingOption {
-    width: 95%;
+    width: 800px;
     display: flex;
     align-items: center;
     padding: 10px ;
-    border: 1px solid #E5E5E5;
+    border: 1px solid #B7B7B7;
     background-color: white;
     border-radius: 5px;
     margin: 30px 0;
@@ -262,7 +251,7 @@
     margin-top: 30px;
     display: flex;
     align-items: center; 
-    gap: 280px; 
+    gap: 430px; 
 }
 
 
@@ -289,8 +278,8 @@
 
 
 .imgProduct img {
-    width: 200px; 
-    height: 200px; 
+    width: 150px; 
+    height: 150px; 
     margin-right: 30px;
     border: none;
 }
@@ -355,50 +344,6 @@
 
 
 
-.couponContainer {
-    display: flex;
-    justify-content: left; /* จัดวางให้อยู่ตรงกลางแนวนอน */
-    align-items: left; /* จัดวางให้อยู่ตรงกลางแนวตั้ง */
-    margin-top: 20px; /* เพิ่มระยะห่างด้านบนของ container เพื่อให้มีช่องว่าง */
-    margin: 10px;
-}
-
-.textCoupon {
-    flex-grow: 1; /* อนุญาตให้ input เต็มความกว้างที่เหลืออยู่ */
-    padding: 5px; /* เพิ่มช่องว่างภายใน input */
-    margin-right: 10px; /* เพิ่มระยะห่างระหว่าง input กับปุ่ม */
-    margin-left: 15px;
-    width: 550px; 
-    height: 40px;
-    border: 1px solid #B7B7B7;
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px; 
-    
-}
-
-.textCoupon:focus {
-    border-color: #56B280; /* เปลี่ยนสีขอบเมื่อได้รับการโฟกัส */
-    outline: 2px solid #56B280; /* เพิ่มเส้นขอบด้านนอกสีเขียว */
-}
-
-
-.couponButton {
-    background-color: #56B280; 
-    color: white; 
-    border-radius: 5px; 
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px; 
-    padding: 8px 50px; 
-    border: none; 
-    cursor: pointer;
-    margin: 20px;
-}
-
-.couponButton:hover {
-    opacity: 0.8; 
-  }
-
-
 /* styles.module.css */
 .container {
     display: flex;
@@ -406,23 +351,23 @@
     height: 100vh;
 }
 
-.left {
-    width: 50%;
-    display: flex; /* เปลี่ยนให้คอมโพเนนต์นี้เป็นการจัดวางแบบ flex */
-    justify-content: center; /* จัดองค์ประกอบให้ตรงกลางแนวนอน */
-    align-items: center; /* จัดองค์ประกอบให้ตรงกลางแนวตั้ง */
-}
 
-.right {
-    width: 50%;
-    background-color: #F2F2F2;
-    display: flex; /* เปลี่ยนให้คอมโพเนนต์นี้เป็นการจัดวางแบบ flex */
-    justify-content: center; /* จัดองค์ประกอบให้ตรงกลางแนวนอน */
-    align-items: center; /* จัดองค์ประกอบให้ตรงกลางแนวตั้ง */
-}
 
 
 .separator {
     margin: 30px 0;
 }
 
+.orderContainer {
+    padding: 50px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+    margin-right: 250px;
+    border-radius: 9px;
+    width: 600px;
+    height: 700px;
+}
+
+.flexContainer {
+    margin-left: 250px;
+    width: 50%;
+}

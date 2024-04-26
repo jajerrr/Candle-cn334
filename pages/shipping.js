@@ -8,7 +8,7 @@ import styles from '../styles/shipping.module.css';
 
 // ฟังก์ชันการนำทางในหน้าจัดส่ง
 const PageNav = () => (
-    <nav className={styles.navBar}>
+    <div className={styles.navBar}>
         <div className={styles.bar}>
             <a href="/cart" className={styles.linkCart}>Cart</a>
             <svg className={styles.svgIcon} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
@@ -20,7 +20,7 @@ const PageNav = () => (
             </svg>
             <a href="/payment" className={styles.linkPayment}>Payment</a>
         </div>
-    </nav>
+    </div>
 );
 
 // คอมโพเนนต์สำหรับการเลือกวิธีการจัดส่ง
@@ -193,6 +193,8 @@ const ShippingPage = () => {
             <Head>
                 <title>Shipping</title>
             </Head>
+            <Navbar />
+            <PageNav />
         
         
             <div className={styles.container}>
@@ -201,18 +203,9 @@ const ShippingPage = () => {
 
             
                 {/* ส่วนแรก (ซ้าย) */}
-                <div className={styles.left}>
                    
 
                     <div className={styles.flexContainer}>
-
-
-
-                    <div className="header-container">
-                        <img src="/logo.jpg" alt="Logo" width="150" height="75" className="logo" />
-                        <hr className={styles.headline} />
-                        <PageNav />
-                    </div>
 
 
 
@@ -311,6 +304,15 @@ const ShippingPage = () => {
                             />
                         </form>
 
+                        <h2 className={styles.shippingMethod}>Shipping Method</h2>
+                        <ShippingMethod
+                            handleShippingChange={handleShippingChange}
+                            selectedMethod={sender.selectedMethod}
+                        /> 
+
+
+                
+
                         <div className={styles.backAndPayButtons}>
                             <a href="/cart" className={styles.backButton}>
                                 <h3 className={styles.back}>Back to cart</h3>
@@ -319,14 +321,16 @@ const ShippingPage = () => {
                                 Go to payment
                             </button>
                         </div>
-                    </div>
+                    
                 </div>
                
 
                 {/* ส่วนหลัง (ขวา) */}
-                <div className={styles.right}>
+               
 
-                    <div className={styles.flexContainer}>
+
+                    <div className={styles.orderContainer}>
+                    <h2 className={styles.contact}>Your Order</h2>
 
                        {cartItems.map((product, index) => (
                             <div key={index} className={styles.productBox}>
@@ -347,30 +351,9 @@ const ShippingPage = () => {
 
                         <hr className={styles.separator} />
 
-                        <div className={styles.couponContainer}>
-                            <form className={styles.couponBox}>
-                                <input
-                                    type="text"
-                                    placeholder="Coupon Code"
-                                    className={styles.textCoupon}
-                                    required
-                                />
-                                <button type="submit" className={styles.couponButton}>Add Code</button>
-                            </form>
-                        </div>
-
-                        <hr className={styles.separator} />
                         
 
-                        <h2 className={styles.shippingMethod}>Shipping Method</h2>
 
-                      <ShippingMethod
-                            handleShippingChange={handleShippingChange}
-                            selectedMethod={sender.selectedMethod}
-                        /> 
-
-
-                        <hr className={styles.separator} />
 
 
                         <div className={styles.priceDetail}>
@@ -384,7 +367,7 @@ const ShippingPage = () => {
                                 <span className={styles.value}>THB {shippingCost.toFixed(2)}</span>
                             </p>
 
-                           <hr className={styles.separator} />
+         
 
                             <h2 className={styles.totalRow}>
                                 <span className={styles.labelTotal}>Total</span>
@@ -393,7 +376,7 @@ const ShippingPage = () => {
                         </div> 
                         
                         </div> 
-                    </div> 
+                    
 
             </div>
 
