@@ -1,8 +1,40 @@
-import React from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+
 
 const ProductList = () => {
     const router = useRouter();
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch('/api/products');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch products');
+                }
+                const data = await response.json();
+                setProducts(data);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    const handleAddToCart = (item) => {
+        const cartItems = [item];
+        router.push({
+            pathname: '/cart',
+            query: {
+                items: JSON.stringify(cartItems),
+            },
+        });
+    };
+
+
 
     // ข้อมูลสินค้า
     const productData = [
@@ -49,30 +81,20 @@ const ProductList = () => {
         
     ];
 
-    // ฟังก์ชันสำหรับจัดการเหตุการณ์การคลิก Add to Cart
-    const handleAddToCart = (item) => {
-        // สร้าง array สำหรับข้อมูลสินค้า
-        const cartItems = [item];
-        
-        // ส่งข้อมูลสินค้าไปยังหน้า cart.js ผ่าน query parameters
-        router.push({
-            pathname: '/cart',
-            query: {
-                items: JSON.stringify(cartItems), // ส่งสินค้าเป็น JSON string
-            },
-        });
-    };
+
+    
 
     return (
         <div>
             <h1>Candle</h1>
             {productData.map((item, index) => (
                 <div key={index}>
-                    <h2>{item.name}</h2>
-                    <img src={item.image} alt={item.name} style={{ width: '200px', height: '200px' }} />
-                    <p>Price: THB {item.price.toFixed(2)}</p>
-                    {/* ปุ่ม Add to Cart */}
-                    <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
+                    <h2>{products.candle_name}</h2>
+                    <img src={products.image_url} alt={products.candle_name} style={{ width: '200px', height: '200px' }} />
+                    
+                    <p>Price: {products.candle_price}</p>
+                    <button onClick={() => handleAddToCart(products)}>Add to Cart</button>
+                
                 </div>
             ))}
         </div>
