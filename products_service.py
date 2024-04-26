@@ -15,9 +15,13 @@ products_collection = db["products"]
 class Product(BaseModel):
     candle_id: str
     candle_name: str
+    candle_scent : str
     candle_price: float
-    detail: str
+    #detail: str
     image_url: str
+    time : str
+    dimension: str
+    weight : str
 
 
 
