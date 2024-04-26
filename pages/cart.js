@@ -88,7 +88,7 @@ const CartPage = () => {
         <div className={styles.productListContainer}> 
             <div className={styles.header}> 
                 <h1 className={styles.title}>Your cart items</h1> 
-                    <a href="/productTest"> 
+                    <a href="/products"> 
                     <h3 className={styles.back}>Back to shopping</h3> 
                     </a> 
     </div> 
