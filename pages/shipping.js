@@ -37,17 +37,6 @@ const ShippingMethod = ({ handleShippingChange, selectedMethod }) => (
             />
             Standard Shipping <span className={styles.boldRight}>Free</span>
         </label>
-        <label className={`${styles.shippingOption} ${selectedMethod === 'Express' ? styles.selected : ''}`}>
-            <input
-                type="radio"
-                name="shippingMethod"
-                value="Express"
-                className={styles.radio}
-                onChange={handleShippingChange}
-                checked={selectedMethod === 'Express'}
-            />
-            Express Shipping <span className={styles.boldRight}>THB 40.00</span>
-        </label>
     </div>
 );
 

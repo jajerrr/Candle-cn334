@@ -64,11 +64,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between; /* ให้สินค้าเรียงตามชิ้น */
+    margin-bottom: 150px;
+    margin-top: 10px;
 }
 
 .headCol {
     font-size: 32px;
-    margin-top: 100px;
+    margin-top: 150px;
     text-align: center;
 }
 

@@ -22,7 +22,7 @@ export default function about(){
                                                 ensuring that every candle from our collection is a delightful experience from start<br></br>  
                                                 to finish."</h3>
 
-                    <a href="/product">
+                    <a href="/products">
                         <button className={styles.button}>Shop Now</button>
                     </a>
                 </div>
