@@ -11,7 +11,7 @@ export default function Landing() {
             
         }}>
             <Image
-            src="/bghome.jpg"
+            src="/home/bghomeHD.jpg"
             alt="background"
             layout="fill"
             objectFit="cover"
