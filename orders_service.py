@@ -16,14 +16,14 @@ class Order(BaseModel):
     product_id: str
     quantity: int
     total_price: float
-    customer_name: str
-    customer_email: str
-    customer_surname :str
-    address: str
-    city:  str
-    poscode :str
-    province :str
-    country : str
+    # customer_name: str
+    # customer_email: str
+    # customer_surname :str
+    # address: str
+    # city:  str
+    # poscode :str
+    # province :str
+    # country : str
 
 @router.post("/orders/")
 def create_order(order_data: Order):
