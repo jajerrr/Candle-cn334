@@ -1,6 +1,7 @@
+import json
 from typing import Optional
 
-from bson import ObjectId
+from bson import ObjectId, json_util
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from pymongo import MongoClient
@@ -11,6 +12,9 @@ db = client["ecommerce"]
 
 # สร้าง collection
 products_collection = db["products"]
+
+# กำหนดการกำหนดสิทธิ CORS
+
 
 class Product(BaseModel):
     candle_id: str
@@ -29,6 +33,15 @@ class Product(BaseModel):
 def create_product(product_data: Product):
     product_id = products_collection.insert_one(product_data.dict()).inserted_id
     return {"message": "Product created successfully", "product_id": str(product_id)}
+
+
+
+@router.get("/products/")
+def get_all():
+    product = products_collection.find()
+    #print(product,type(product))
+    return {"candle": json.loads(json_util.dumps(product))}
+
 
 
 @router.get("/products/{product_id}")

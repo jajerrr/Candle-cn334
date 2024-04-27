@@ -13,10 +13,10 @@ app = FastAPI()
 # เพิ่ม Middleware เพื่ออนุญาตให้เข้าถึง API จากต่างๆ โดยที่ไม่ต้องรับสิทธิ์เพิ่มเติม
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # ระบุโดเมนที่อนุญาตให้เข้าถึงได้
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # ระบุเมทอดที่อนุญาต
+    allow_headers=["*"],  # ระบุเฮดเดอร์ที่อนุญาต
 )
 
 # เชื่อมต่อ MongoDB
