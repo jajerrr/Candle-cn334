@@ -20,6 +20,9 @@ const Detail = () => {
             image: '/index/BerryBliss.jpg',
             price: 59.00,
             description: 'กลิ่นหอมที่เย้ายวนของผลเบอร์รี่ ผักใบเขียวและไวโอเล็ต',
+            burningtime: '20 hours',
+            diameter: '7.5cm x 7cm',
+            weight: '260g',
         },
         {
             id: 2,
@@ -27,6 +30,9 @@ const Detail = () => {
             image: '/index/VanillaSerenity.jpg',
             price: 59.00,
             description: 'กลิ่นหอมหวานของวานิลลาและนมอุ่นพร้อมกลิ่นมะพร้าว',
+            burningtime: '20 hours',
+            diameter: '7.5cm x 7cm',
+            weight: '260g',
         },
         {
             id: 3,
@@ -34,6 +40,9 @@ const Detail = () => {
             image: '/index/EmberGlow.jpg',
             price: 59.00,
             description: 'กลิ่นหอมเอิร์ธโทนและควันพร้อมกลิ่นหอมหวาน',
+            burningtime: '20 hours',
+            diameter: '7.5cm x 7cm',
+            weight: '260g',
         },
         {
             id: 4,
@@ -41,6 +50,9 @@ const Detail = () => {
             image: '/index/MeadowBreeze.jpg',
             price: 59.00,
             description: 'กลิ่นหอมสดชื่นของหญ้าที่เพิ่งตัดใหม่และสมุนไพรรสเผ็ด',
+            burningtime: '20 hours',
+            diameter: '7.5cm x 7cm',
+            weight: '260g',
         },
         {
             id: 5,
@@ -48,6 +60,9 @@ const Detail = () => {
             image: '/index/EarthyElegance.jpg',
             price: 59.00,
             description: 'กลิ่นหอมป่าไม้และลำธารที่ไหลผ่าน',
+            burningtime: '20 hours',
+            diameter: '7.5cm x 7cm',
+            weight: '260g',
         },
         {
             id: 6,
@@ -55,6 +70,9 @@ const Detail = () => {
             image: '/index/ZestyCitrusDeligh.jpg',
             price: 59.00,
             description: 'กลิ่นหอมสดชื่นของมะนาวและตะไคร้',
+            burningtime: '20 hours',
+            diameter: '7.5cm x 7cm',
+            weight: '260g',
         },
         {
             id: 7,
@@ -62,6 +80,9 @@ const Detail = () => {
             image: '/index/NordicForest.jpg',
             price: 59.00,
             description: 'กลิ่นที่ปลอบโยนของป่าไม้และอำพัน มีกลิ่นซิตรัสและไซเปรส',
+            burningtime: '20 hours',
+            diameter: '7.5cm x 7cm',
+            weight: '260g',
         },
         {
             id: 8,
@@ -69,6 +90,9 @@ const Detail = () => {
             image: '/index/EnchantingJasmine .jpg',
             price: 59.00,
             description: 'กลิ่นหอมของดอกมะลิ ลูกแพร์ ขิง และดอกลิลลี่แห่งหุบเขา',
+            burningtime: '20 hours',
+            diameter: '7.5cm x 7cm',
+            weight: '260g',
         },
 
 
@@ -79,6 +103,9 @@ const Detail = () => {
             image: '/index/sBerryBliss.jpg',
             price: 129.00,
             description: 'กลิ่นหอมที่เย้ายวนของผลเบอร์รี่ ผักใบเขียวและไวโอเล็ต',
+            burningtime: '3.5 hours',
+            diameter: '3.8cm x 3cm',
+            weight: '390g',
         },
         {
             id: 10,
@@ -86,6 +113,9 @@ const Detail = () => {
             image: '/index/sVanillaSerenity.jpg',
             price: 129.00,
             description: 'กลิ่นหอมหวานของวานิลลาและนมอุ่นพร้อมกลิ่นมะพร้าว',
+            burningtime: '3.5 hours',
+            diameter: '3.8cm x 3cm',
+            weight: '390g',
         },
         {
             id: 11,
@@ -93,6 +123,9 @@ const Detail = () => {
             image: '/index/sEmberGlow.jpg',
             price: 129.00,
             description: 'กลิ่นหอมเอิร์ธโทนและควันพร้อมกลิ่นหอมหวาน',
+            burningtime: '3.5 hours',
+            diameter: '3.8cm x 3cm',
+            weight: '390g',
         },
         {
             id: 12,
@@ -100,6 +133,9 @@ const Detail = () => {
             image: '/index/sMeadowBreeze.jpg',
             price: 129.00,
             description: 'กลิ่นหอมสดชื่นของหญ้าที่เพิ่งตัดใหม่และสมุนไพรรสเผ็ด',
+            burningtime: '3.5 hours',
+            diameter: '3.8cm x 3cm',
+            weight: '390g',
         },
         {
             id: 13,
@@ -107,6 +143,9 @@ const Detail = () => {
             image: '/index/sEarthyElegance.jpg',
             price: 129.00,
             description: 'กลิ่นหอมป่าไม้และลำธารที่ไหลผ่าน',
+            burningtime: '3.5 hours',
+            diameter: '3.8cm x 3cm',
+            weight: '390g',
         },
         {
             id: 14,
@@ -114,6 +153,9 @@ const Detail = () => {
             image: '/index/sZestyCitrusDelight.jpg',
             price: 129.00,
             description: 'กลิ่นหอมสดชื่นของมะนาวและตะไคร้',
+            burningtime: '3.5 hours',
+            diameter: '3.8cm x 3cm',
+            weight: '390g',
         },
         {
             id: 15,
@@ -121,6 +163,9 @@ const Detail = () => {
             image: '/index/sNordicForest.jpg',
             price: 129.00,
             description: 'กลิ่นที่ปลอบโยนของป่าไม้และอำพัน มีกลิ่นซิตรัสและไซเปรส',
+            burningtime: '3.5 hours',
+            diameter: '3.8cm x 3cm',
+            weight: '390g',
         },
         {
             id: 16,
@@ -128,6 +173,9 @@ const Detail = () => {
             image: '/index/sEnchantingJasmine.jpg',
             price: 129.00,
             description: 'กลิ่นหอมของดอกมะลิ ลูกแพร์ ขิง และดอกลิลลี่แห่งหุบเขา',
+            burningtime: '3.5 hours',
+            diameter: '3.8cm x 3cm',
+            weight: '390g',
         },
 
     ];
@@ -181,13 +229,20 @@ const handleAddToCart = (selectedProduct) => {
                 <div>
                     <h1>{selectedProduct.name}</h1>
                     <p className={styles.price}>THB {selectedProduct.price.toFixed(2)}</p>
-                    <p className={styles.description}>{selectedProduct.description}</p>
+
+                    <div className={styles.java}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class={styles.volumn}>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+                        </svg>
+                        <p className={styles.description}>{selectedProduct.description}</p>
+                    </div>
+
 
                     <div className={styles.detailBox}>
                         <p>
                             <span className={styles.label}>Wax:</span> Top grade Soy wax that delivers a smoke less, consistent burn<br />
                             <span className={styles.label}>Fragrance:</span> Premium quality ingredients with natural essential oils<br />
-                            <span className={styles.label}>Burning Time:</span> 70-75 hours <span className={styles.label}>Dimension:</span> 10cm x 5cm <span className={styles.label}>Weight:</span> 400g
+                            <span className={styles.label}>Burning Time: </span> {selectedProduct.burningtime}  <span className={styles.label}>    Dimension: </span> {selectedProduct.diameter}<span className={styles.label}>    Weight: </span> {selectedProduct.weight}
                         </p>
                     </div>
 

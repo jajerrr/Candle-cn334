@@ -24,7 +24,7 @@ export default function Landing() {
             <p>All can make with natural soy wax</p>
 
             <Link href="/products" passHref>
-                <p className="button">Discovery our products</p>
+                <p className="button">Discover Our Collection</p>
             </Link>
             
             </div>
