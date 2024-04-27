@@ -31,11 +31,11 @@ const PageNav = () => (
 
 );  
 
+
 // ฟังก์ชันหลักของ PaymentPage
 
 const PaymentPage = () => {
     const [shippingCost, setShippingCost] = useState(0);
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
     const [cartItems, setCartItems] = useState([]);
     const [quantities, setQuantities] = useState([]);
     const [sender, setSender] = useState({
@@ -110,10 +110,7 @@ const PaymentPage = () => {
         }));
     };
 
-    // จัดการการเปลี่ยนแปลงของ selectedPaymentMethod
-    const handleMethodChange = (event) => {
-        setSelectedPaymentMethod(event.target.value);
-    };
+
 
     // การจัดรูปแบบข้อมูล cartData สำหรับการแสดงใน PaymentPage
     const cartData = cartItems.map((item, index) => {
@@ -199,83 +196,6 @@ const PaymentPage = () => {
                         </form>
                     </div>
 
-                    {/* Payment Method */}
-                    {/*<h2 className={styles.paymentMethod}>Payment Method</h2>
-                  
-                    <div className={styles.paymentMethodBox} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <div className={styles.headBox}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={styles.iconCredit}>
-                                <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
-                                <path fillRule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clipRule="evenodd" />
-                            </svg>
-                            <h3 className="text-lg font-bold">Credit Card</h3>
-                        </div>
-
-
-
-
-                        {/* กล่องสำหรับการกรอกข้อมูล Card Number 
-                        <form className={styles.cardNumBox}>
-                            <div className={styles.inputWrapper}> {/* กล่องห่อ 
-                                <input
-                                    name="cardnumber"
-                                    value={sender.cardnumber}
-                                    onChange={handleSenderChange}
-                                    placeholder=" Card Number"
-                                    className={styles.textName}
-                                    required
-                                />
-                                * ไอคอนที่ขวาของ input *
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={styles.iconcardnum}>
-                                    <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z" clipRule="evenodd" />
-                                </svg>
-                            </div>
-                        </form>
-
-
-
-                         กล่องสำหรับการกรอกข้อมูล Holder Name 
-                        <form className={styles.holderNameBox}>
-                            <input
-                                name="holdername"
-                                value={sender.holdername}
-                                onChange={handleSenderChange}
-                                placeholder=" Holder Name"
-                                className={styles.textName}
-                                required
-                            />
-                        </form>
-
-                        * กล่องสำหรับการกรอกข้อมูล Expiration และ CVV *
-                        <form className={styles.cvvBox}>
-                            <div style={{ display: 'flex', gap: '10px' }}>
-                                <input
-                                    name="expiration"
-                                    value={sender.expiration}
-                                    onChange={handleSenderChange}
-                                    placeholder=" Expiration (MM/YY)"
-                                    className={styles.textName}
-                                    required
-                                />
-                                * Wrapper สำหรับ input CVV และไอคอน *
-                                <div className={styles.inputWrapper}>
-                                    <input
-                                        name="cvv"
-                                        value={sender.cvv}
-                                        onChange={handleSenderChange}
-                                        placeholder=" CVV"
-                                        className={styles.textName}
-                                        required
-                                    />
-                                    * ไอคอน SVG *
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={styles.iconcvv}>
-                                        <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clipRule="evenodd" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div> */}
 
 
                     {/* Products Information */}
