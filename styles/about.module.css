@@ -1,33 +1,31 @@
 .container {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
-  }
-  
-  .left {
-    margin-left: 300px;
-  }
-  
-  .right {
-    flex: 1;
-    margin-left: 100px;
-  }
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 300px;
 
-  .image {
-    padding-left: 70px;
   }
+  
+
+
 
 .head {
     font-size: 40px;
     margin-top: 35px;
+    margin-bottom: 30px;
+    font-weight: 200;
 }
 
 
   .sub {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 100;
-    color: #616161;
+    color: #62746A;
     font-weight: 100;
+    text-align: center; 
+    margin-bottom: 50px;
+    line-height: 2;
   }
 
   .button {
@@ -36,7 +34,7 @@
     border-radius: 5px; 
     font-family: 'Poppins', sans-serif;
     font-size: 24px; 
-    padding: 8px 50px; 
+    padding: 15px 70px; 
     border: none; 
     cursor: pointer;
     margin-top: 20px;
@@ -52,58 +50,59 @@
     flex-direction: column;
     display: flex;
     align-items: center; /* จัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
-    margin-top: 50px;
+    margin-top: 0px;
     padding: 50px 0;
     width: 100%;
-    height: 50%;
+    height: 100%;
+    
 
     background-image: url('/login/bglogin.jpg');
     background-size: cover; /* ขยายรูปภาพให้เต็มพื้นที่ */
     background-position: center; /* จัดตำแหน่งรูปภาพตรงกลาง */
-    background-repeat: no-repeat; 
-   
+    background-repeat: no-repeat;
+    height: 600px;
+ 
   }
 
-.values {
-    display: flex; /* ให้เป็น flex container */
-    justify-content: center; /* จัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
-    font-size: 40px;
-    text-align: center;
-    margin-bottom: 70px;
-    margin-top: 10px;
+.wrapper {
+    display: flex;
+    justify-content: space-between; /* จัดเรียงสามกล่องในแนวนอนและเว้นระยะห่างระหว่างกล่อง */
 }
 
-.box {
-    width: 450px;
-    height: 450px;
-    background-color: #FFFFFF;
-    border-radius: 3%;
-    margin-left: 60px;
-    margin-right: 60px;
-    text-align: center;
-  }
-
-  .containerBox {
-    display: flex; /* ให้เป็น flex container */
-    justify-content: center; /* จัดให้ elements อยู่ตรงกลางแนวนอน */
-    flex-direction: row; /* จัดเรียง elements ในแนวนอน */
+.boxleft, .boxmiddle, .boxright {
+  width: 475px;
+  height: 550px;
+  background-color: #FFFFFF;
+  border-radius: 3%;
+  margin-left: 60px;
+  margin-right: 60px;
+  margin-bottom: 200px;
+  margin-top: -235px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-.num {
-    margin-top: 80px;
-    margin-bottom: 30px;
-    color: #616161;
-    font-size: 42px;
+
+
+
+.image {
+  width: 90%; /* ทำให้รูปขยายเต็มความกว้างของ container */
+  height: 50%; /* ทำให้รูปขยายเต็มความสูงของ container */
+  object-fit: cover; /* ทำให้รูปภาพโดยปกติจะปรับขนาดเพื่อให้พอดีกับพื้นที่ขององค์ประกอบ และรักษาอัตราส่วนของรูปไว้ */
+  margin-top: 30px;
 }
+
 
 .title {
     font-weight: bolder;
     font-size: 22px;
     color: #616161;
+    font-weight: 200;
 }
 
 .content {
     margin-top: -50px;
     font-size: 18px;
     color: #616161;
+    font-weight: 100;
 }

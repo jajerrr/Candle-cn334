@@ -19,11 +19,16 @@
     font-size: 40px;
     text-align: center;
     margin-top: 70px;
+    margin-bottom: 10px;
+    font-size: 200;
 }
 
 .sub {
-    font-size: 20px;
+    font-size: 22px;
     text-indent: -20px;
+    line-height: 1.75;
+    color: #616161;
+    font-weight: 100;
 }
 
   .box {
@@ -33,15 +38,16 @@
     border-radius: 3%;
     margin-left: 60px;
     margin-right: 60px;
-    margin-top: 50px;
+
     text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   }
 
   .containerBox {
     display: flex; /* ให้เป็น flex container */
     justify-content: center; /* จัดให้ elements อยู่ตรงกลางแนวนอน */
     flex-direction: row; /* จัดเรียง elements ในแนวนอน */
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 
