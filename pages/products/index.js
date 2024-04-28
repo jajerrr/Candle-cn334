@@ -1,73 +1,43 @@
-import Head from "next/head";
 import Navbar from "@/components/Navbar";
-import { useRouter } from 'next/router';
-import React from 'react';
 import styles from '@/styles/index.module.css';
+import Head from "next/head";
 import Link from "next/link";
-import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-
-const ProductList = ({ products }) => {
+const ProductList = () => {
     const router = useRouter();
-
-    // ข้อมูลสินค้า
-    const productData = [
-        {
-            id: 1,
-            name: 'Berry Bliss',
-            image: '/index/BerryBliss.jpg',
-            price: 59.00,
-        },
-        {
-            id: 2,
-            name: 'Vanilla Serenity',
-            image: '/index/VanillaSerenity.jpg',
-            price: 59.00,
-        },
-        {
-            id: 3,
-            name: 'Ember Glow',
-            image: '/index/EmberGlow.jpg',
-            price: 59.00,
-        },
-        {
-            id: 4,
-            name: 'Meadow Breeze',
-            image: '/index/MeadowBreeze.jpg',
-            price: 59.00,
-        },
-        {
-            id: 5,
-            name: 'Earthy Elegance',
-            image: '/index/EarthyElegance.jpg',
-            price: 59.00,
-        },
-        {
-            id: 6,
-            name: 'Zesty Citrus Deligh',
-            image: '/index/ZestyCitrusDeligh.jpg',
-            price: 59.00,
-        },
-        {
-            id: 7,
-            name: 'Nordic Forest',
-            image: '/index/NordicForest.jpg',
-            price: 59.00,
-        },
-        {
-            id: 8,
-            name: 'Enchanting Jasmine',
-            image: '/index/EnchantingJasmine .jpg',
-            price: 59.00,
-        },
-        
-    ];
-
+    const [products, setProducts] = useState([]);
     useEffect(() => {
-        // บันทึกข้อมูลสินค้าใน localStorage เมื่อหน้า index โหลดขึ้นมา
-        localStorage.setItem('products', JSON.stringify(products));
-    }, [products]);
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/products/products');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch products');
+                }
+                const data = await response.json();
+                setProducts(data.candle);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
 
+        fetchProducts();
+    }, []);
+
+    // ฟังก์ชันสำหรับจัดการเหตุการณ์การคลิก Add to Cart
+    const handleAddToCart = (item) => {
+        // สร้าง array สำหรับข้อมูลสินค้า
+        const cartItems = [item];
+        
+        // ส่งข้อมูลสินค้าไปยังหน้า cart.js ผ่าน query parameters
+        router.push({
+            pathname: '/cart',
+            query: {
+                items: JSON.stringify(cartItems), // ส่งสินค้าเป็น JSON string
+            },
+        });
+    };
 
     return (
         <div>
@@ -78,21 +48,22 @@ const ProductList = ({ products }) => {
             
             <h1 className={styles.title}>Products</h1>
             <p className={styles.subtitle}>Order it for you or for your beloved ones</p>
-    
-            <div className={styles.productFlexContainer}>
 
-                {productData.map((item, index) => (
-                    <Link href={`/detail/${item.id}`} key={index}>
+            <div className={styles.productFlexContainer}>
+                {products.map((item, index) => (
+                    <Link href={`/detail/${item._id.$oid}`} as={`/detail/${item._id.$oid}`} key={index}>
                     <div key={index} className={styles.productItem}>
-                        <img src={item.image} alt={item.name} style={{ width: '300px', height: '300px' }} />
+                        <img src={item.image_url} alt={item.candle_name} style={{ width: '300px', height: '300px' }} />
+                        {console.log("item",item._id)}
                         <div className={styles.textProduct}>
-                            <h2 className={styles.productName}>{item.name}</h2>
-                            <p className={styles.productPrice}>THB {item.price.toFixed(2)}</p>
+                            <h2 className={styles.productName}>{item.candle_name}</h2>
+                            <p className={styles.productPrice}>THB {item.candle_price}</p>
                         </div>
                     </div>
                 </Link>
-                ))}
                 
+                
+                ))}
             </div>
         </div>
     );
