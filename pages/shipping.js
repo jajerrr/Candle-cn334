@@ -340,9 +340,7 @@ const ShippingPage = () => {
 
                         <hr className={styles.separator} />
 
-                        
-
-
+                
 
 
                         <div className={styles.priceDetail}>
