@@ -157,4 +157,7 @@ celerybeat.pid
 ehthumbs.db
 Thumbs.db
 
+/Users/jajan./Desktop/project\ candle/candle/env/lib/python3.12/site-packages/pip/_vendor/rich/__pycache__/
+
+*.pyc
 

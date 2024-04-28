@@ -1,6 +1,14 @@
-from fastapi import FastAPI
+import json
+import os
+import shutil
+import uuid
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
 
 from dashboard_service import router as dashboard_router
 from orders_service import router as orders_router
@@ -10,6 +18,20 @@ from users_service import router as users_router
 
 # เรียกใช้ FastAPI
 app = FastAPI()
+
+uri = "mongodb://localhost:27017/"
+IMAGED = "/Users/jajan./Desktop/image"
+
+if not os.path.exists(IMAGED):
+    os.makedirs(IMAGED)
+
+app.mount("/images", StaticFiles(directory=IMAGED), name="images")
+client = MongoClient(uri, connect=False)
+db = client['CoffeeApp']
+
+class Images(BaseModel):
+    filename: str
+    url: str 
 
 # เพิ่ม Middleware เพื่ออนุญาตให้เข้าถึง API จากต่างๆ โดยที่ไม่ต้องรับสิทธิ์เพิ่มเติม
 app.add_middleware(
@@ -31,6 +53,28 @@ app.include_router(users_router, prefix="/api/users", tags=["Users"])
 app.include_router(orders_router, prefix="/api/orders", tags=["Orders"])
 app.include_router(dashboard_router, prefix="/api/dashboard", tags=["Dashboard"])
 app.include_router(shipping_router, prefix="/api/shipping", tags=["Shipping"])
+
+@app.post("/upload_image/")
+async def upload_image(file: UploadFile = File(...)):
+    # Generate a unique filename to avoid conflicts
+    file_extension = file.filename.split('.')[-1]
+    unique_filename = f"{uuid.uuid4()}.{file_extension}"
+    file_path = os.path.join(IMAGED, unique_filename)
+
+    # Save the file to the specified directory
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    # Store image data in MongoDB (assuming db setup is already done)
+    image_data = {
+        "filename": unique_filename,
+        "url": f"/images/{unique_filename}"
+    }
+    db.Images.insert_one(image_data)
+
+    # Return the filename and URL where the image can be accessed
+    return {"filename": unique_filename, "url": f"/images/{unique_filename}"}
+
 
 if __name__ == "__main__":
     import uvicorn
