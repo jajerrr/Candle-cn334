@@ -194,14 +194,30 @@ const Detail = () => {
         }
     }, [id]); // เรียกใช้ฟังก์ชันเมื่อ id เปลี่ยนแปลง
 
+    // ฟังก์ชันสำหรับตรวจสอบว่าสินค้ามีอยู่ในตะกร้าหรือไม่
+const isItemInCart = (itemId) => {
+    // ดึงข้อมูลสินค้าที่อยู่ใน Local Storage
+    const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    // ตรวจสอบว่าไอดีสินค้าอยู่ในตะกร้าหรือไม่
+    return existingCartItems.some(item => item.id === itemId);
+};
+
+
 // ฟังก์ชันสำหรับจัดการเหตุการณ์การคลิก Add to Cart
 const handleAddToCart = (selectedProduct) => {
+    // ตรวจสอบว่าสินค้ามีอยู่ในตะกร้าหรือไม่
+    const isItemAlreadyInCart = isItemInCart(selectedProduct.id);
+    if (isItemAlreadyInCart) {
+        alert('สินค้านี้มีอยู่ในตะกร้าแล้ว');
+        return;
+    }
+
     // เพิ่มคุณสมบัติ addedFromButton เพื่อระบุว่าสินค้าถูกเพิ่มจากการกดปุ่ม "Add to Cart"
     selectedProduct.addedFromButton = true;
     // ดึงข้อมูลสินค้าที่มีอยู่ใน Local Storage (หากมี)
     const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     // เพิ่มข้อมูลสินค้าที่เลือกเข้าไปในตัวแปร existingCartItems
-    const updatedCartItems = [...existingCartItems, selectedProduct]; // แก้จาก item เป็น selectedProduct
+    const updatedCartItems = [...existingCartItems, selectedProduct];
     // บันทึกข้อมูลสินค้าที่อัพเดทลงใน Local Storage
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
 
@@ -214,7 +230,7 @@ const handleAddToCart = (selectedProduct) => {
     });
 };
 
-    
+
 
     return (
         <div>
