@@ -91,8 +91,9 @@ const CartPage = () => {
     }, []);
     
 
-    return (
 
+return (    
+    
 
 <> 
 
@@ -185,7 +186,7 @@ const CartPage = () => {
 
 </> 
 
-); 
+    ); 
 
 }; 
 
