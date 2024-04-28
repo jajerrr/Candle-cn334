@@ -161,3 +161,6 @@ Thumbs.db
 
 *.pyc
 
+git add --ignore-errors *.py
+
+
