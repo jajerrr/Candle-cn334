@@ -20,7 +20,7 @@ const ProductList = () => {
                 }
                 const data = await response.json();
                 setProducts(data.candle);
-                // {console.log("dataimage",data.candle)}
+                {console.log("dataimage",data.candle)}
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -198,8 +198,8 @@ const ProductList = () => {
 
             <div className={styles.productFlexContainer}>
 
-            {products.map((item, index) => (
-                    <Link href={`/detail/${item.id.$oid}`} as={`/detail/${item._id.$oid}`} key={index}>
+            {products.slice(0,8).map((item, index) => (
+                    <Link href={`/detail/${item._id.$oid}`} as={`/detail/${item._id.$oid}`} key={index}>
                     <div key={index} className={styles.productItem}>
                         <img src={`http://127.0.0.1:8000${item.image_url}`} alt={item.candle_name} style={{ width: '300px', height: '300px' }} />
                         <div className={styles.textProduct}>
@@ -220,9 +220,9 @@ const ProductList = () => {
                                         fragrances for you to find.</p>
 
     
-            {/* <div className={styles.productFlexContainer}>
+            <div className={styles.productFlexContainer}>
 
-                {products.slice(8).map((item, index) => (
+                {products.map((item, index) => (
                     <Link href={`/detail/${item._id.$oid}`} as={`/detail/${item._id.$oid}`} key={index}>
                     <div key={index} className={styles.productItem}>
                     <img src={`http://127.0.0.1:8000${item.image_url}`} alt={item.candle_name} style={{ width: '300px', height: '300px' }} />
@@ -234,7 +234,7 @@ const ProductList = () => {
                 </Link>
                 ))}
 
-            </div> */}
+            </div>
 
 
 

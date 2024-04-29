@@ -7,28 +7,124 @@ import styles from '../styles/cart.module.css';
 
 
 
-const CartPage = () => {
-    const [initialCartItems, setInitialCartItems] = useState([]);
+// const CartPage = () => {
+//     const [initialCartItems, setInitialCartItems] = useState([]);
 
-    useEffect(() => {
-        const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        setInitialCartItems(storedItems);
-    }, []);
+//     useEffect(() => {
+//         const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+//         setInitialCartItems(storedItems);
+//     }, []);
+
+//     const router = useRouter();
+
+//     // กำหนดค่าเริ่มต้นให้กับตัวแปร products เป็นอาร์เรย์ว่าง
+//     const [products, setProducts] = useState([]);
+
+//     const { items } = router.query;
+//     const initialProductItems = items ? JSON.parse(items) : [];
+
+//     const [quantities, setQuantities] = useState(initialProductItems.map(() => 1));
+//     const [subtotal, setSubtotal] = useState(0);
+
+//     const calculateSubtotal = () => {
+//         return initialCartItems.reduce((total, item, index) => {
+//             return total + item.price * quantities[index];
+//         }, 0);
+//     };
+
+//     const updateQuantity = (index, newQuantity) => {
+//         if (newQuantity <= 0) {
+//             return;
+//         }
+//         const updatedQuantities = [...quantities];
+//         updatedQuantities[index] = newQuantity;
+//         setQuantities(updatedQuantities);
+//     };
+
+//     const removeItem = (index) => {
+//         const updatedCartItems = [...initialCartItems];
+//         updatedCartItems.splice(index, 1);
+//         setInitialCartItems(updatedCartItems);
+    
+//         const updatedQuantities = [...quantities];
+//         updatedQuantities.splice(index, 1);
+//         setQuantities(updatedQuantities);
+    
+//         // อัพเดตข้อมูลใน localStorage ด้วยข้อมูลใหม่
+//         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+//     };
+    
+
+//     useEffect(() => {
+//         setSubtotal(calculateSubtotal());
+//     }, [initialCartItems, quantities]);
+
+//     const handleCheckout = () => {
+//         const cartData = initialCartItems.map((item, index) => ({
+            
+//             productImg: item.image,
+//             productName: item.name,
+//             productQuantity: quantities[index],
+//             productPrice: item.price.toFixed(2),
+//         }));
+
+//         const query = {
+//             products: JSON.stringify(cartData),
+//             total: subtotal.toFixed(2),
+//         };
+
+//         // นำทางไปที่ /shipping ด้วยข้อมูล query
+//         router.push({
+//             pathname: '/shipping',
+//             query: query,
+//         });
+
+//         // เคลียร์ข้อมูลใน localStorage
+//         localStorage.removeItem('cartItems');
+
+//     };
+
+//     // useEffect(() => {
+//     //     // ตรวจสอบว่ามีข้อมูลสินค้าใน localStorage หรือไม่
+//     //     const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        
+//     //     // กรองข้อมูลสินค้าเฉพาะที่เพิ่มจากการกดปุ่ม "Add to Cart"
+//     //     const filteredItems = storedItems.filter(item => item.addedFromButton === true);
+        
+//     //     // ตั้งค่าสินค้าใน state เฉพาะสินค้าที่เพิ่มจากการกดปุ่ม "Add to Cart"
+//     //     setInitialCartItems(filteredItems);
+//     // }, []);
+    
+
+const CartPage = () => {
 
     const router = useRouter();
-
-    // กำหนดค่าเริ่มต้นให้กับตัวแปร products เป็นอาร์เรย์ว่าง
-    const [products, setProducts] = useState([]);
-
-    const { items } = router.query;
+    const { items } = router.query; // ดึง query parameters items มาจาก URL
+    const [cartItems, setCartItems] = useState([]);
+    //const [initialCartItems, setInitialCartItems] = useState([]);
     const initialProductItems = items ? JSON.parse(items) : [];
-
     const [quantities, setQuantities] = useState(initialProductItems.map(() => 1));
     const [subtotal, setSubtotal] = useState(0);
 
+    
+
+    useEffect(() => {
+        if (items) {
+            // แปลง JSON string เป็น array ของสินค้า
+            const parsedItems = JSON.parse(items);
+            // เพิ่มข้อมูลใหม่ลงไปในอาร์เรย์ของสินค้า
+            const newCartItems = [...cartItems, ...parsedItems];
+            setCartItems(newCartItems);
+            // บันทึกข้อมูลใหม่ทั้งหมดลงใน localStorage
+            localStorage.setItem('cartItems', JSON.stringify(newCartItems));
+        }
+    }, [items]);
+    
+
+    
     const calculateSubtotal = () => {
-        return initialCartItems.reduce((total, item, index) => {
-            return total + item.price * quantities[index];
+        return cartItems.reduce((total, item, index) => {
+            return total + item.candle_price * quantities[index];
         }, 0);
     };
 
@@ -41,31 +137,39 @@ const CartPage = () => {
         setQuantities(updatedQuantities);
     };
 
+
     const removeItem = (index) => {
-        const updatedCartItems = [...initialCartItems];
-        updatedCartItems.splice(index, 1);
-        setInitialCartItems(updatedCartItems);
+        // ดึงข้อมูลที่มีอยู่ใน localStorage
+        const existingItems = localStorage.getItem('cartItems');
+        let cartItems = [];
+        if (existingItems) {
+            // แปลง JSON string เป็น array
+            cartItems = JSON.parse(existingItems);
+        }
     
-        const updatedQuantities = [...quantities];
-        updatedQuantities.splice(index, 1);
-        setQuantities(updatedQuantities);
+        // ลบสินค้าที่ต้องการออกจากอาร์เรย์ของสินค้า
+        cartItems.splice(index, 1);
     
-        // อัพเดตข้อมูลใน localStorage ด้วยข้อมูลใหม่
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        // บันทึกข้อมูลใหม่ลงใน localStorage
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+        // อัปเดต state ด้วยอาร์เรย์ใหม่หลังจากลบ
+        setCartItems(cartItems);
     };
+    
     
 
     useEffect(() => {
         setSubtotal(calculateSubtotal());
-    }, [initialCartItems, quantities]);
+    }, [cartItems, quantities]);
 
     const handleCheckout = () => {
-        const cartData = initialCartItems.map((item, index) => ({
-            
-            productImg: item.image,
-            productName: item.name,
+        const cartData = cartItems.map((item, index) => ({
+            productId: item._id,
+            productImg: item.image_url,
+            productName: item.candle_name,
             productQuantity: quantities[index],
-            productPrice: item.price.toFixed(2),
+            productPrice: item.candle_price.toFixed(2),
         }));
 
         const query = {
@@ -78,26 +182,13 @@ const CartPage = () => {
             pathname: '/shipping',
             query: query,
         });
+        
 
-        // เคลียร์ข้อมูลใน localStorage
-        localStorage.removeItem('cartItems');
-
+        
     };
 
-    useEffect(() => {
-        // ตรวจสอบว่ามีข้อมูลสินค้าใน localStorage หรือไม่
-        const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        
-        // กรองข้อมูลสินค้าเฉพาะที่เพิ่มจากการกดปุ่ม "Add to Cart"
-        const filteredItems = storedItems.filter(item => item.addedFromButton === true);
-        
-        // ตั้งค่าสินค้าใน state เฉพาะสินค้าที่เพิ่มจากการกดปุ่ม "Add to Cart"
-        setInitialCartItems(filteredItems);
-    }, []);
-    
 
-
-return (    
+return (
     
 
 <> 
@@ -137,11 +228,11 @@ return (
 
             <tbody> 
 
-        {initialCartItems.map((item, index) => (
+        {cartItems.map((item, index) => (
         <tr key={index}> 
             <td className={styles.product}> 
                 <div className={styles.productInfo}> 
-                    <img src={item.image} className={styles.productImage} alt={item.name} /> 
+                <img src={`http://127.0.0.1:8000${item.image_url}`} className={styles.productImage} alt={item.candle_name} /> 
                         <div className={styles.productDetails}> 
 
                         <h2 className={styles.productName}>{item.name}</h2> 
@@ -151,7 +242,7 @@ return (
                 </div> 
             </td> 
 
-            <td className={styles.priceValue}>THB {item.price.toFixed(2)}</td> 
+            <td className={styles.priceValue}>THB {item.candle_price}</td> 
             <td> 
                 <div className={styles.quantity}> 
                     <button className={styles.quantityButtonMinus} onClick={() => updateQuantity(index, quantities[index] - 1)}>-</button> 
@@ -160,7 +251,7 @@ return (
                  </div> 
             </td> 
 
-            <td className={styles.totalValue}>THB {(item.price * quantities[index]).toFixed(2)}</td> 
+            <td className={styles.totalValue}>THB {(item.candle_price * quantities[index]).toFixed(2)}</td> 
                 </tr> 
                 ))} 
 

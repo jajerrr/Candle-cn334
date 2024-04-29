@@ -145,6 +145,7 @@ const ShippingPage = () => {
     // ฟังก์ชันที่ใช้ในการนำทางไปที่หน้า `payment` และส่งข้อมูล `query` ตามที่ต้องการ
     const handleGoToPayment = () => {
         const cartData = cartItems.map((item, index) => ({
+            productId : item.productId || '' ,
             productImg: item.productImg || '',
             productName: item.productName || '',
             productQuantity: quantities[index],
@@ -324,7 +325,7 @@ const ShippingPage = () => {
                        {cartItems.map((product, index) => (
                             <div key={index} className={styles.productBox}>
                                 <span className={styles.imgProduct}>
-                                    <img src={product.productImg} alt={product.productName} />
+                                    <img src={`http://127.0.0.1:8000${product.productImg}`} alt={product.productName} />
                                 </span>
                                 <div>
                                     <h2>
