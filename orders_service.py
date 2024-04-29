@@ -14,19 +14,35 @@ products_collection = db["products"]
 
 
 class ProductOrder(BaseModel):
-    product_id: str
-    quantity: int
+    productId : str
+    productImg : str
+    productName : str
+    productPrice : str
+    productQuantity :int
+
+
+
+
+# class User(BaseModel):
+#     contact: str
+#     name: str
+#     surname: str
 
 
 class Address(BaseModel):
+    contact: str
+    name: str
+    surname: str
     address: str
+    note: str
     city: str
-    postal_code: str
+    postcode: str
+    province: str
     country: str
 
 
 class Order(BaseModel):
-    user_id: str
+    # user_detail:User
     products: List[ProductOrder]
     shipping_address: Address
     total_price: float
@@ -37,11 +53,11 @@ def create_order(order_data: Order):
     # Calculate total price
     total_price = 0
     for product_order in order_data.products:
-        product = products_collection.find_one({"_id": ObjectId(product_order.product_id)})
+        product = products_collection.find_one({"_id": ObjectId(product_order.productId)})
         if product:
-            total_price += product["candle_price"] * product_order.quantity
+            total_price += product["candle_price"] * product_order.productQuantity
         else:
-            raise HTTPException(status_code=404, detail=f"Product with ID {product_order.product_id} not found")
+            raise HTTPException(status_code=404, detail=f"Product with ID {product_order.productId} not found")
 
     # Add total price to order data
     order_data.total_price = total_price
@@ -50,3 +66,16 @@ def create_order(order_data: Order):
     order_id = orders_collection.insert_one(order_data.dict()).inserted_id
 
     return {"message": "Order created successfully", "order_id": str(order_id)}
+
+
+@router.get("/orders/{order_id}")
+def get_order(order_id: str):
+    # Find order by ID
+    order = orders_collection.find_one({"_id": ObjectId(order_id)})
+    if order:
+        order["_id"] = str(order["_id"])
+        return order
+    else:
+        raise HTTPException(status_code=404, detail=f"Order with ID {order_id} not found")
+
+
