@@ -1,7 +1,9 @@
 import Head from "next/head";
-
+import { CartContext } from '../components/CartContext';
 import Navbar from "@/components/Navbar";
 import styles from '../styles/about.module.css';
+
+
 
 export default function about(){
     return(

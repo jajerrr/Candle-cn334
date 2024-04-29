@@ -60,10 +60,21 @@ const postDataToAPI = async (data) => {
         });
         const responseData = await response.json();
         console.log('Response from API:', responseData);
+
+        // หลังจากที่ส่งข้อมูลไปยัง API และได้รับการยืนยัน
+        // รีเซ็ตค่าใน Local Storage
+        resetLocalStorage();
         // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้รับกลับจาก API
     } catch (error) {
         console.error('Error posting data to API:', error);
     }
+};
+
+// ฟังก์ชันสำหรับรีเซ็ตค่าใน Local Storage
+const resetLocalStorage = () => {
+    // ลบข้อมูลที่เกี่ยวข้องออกจาก Local Storage
+    localStorage.removeItem('cartItems');
+    // อื่น ๆ ตามต้องการ
 };
 
 

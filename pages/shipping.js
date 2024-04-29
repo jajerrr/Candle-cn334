@@ -178,6 +178,25 @@ const ShippingPage = () => {
     };
 
 
+    const backtocart = () => {
+        // ดึงข้อมูลจาก Local Storage
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
+        // ตรวจสอบว่ามีสินค้าในตะกร้าหรือไม่
+        if (storedCartItems.length > 0) {
+            // ส่งไปยังหน้า cart พร้อมกับข้อมูลใน Local Storage
+            router.push({
+                pathname: '/cart',
+                query: {
+                    items: JSON.stringify(storedCartItems),
+                },
+            });
+        } 
+    };
+
+
+
+
     return (
         <>
             <Head>
@@ -304,9 +323,8 @@ const ShippingPage = () => {
                 
 
                         <div className={styles.backAndPayButtons}>
-                            <a href="/cart" className={styles.backButton}>
-                                <h3 className={styles.back}>Back to cart</h3>
-                            </a>
+                                <button className={styles.payButton} onClick={backtocart}>Back to cart</button>
+                            
                             <button className={styles.payButton} onClick={handleGoToPayment}>
                                 Go to payment
                             </button>

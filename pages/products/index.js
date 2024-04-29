@@ -222,7 +222,7 @@ const ProductList = () => {
     
             <div className={styles.productFlexContainer}>
 
-                {products.map((item, index) => (
+                {products.slice(8).map((item, index) => (
                     <Link href={`/detail/${item._id.$oid}`} as={`/detail/${item._id.$oid}`} key={index}>
                     <div key={index} className={styles.productItem}>
                     <img src={`http://127.0.0.1:8000${item.image_url}`} alt={item.candle_name} style={{ width: '300px', height: '300px' }} />
