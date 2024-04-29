@@ -294,7 +294,7 @@ const PaymentPage = () => {
                         </a>
                         <a href="/confirm">
                         < button className={styles.payButton}onClick={() => {handlePayNowClick(cartItems, sender, total, shippingCost);}}>Pay Now</button>                        
-                        </a> 
+                        </a>
                     </div>
                 </div>
             </div>
