@@ -4,6 +4,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from pymongo import MongoClient
 from bson import ObjectId
+from datetime import datetime
 
 router = APIRouter()
 client = MongoClient("mongodb://localhost:27017/")
@@ -46,7 +47,7 @@ class Order(BaseModel):
     products: List[ProductOrder]
     shipping_address: Address
     total_price: float
-
+    Date_time: datetime = datetime.now() 
 
 @router.post("/orders/")
 def create_order(order_data: Order):

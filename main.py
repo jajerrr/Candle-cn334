@@ -54,6 +54,57 @@ app.include_router(orders_router, prefix="/api/orders", tags=["Orders"])
 app.include_router(dashboard_router, prefix="/api/dashboard", tags=["Dashboard"])
 app.include_router(shipping_router, prefix="/api/shipping", tags=["Shipping"])
 
+import requests
+import os
+import json
+
+def get_speech_description(message, product_id):
+    try:
+        def fetch_speech_description(message):
+            url_path = "https://api.aiforthai.in.th/vaja9/synth_audiovisual"
+            api_key = "ruBZK9SmwaZ2J6SgSiWEoNO0KlufhPSi"
+            headers = {
+                "Apikey": api_key,
+                "Content-Type": "application/json",
+            }
+            body_data = {
+                "input_text": message,
+                "speaker": 1,
+                "phrase_break": 0,
+                "audiovisual": 0,
+            }
+            response = requests.post(url_path, json=body_data, headers=headers)
+            return response.json()["wav_url"]
+        
+        wav_url = fetch_speech_description(message)
+        
+        def fetch_sound(wav_url, product_id):
+            api_key = "ruBZK9SmwaZ2J6SgSiWEoNO0KlufhPSi"
+            headers = {
+                "Apikey": api_key,
+            }
+            response = requests.get(wav_url, headers=headers)
+            if response.status_code == 200:
+                location = "/sound"
+                sound_location = os.path.join(os.getcwd(), location)
+                with open(f"{sound_location}/{product_id}.wav", "wb") as f:
+                    f.write(response.content)
+        
+        fetch_sound(wav_url, product_id)
+    except Exception as e:
+        print(e)
+
+def create_sound(request):
+    try:
+        req_data = request.get_json()
+        description = req_data["description"]
+        product_id = req_data["id"]
+        get_speech_description(description, product_id)
+        return {"status": 200}
+    except Exception as e:
+        print(e)
+        return {"error": str(e)}
+
 @app.post("/upload_image/")
 async def upload_image(file: UploadFile = File(...)):
     # Generate a unique filename to avoid conflicts
