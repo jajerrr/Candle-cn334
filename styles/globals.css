@@ -17,7 +17,7 @@ nav a {
 }
 
 nav {
-    height: 90px;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,6 +71,7 @@ land_1{
     height: 100vh;
 }
 
+
 h1 {
     font-size: 40px;
     margin-top: 60px;
@@ -94,8 +95,9 @@ p {
     background-color: rgba(255, 255, 255, 0.7);
     padding: 50px;
     text-align: center;
-    margin-right: 600px;
-    margin-left: 600px;
+    margin-right: 950px;
+    margin-left: 950px;
+   
     
 }
 

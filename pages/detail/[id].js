@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import styles from '@/styles/[id].module.css';
 
 import React, { useState, useEffect} from 'react';
+
 import axios from "axios";
 
 
@@ -31,7 +32,7 @@ const Detail = () => {
             burningtime: '20 hours',
             diameter: '7.5cm x 7cm',
             weight: '260g',
-            soundUrl: '/sounds/BerryBliss.wav',
+            
         },
         {
             id: 2,

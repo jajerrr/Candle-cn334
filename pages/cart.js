@@ -45,11 +45,15 @@ const CartPage = () => {
         const updatedCartItems = [...initialCartItems];
         updatedCartItems.splice(index, 1);
         setInitialCartItems(updatedCartItems);
-
+    
         const updatedQuantities = [...quantities];
         updatedQuantities.splice(index, 1);
         setQuantities(updatedQuantities);
+    
+        // อัพเดตข้อมูลใน localStorage ด้วยข้อมูลใหม่
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     };
+    
 
     useEffect(() => {
         setSubtotal(calculateSubtotal());
@@ -57,6 +61,7 @@ const CartPage = () => {
 
     const handleCheckout = () => {
         const cartData = initialCartItems.map((item, index) => ({
+            
             productImg: item.image,
             productName: item.name,
             productQuantity: quantities[index],

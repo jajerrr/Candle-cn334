@@ -215,9 +215,6 @@ const PaymentPage = () => {
                                     THB {parseFloat(product.productPrice).toFixed(2)}
                                 </h3>
                             </div>
-                            {index !== cartItems.length - 1 && (
-                                <hr style={{ width: '95%', border: '1px solid #E5E5E5' }} />
-                            )}
                         </div>
                     ))}
 

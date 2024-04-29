@@ -5,8 +5,8 @@
 
     justify-content: center; /* จัดให้แนวนอนอยู่ตรงกลาง */
     align-items: center; /* จัดให้แนวตั้งอยู่ตรงกลาง */
-    
-    height: 100vh;
+    margin-top: -100px;
+    height: 90vh;
 
 }
 
