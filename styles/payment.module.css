@@ -76,7 +76,7 @@
     margin-right: 100px;
     margin: 20px;
     color: gray;
-    font-size: 18px;
+    font-size: 22px;
     
 }
 
@@ -84,7 +84,7 @@
 
 .paymentBox {
 
-    padding: 25px; /* ระยะห่างภายใน */
+    padding: 30px; /* ระยะห่างภายใน */
     border-radius: 8px; /* ขอบโค้งมน */
     margin: 20px;
     width: 900px; 
@@ -95,7 +95,7 @@
 .edit {
     color: #56B280;
     margin-right: 20px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .edit:hover {
@@ -119,7 +119,7 @@
     height: 40px;
     border: 1px solid gray;
     font-family: 'Poppins', sans-serif;
-    font-size: 18px; 
+    font-size: 22px; 
     
 }
 
@@ -134,7 +134,7 @@
     color: white; 
     border-radius: 5px; 
     font-family: 'Poppins', sans-serif;
-    font-size: 18px; 
+    font-size: 22px; 
     padding: 8px 50px; 
     border: none; 
     cursor: pointer;
@@ -220,6 +220,7 @@
     cursor: pointer;
     margin-top: 50px;
     margin-left: 15px;
+    font-size: 24px; 
     
   }
 
@@ -228,7 +229,7 @@
     background-color: #56B280; 
     color: white; 
     border-radius: 5px; 
-    font-size: 20px; 
+    font-size: 24px; 
     padding: 10px 60px; 
     border: none; 
     cursor: pointer;
@@ -241,13 +242,13 @@
   }
 
   .backAndPayButtons {
-    font-size: 18px;
+    font-size: 24px;
     margin-top: 30px;
     
     display: flex;
     
     align-items: center; /* จัดตำแหน่งกลางในแนวตั้ง */
-    gap: 600px; /* ระยะห่างระหว่างปุ่ม */
+    gap: 580px; /* ระยะห่างระหว่างปุ่ม */
 }
 
 
@@ -260,6 +261,9 @@
     
 }
 
+.product {
+    font-size: 30px;
+}
 
 
 .infoLabels{
@@ -320,31 +324,33 @@
     text-align: left;
     margin-left: 20px;
     color: #616161;
-    font-size: 20px;
+    font-size: 22px;
 }
 .value {
     flex-basis: 25%;
     margin-right: 20px;
     text-align: right;
     color: #616161;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .labelTotal {
     flex-basis: 70%;
     text-align: left;
     margin-left: 20px;
+    font-size: 24px;
 }
 
 .valueTotal {
     flex-basis: 25%;
     margin-right: 20px;
     text-align: right;
+    font-size: 24px;
 }
 
 .inputAdd {
     margin-left: 110px;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .separator {
@@ -360,7 +366,7 @@
 }
 
 .nameAndSurname {
-    font-size: 18px;
+    font-size: 20px;
     margin-left: 3px;
 }
 
