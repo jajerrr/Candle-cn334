@@ -8,7 +8,7 @@ import styles from '@/styles/[id].module.css';
 
 import React, { useState, useEffect} from 'react';
 
-import axios from "axios";
+// import axios from "axios";
 
 
 
@@ -194,80 +194,80 @@ const Detail = () => {
 
 
 
-  useEffect(() => {
-    const fetchProductList = async () => {
-      try {
-        if (selectedProduct && selectedProduct.description) {
-          const API_URL = `http://localhost:3000/detail/${id}/${selectedProduct.description}`;
-          const result = await fetch(API_URL, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          if (result.ok) {
-            const responseBody = await result.text();
-            setItems(JSON.parse(responseBody));
-          } else {
-            throw new Error(`Error: ${result.status} - ${result.body}`);
-          }
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchProductList = async () => {
+  //     try {
+  //       if (selectedProduct && selectedProduct.description) {
+  //         const API_URL = `http://localhost:3000/detail/${id}/${selectedProduct.description}`;
+  //         const result = await fetch(API_URL, {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         });
+  //         if (result.ok) {
+  //           const responseBody = await result.text();
+  //           setItems(JSON.parse(responseBody));
+  //         } else {
+  //           throw new Error(`Error: ${result.status} - ${result.body}`);
+  //         }
+  //       }
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
 
-    fetchProductList();
-  }, [selectedProduct]); // Add router.query.keyword to dependency array
+  //   fetchProductList();
+  // }, [selectedProduct]); // Add router.query.keyword to dependency array
 
  
 
-  const play = async () => {
-    const audioCtx = new AudioContext();
+  // const play = async () => {
+  //   const audioCtx = new AudioContext();
 
-    let buffer = null;
-    const handleAudioProduct = async () => {
+  //   let buffer = null;
+  //   const handleAudioProduct = async () => {
 
-    if (!selectedProduct) {
-            throw new Error("Selected product is null");
-          }  
+  //   if (!selectedProduct) {
+  //           throw new Error("Selected product is null");
+  //         }  
 
-      const API_URL = `http://localhost:3000/sound/detail/${id}/${selectedProduct.description}.wav`;
+  //     const API_URL = `http://localhost:3000/sound/detail/${id}/${selectedProduct.description}.wav`;
     
-      try {
-        const result = await fetch(API_URL, {
-          method: "GET",
+  //     try {
+  //       const result = await fetch(API_URL, {
+  //         method: "GET",
           
-        });
-        if (result.ok) {
-          const arrayBuffer = await result.arrayBuffer();
-          return arrayBuffer;
-        } else {
-          throw new Error(`Error: ${result.status} - ${result.statusText}`);
-        }
-      } catch (err) {
-        throw err;
-      }
-    };
+  //       });
+  //       if (result.ok) {
+  //         const arrayBuffer = await result.arrayBuffer();
+  //         return arrayBuffer;
+  //       } else {
+  //         throw new Error(`Error: ${result.status} - ${result.statusText}`);
+  //       }
+  //     } catch (err) {
+  //       throw err;
+  //     }
+  //   };
 
-    const audioData = await handleAudioProduct();
+  //   const audioData = await handleAudioProduct();
 
 
    
-    audioCtx.decodeAudioData(
-      audioData,
-      (decodedData) => {
-        buffer = decodedData;
-        const source = audioCtx.createBufferSource();
-        source.buffer = buffer;
-        source.connect(audioCtx.destination);
-        source.start(0);
-      },
-      (error) => {
-        console.error("Error decoding audio data:", error);
-      }
-    );
-  };
+  //   audioCtx.decodeAudioData(
+  //     audioData,
+  //     (decodedData) => {
+  //       buffer = decodedData;
+  //       const source = audioCtx.createBufferSource();
+  //       source.buffer = buffer;
+  //       source.connect(audioCtx.destination);
+  //       source.start(0);
+  //     },
+  //     (error) => {
+  //       console.error("Error decoding audio data:", error);
+  //     }
+  //   );
+  // };
 
  
 
@@ -360,22 +360,22 @@ const handleAddToCart = (selectedProduct) => {
                     <div className={styles.java}>
 
 
-                    <button onClick={play} className={styles.audiobutton}>
+                    {/*<button onClick={play} className={styles.audiobutton}>
                         <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className={styles.volume}
+                            // xmlns="http://www.w3.org/2000/svg"
+                            // // fill="none"
+                            // viewBox="0 0 24 24"
+                            // strokeWidth="1.5"
+                            // stroke="currentColor"
+                            // className={styles.volume}
                         >
                             <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
-                            />
+                            // strokeLinecap="round"
+                            // strokeLinejoin="round"
+                            // d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
+                            // />
                         </svg>
-                        </button>
+            </button>*/}
   
                         <p className={styles.description}>{selectedProduct.description}</p>
 
