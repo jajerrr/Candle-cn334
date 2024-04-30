@@ -81,6 +81,13 @@ var/
 # pyinstaller
 *.spec
 
+# Ignore pip install requests
+pip install requests
+
+# Ignore pip python-multipart
+
+pip install python-multipart
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
