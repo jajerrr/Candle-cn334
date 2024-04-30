@@ -8,7 +8,7 @@ import styles from '@/styles/[id].module.css';
 
 import React, { useState, useEffect} from 'react';
 
-// import axios from "axios";
+import axios from "axios";
 
 
 
@@ -52,6 +52,9 @@ const Detail = () => {
     
         // ตรวจสอบว่าสินค้าที่เพิ่มอยู่แล้วหรือไม่โดยใช้ ID เป็นตัวเปรียบเทียบ
         const isItemInCart = cartItems.some(cartItem => cartItem._id === item._id);
+
+        
+
     
         if (isItemInCart) {
             // ถ้าสินค้ามีอยู่ในตะกร้าแล้ว ให้แจ้งเตือนและไม่เพิ่มสินค้าเข้าไปอีก
@@ -72,29 +75,31 @@ const Detail = () => {
         }
     };
 
-    const play = async () => {
-        try {
-            const response = await fetch(`http://127.0.0.1:8000/api/create_sound/get_sound/${id}`, {
-                method: 'GET',
-            });
     
-            if (response.ok) {
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const audio = new Audio(url);
-                audio.play();
-            } else {
-                console.error('Failed to get sound:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error:', error);
+
+
+const play = async () => {
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/api/create_sound/get_sound/${id}`, {
+            method: 'GET',
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const audio = new Audio(url);
+            audio.play();
+        } else {
+            console.error('Failed to get sound:', response.statusText);
         }
-    };
-    
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
 
 
 
-    
+
 
 
     return (
@@ -110,29 +115,28 @@ const Detail = () => {
                 <div>
                 <h1>{product.candle_name}</h1>
                     <p className={styles.price}>THB {product.candle_price.toFixed(2)}</p>
-                    <p className={styles.description}>{product.candle_scent}</p>
-
                     <div className={styles.java}>
-                    <button onClick={() => play(product.candle_name, product.productId)} className={styles.audiobutton}>
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className={styles.volume}>
-                    <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
-                    />
-                    </svg>
-                    </button>
+                    
+            <button onClick={() => play(product.candle_name, product.productId)} className={styles.audiobutton}>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth="1.5"
+        stroke="currentColor"
+        className={styles.volume}
+    >
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
+        />
+    </svg>
+</button>
 
-
-                   
+                    
   
-                        <p className={styles.description}>{selectedProduct.description}</p> 
+                        <p className={styles.description}>{product.candle_scent}</p>
 
 
                         </div>

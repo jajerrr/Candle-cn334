@@ -145,7 +145,7 @@ return (
                 <img src={`http://127.0.0.1:8000${item.image_url}`} className={styles.productImage} alt={item.candle_name} /> 
                         <div className={styles.productDetails}> 
 
-                        <h2 className={styles.productName}>{item.name}</h2> 
+                        <h2 className={styles.productName}>{item.candle_name}</h2> 
                 
                         <a> <h3 className={styles.removeProduct} onClick={() => removeItem(index)}>Remove</h3>  </a> 
                         </div> 
