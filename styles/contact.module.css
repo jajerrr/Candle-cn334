@@ -16,7 +16,7 @@
   .Contact {
     display: flex; /* ให้เป็น flex container */
     justify-content: center; /* จัดให้เนื้อหาอยู่ตรงกลางแนวนอน */
-    font-size: 40px;
+    font-size: 48px;
     text-align: center;
     margin-top: 200px;
     margin-bottom: 10px;
@@ -24,7 +24,7 @@
 }
 
 .sub {
-    font-size: 22px;
+    font-size: 24px;
     text-indent: -20px;
     line-height: 1.75;
     color: #616161;
@@ -33,7 +33,7 @@
 
   .box {
     width: 350px;
-    height: 375px;
+    height: 425px;
     background-color: #FFFFFF;
     border-radius: 3%;
     margin-left: 60px;
@@ -64,7 +64,7 @@
 }
 
 .content {
-    font-size: 18px;
+    font-size: 20px;
     margin-top: -50px;
 }
 

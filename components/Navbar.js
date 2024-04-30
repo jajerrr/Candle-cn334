@@ -11,7 +11,7 @@ const Navbar = () => {
     const handleCartClick = () => {
         // ดึงข้อมูลจาก Local Storage
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    
+
         // ตรวจสอบว่ามีสินค้าในตะกร้าหรือไม่
         if (storedCartItems.length > 0) {
             // ส่งไปยังหน้า cart พร้อมกับข้อมูลใน Local Storage
@@ -54,7 +54,7 @@ const Navbar = () => {
                             height="30" 
                             onClick={handleCartClick} 
                         />
-                        <span>{cartItems.length}</span> {/* แสดงจำนวนสินค้าในตะกร้า */}
+                       
                     </div>
                 </Link>
             </div>
