@@ -1,6 +1,7 @@
-from bson.json_util import dumps
-from fastapi import APIRouter
+from fastapi import FastAPI, APIRouter
 from pymongo import MongoClient
+from bson import json_util, ObjectId
+import json
 
 router = APIRouter()
 client = MongoClient("mongodb://localhost:27017/")
@@ -21,8 +22,19 @@ def get_dashboard_summary():
     # สร้างข้อมูลสรุป
     dashboard_summary = {
         "total_sales": total_sales,
-        "best_selling_products": best_selling_products,
+        "best_selling_products": convert_objectid(best_selling_products),  # Convert ObjectId to string
         "order_statistics": order_statistics
     }
     # แปลงข้อมูล JSON ด้วย dumps()
-    return dumps(dashboard_summary)
+    return json.dumps(dashboard_summary, default=json_util.default)
+
+def convert_objectid(doc):
+    if isinstance(doc, list):
+        return [convert_objectid(item) for item in doc]
+    if isinstance(doc, dict):
+        for key, value in doc.items():
+            if isinstance(value, ObjectId):
+                doc[key] = str(value)  # Convert ObjectId to string
+            elif isinstance(value, (dict, list)):
+                doc[key] = convert_objectid(value)
+    return doc
