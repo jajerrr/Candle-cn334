@@ -6,7 +6,7 @@ export const CartContext = createContext();
 // สร้าง Provider Component
 export const CartProvider = ({ children }) => {
   // สร้าง state สำหรับเก็บข้อมูลสินค้าในตะกร้า
-  const [cartItems, setCartItems] = useState([{ id: 1, quantity: 1 }]);
+  const [cartItems, setCartItems] = useState([{}]);
 
   // ฟังก์ชันสำหรับอัพเดตจำนวนสินค้าในตะกร้า
   const updateQuantity = (index, newQuantity) => {
@@ -23,7 +23,7 @@ export const CartProvider = ({ children }) => {
     cartItems,
     updateQuantity,
     setCartItems,
-  };
+  }; 
 
   // ส่งค่า value เข้าไปยัง Provider
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

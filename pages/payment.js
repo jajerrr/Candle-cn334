@@ -16,7 +16,7 @@ const PageNav = () => (
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />  
             </svg>  
                 
-            <a href="/shipping" className={styles.linkShipping}>  
+            <a href="/shipping" className={styles.linkShipping}>
                 <p>Shipping</p>  
             </a>  
             <svg className={styles.svgIcon} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">  
@@ -32,10 +32,58 @@ const PageNav = () => (
 );  
 
 
+
+// จัดการเหตุการณ์เมื่อคลิกปุ่ม "Pay Now"
+const handlePayNowClick = (cartItems,sender,subtotal) => {
+    // เตรียมข้อมูลที่ต้องการส่งไปยัง API
+    const data = {
+        products: cartItems, // สินค้าที่ลูกค้าสั่งซื้อ
+        shipping_address: sender, // ข้อมูลการจัดส่ง
+        //paymentMethod: selectedPaymentMethod, // วิธีการชำระเงินที่เลือก
+        total_price: subtotal , // ยอดรวมทั้งหมด
+    };
+
+    // โพสข้อมูลไปยัง API
+    postDataToAPI(data);
+    console.log("Data to be posted:", data);
+};
+
+//ฟังก์ชันสำหรับการโพสข้อมูลไปยัง API
+const postDataToAPI = async (data) => {
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/orders/orders/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        const responseData = await response.json();
+        console.log('Response from API:', responseData);
+
+        // หลังจากที่ส่งข้อมูลไปยัง API และได้รับการยืนยัน
+        // รีเซ็ตค่าใน Local Storage
+        resetLocalStorage();
+        // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้รับกลับจาก API
+    } catch (error) {
+        console.error('Error posting data to API:', error);
+    }
+};
+
+// ฟังก์ชันสำหรับรีเซ็ตค่าใน Local Storage
+const resetLocalStorage = () => {
+    // ลบข้อมูลที่เกี่ยวข้องออกจาก Local Storage
+    localStorage.removeItem('cartItems');
+    // อื่น ๆ ตามต้องการ
+};
+
+
+
 // ฟังก์ชันหลักของ PaymentPage
 
 const PaymentPage = () => {
     const [shippingCost, setShippingCost] = useState(0);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
     const [cartItems, setCartItems] = useState([]);
     const [quantities, setQuantities] = useState([]);
     const [sender, setSender] = useState({
@@ -43,10 +91,11 @@ const PaymentPage = () => {
         name: '',
         surname: '',
         address: '',
+        note: '',
         city: '',
         province: '',
         country: '',
-        postalCode: '',
+        postcode: '',
         selectedMethod: '',
     });
     const [total, setTotal] = useState(0);
@@ -72,8 +121,11 @@ const PaymentPage = () => {
                     city: query.city || '',
                     province: query.province || '',
                     country: query.country || '',
-                    postalCode: query.postalCode || '',
+                    postcode: query.postcode || '',
+                    note: query.note || '',
                     selectedMethod: query.selectedMethod || '',
+                    //body: item.body || '', // ใช้ property "body" จากอาร์เรย์ที่กำหนด
+                    //shipping_address: item.shipping_address || '', // ใช้ property "shipping_address" จากอาร์เรย์ที่กำหนด
                 });
 
                 // ตั้งค่า total, shippingCost, และ selectedPaymentMethod จาก query
@@ -95,11 +147,11 @@ const PaymentPage = () => {
 
         // บันทึก `subtotal` และ `shippingCost` ลงใน `localStorage`
         localStorage.setItem('subtotal', subtotal.toFixed(2));
-        localStorage.setItem('shippingCost', shippingCost.toFixed(2));
+        //localStorage.setItem('shippingCost', shippingCost.toFixed(2));
 
         // อัปเดตค่า `total`
         setTotal(subtotal);
-    }, [cartItems, quantities, shippingCost]);
+    }, [cartItems, quantities]);
 
     // จัดการการเปลี่ยนแปลงของ sender
     const handleSenderChange = (event) => {
@@ -110,7 +162,10 @@ const PaymentPage = () => {
         }));
     };
 
-
+    // จัดการการเปลี่ยนแปลงของ selectedPaymentMethod
+    const handleMethodChange = (event) => {
+        setSelectedPaymentMethod(event.target.value);
+    };
 
     // การจัดรูปแบบข้อมูล cartData สำหรับการแสดงใน PaymentPage
     const cartData = cartItems.map((item, index) => {
@@ -118,12 +173,16 @@ const PaymentPage = () => {
         const formattedPrice = productPrice.toFixed(2);
 
         return {
+            productId : item.productId,
             productImg: item.productImg || '', // จัดการกรณีที่ productImg เป็นค่า undefined หรือ null
             productName: item.productName || '', // จัดการกรณีที่ productName เป็นค่า undefined หรือ null
             productQuantity: quantities[index],
             productPrice: formattedPrice,
+            
         };
     });
+
+    
     return (
         <>
             <Head>
@@ -141,7 +200,7 @@ const PaymentPage = () => {
                             
                             <span className={styles.infoLabel}>Contact: <span className={styles.email}>{sender.contact}</span></span>
 
-                            <a href={`/shipping?name=${sender.name}&surname=${sender.surname}&address=${sender.address}&city=${sender.city}&province=${sender.province}&country=${sender.country}&postalCode=${sender.postalCode}&products=${encodeURIComponent(JSON.stringify(cartItems))}&method=${sender.selectedMethod}`}>
+                            <a href={`/shipping?name=${sender.name}&surname=${sender.surname}&address=${sender.address}&city=${sender.city}&province=${sender.province}&country=${sender.country}&postcode=${sender.postcode}&products=${encodeURIComponent(JSON.stringify(cartItems))}&method=${sender.selectedMethod}`}>
                                 <p className={styles.edit}>Edit</p>
                             </a>
 
@@ -160,7 +219,7 @@ const PaymentPage = () => {
                                     <div className={styles.inputAdd}>
                                         {sender.address}<br />
                                         {sender.city}<br />
-                                        {`${sender.province}, ${sender.postalCode}`}<br />
+                                        {`${sender.province}, ${sender.postcode}`}<br />
                                         
                                     </div>
                                 </div>
@@ -177,7 +236,7 @@ const PaymentPage = () => {
                             <span className={styles.infoLabel}>
                                 Method: <span className={styles.inputShipping}>{sender.selectedMethod}</span>
                             </span>
-                            <a href={`/shipping?method=${sender.selectedMethod}&contact=${sender.contact}&name=${sender.name}&surname=${sender.surname}&address=${sender.address}&city=${sender.city}&province=${sender.province}&country=${sender.country}&postalCode=${sender.postalCode}&products=${encodeURIComponent(JSON.stringify(cartItems))}`}>
+                            <a href={`/shipping?method=${sender.selectedMethod}&contact=${sender.contact}&name=${sender.name}&surname=${sender.surname}&address=${sender.address}&city=${sender.city}&province=${sender.province}&country=${sender.country}&postcode=${sender.postcode}&products=${encodeURIComponent(JSON.stringify(cartItems))}`}>
                                 <p className={styles.edit}>Edit</p>
                             </a>
                         </div>
@@ -196,8 +255,6 @@ const PaymentPage = () => {
                         </form>
                     </div>
 
-
-
                     {/* Products Information */}
                     <h2 className={styles.product}>Products</h2>
                     {cartData.map((product, index) => (
@@ -205,7 +262,7 @@ const PaymentPage = () => {
                         <div key={index}>
                             <div className={styles.productBox}>
                                 <span className={styles.imgProduct}>
-                                    <img src={product.productImg} alt={product.productName} />
+                                    <img src={`http://127.0.0.1:8000${product.productImg}`} alt={product.productName} />
                                 </span>
                                 <div>
                                     <h2><span className={styles.infoLabels}> </span>{product.productName}</h2>
@@ -215,6 +272,9 @@ const PaymentPage = () => {
                                     THB {parseFloat(product.productPrice).toFixed(2)}
                                 </h3>
                             </div>
+                            {index !== cartItems.length - 1 && (
+                                <hr style={{ width: '75%', border: '1px solid rgba(86, 178, 128, 0.5)' }} />
+                            )}
                         </div>
                     ))}
 
@@ -239,12 +299,12 @@ const PaymentPage = () => {
                     </div>
 
                     <div className={styles.backAndPayButtons}>
-                       
-                        <a href={`/shipping?method=${sender.selectedMethod}&contact=${sender.contact}&name=${sender.name}&surname=${sender.surname}&address=${sender.address}&city=${sender.city}&province=${sender.province}&country=${sender.country}&postalCode=${sender.postalCode}&products=${encodeURIComponent(JSON.stringify(cartItems))}`} className="{styles.backButton}">
+
+                        <a href={`/shipping?method=${sender.selectedMethod}&contact=${sender.contact}&name=${sender.name}&surname=${sender.surname}&address=${sender.address}&city=${sender.city}&province=${sender.province}&country=${sender.country}&postcode=${sender.postcode}&products=${encodeURIComponent(JSON.stringify(cartItems))}`} className="{styles.backButton}">
                             <h3 className={styles.back}>Back to detail</h3>
                         </a>
                         <a href="/confirm">
-                            <button className={styles.payButton}>Pay Now</button>
+                        < button className={styles.payButton}onClick={() => {handlePayNowClick(cartItems, sender, total, shippingCost);}}>Pay Now</button>                        
                         </a>
                     </div>
                 </div>

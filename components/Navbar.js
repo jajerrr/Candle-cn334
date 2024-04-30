@@ -26,6 +26,9 @@ const Navbar = () => {
             alert('Your cart is empty.');
         }
     };
+    
+
+    
 
     return (
         <nav>

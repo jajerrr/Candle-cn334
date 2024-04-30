@@ -145,6 +145,7 @@ const ShippingPage = () => {
     // ฟังก์ชันที่ใช้ในการนำทางไปที่หน้า `payment` และส่งข้อมูล `query` ตามที่ต้องการ
     const handleGoToPayment = () => {
         const cartData = cartItems.map((item, index) => ({
+            productId : item.productId || '' ,
             productImg: item.productImg || '',
             productName: item.productName || '',
             productQuantity: quantities[index],
@@ -175,6 +176,25 @@ const ShippingPage = () => {
             query: queryParams.toString(),
         });
     };
+
+
+    const backtocart = () => {
+        // ดึงข้อมูลจาก Local Storage
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
+        // ตรวจสอบว่ามีสินค้าในตะกร้าหรือไม่
+        if (storedCartItems.length > 0) {
+            // ส่งไปยังหน้า cart พร้อมกับข้อมูลใน Local Storage
+            router.push({
+                pathname: '/cart',
+                query: {
+                    items: JSON.stringify(storedCartItems),
+                },
+            });
+        } 
+    };
+
+
 
 
     return (
@@ -303,9 +323,8 @@ const ShippingPage = () => {
                 
 
                         <div className={styles.backAndPayButtons}>
-                            <a href="/cart" className={styles.backButton}>
-                                <h3 className={styles.back}>Back to cart</h3>
-                            </a>
+                                <button className={styles.payButton} onClick={backtocart}>Back to cart</button>
+                            
                             <button className={styles.payButton} onClick={handleGoToPayment}>
                                 Go to payment
                             </button>
@@ -324,7 +343,7 @@ const ShippingPage = () => {
                        {cartItems.map((product, index) => (
                             <div key={index} className={styles.productBox}>
                                 <span className={styles.imgProduct}>
-                                    <img src={product.productImg} alt={product.productName} />
+                                    <img src={`http://127.0.0.1:8000${product.productImg}`} alt={product.productName} />
                                 </span>
                                 <div>
                                     <h2>
