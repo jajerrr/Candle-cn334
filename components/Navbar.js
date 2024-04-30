@@ -2,18 +2,28 @@ import React, { useContext } from 'react';
 import { CartContext } from '../components/CartContext';
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
-    const { cartItems, setCartItems } = useContext(CartContext);
+    const { cartItems} = useContext(CartContext);
+    const router = useRouter();
 
     const handleCartClick = () => {
-        if (cartItems) {
-            const updatedItems = cartItems.map(item => ({
-                ...item,
-                quantity: Math.max(item.quantity || 1, 1)
-            }));
-            setCartItems(updatedItems);
-            localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+        // ดึงข้อมูลจาก Local Storage
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        // ตรวจสอบว่ามีสินค้าในตะกร้าหรือไม่
+        if (storedCartItems.length > 0) {
+            // ส่งไปยังหน้า cart พร้อมกับข้อมูลใน Local Storage
+            router.push({
+                pathname: '/cart',
+                query: {
+                    items: JSON.stringify(storedCartItems),
+                },
+            });
+        } else {
+            // แสดงแจ้งเตือนถ้าตะกร้าว่าง
+            alert('Your cart is empty.');
         }
     };
 
@@ -41,7 +51,7 @@ const Navbar = () => {
                             height="30" 
                             onClick={handleCartClick} 
                         />
-                        <span>{cartItems.length}</span> {/* แสดงจำนวนสินค้าในตะกร้า */}
+                       
                     </div>
                 </Link>
             </div>
